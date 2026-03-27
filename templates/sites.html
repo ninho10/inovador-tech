@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Desenvolvimento de sites profissionais, responsivos e ultra-rápidos para empresas.">
+    <link rel="canonical" href="http://inovadortech.com.br/sites">
+    <meta property="og:title" content="Inovador Tech | Criação de Sites Premium">
+    <meta property="og:image" content="{{ url_for('static', filename='img/sites_hero.png', _external=True) }}">
+    <title>Inovador Tech | Criação de Sites Profissionais</title>
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Outfit:wght@300;500;700;900&display=swap" rel="stylesheet">
+    
+    <!-- AOS -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- TSParticles -->
+    <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.12.0/tsparticles.bundle.min.js"></script>
+
+    <style>
+        .sites-hero {
+            padding-top: 160px;
+            padding-bottom: 60px;
+        }
+        .feature-box {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(0, 243, 255, 0.1);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            transition: 0.3s;
+            height: 100%;
+        }
+        .feature-box:hover {
+            border-color: var(--neon-cyan);
+            transform: scale(1.05);
+            background: rgba(0, 243, 255, 0.05);
+        }
+        .monitor-frame {
+            border: 10px solid #1a1a1a;
+            border-radius: 20px;
+            box-shadow: 0 0 40px rgba(0, 243, 255, 0.2);
+            overflow: hidden;
+            position: relative;
+        }
+    </style>
+</head>
+<body>
+    <!-- Custom Cursor -->
+    <div id="custom-cursor"></div>
+    <div id="cursor-glow"></div>
+
+    <!-- Particle Background -->
+    <div id="tsparticles"></div>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg fixed-top scrolled" id="mainNav">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <span class="brand-accent">INOVADOR</span> TECH
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/#beneficios">Benefícios</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/#servicos">Serviços</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/dados">📊 Dados</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/ai">🤖 IA</a></li>
+                    <li class="nav-item"><a class="nav-link active fw-bold text-neon-cyan" href="/sites">🌐 Sites</a></li>
+                    <li class="nav-item"><a class="nav-link btn-contact ms-lg-3" href="https://wa.me/5521983225806">Fale Conosco</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <header class="sites-hero container text-center">
+        <h1 class="hero-title" data-aos="fade-down">CRIAMOS <span class="text-neon-cyan">SITES TECNOLÓGICOS</span> SOB MEDIDA</h1>
+        <p class="hero-subtitle mx-auto mb-5" data-aos="fade-up">
+            Transformamos a presença digital da sua empresa com design premium, velocidade ultra-rápida e tecnologia de ponta.
+        </p>
+        
+        <div class="monitor-frame mx-auto mb-5" style="max-width: 900px;" data-aos="zoom-in">
+            <img src="{{ url_for('static', filename='img/sites_hero.png') }}" alt="Interface de desenvolvimento web moderna com telas holográficas" class="img-fluid">
+        </div>
+    </header>
+
+    <main class="container py-5">
+        <div class="row g-4 text-center mb-5">
+            <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+                <div class="feature-box">
+                    <i data-lucide="smartphone" class="text-neon-cyan mb-3" style="width: 50px; height: 50px;"></i>
+                    <h3>100% Responsivos</h3>
+                    <p>Seu site perfeito em qualquer tela: celular, tablet ou desktop.</p>
+                </div>
+            </div>
+            <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+                <div class="feature-box">
+                    <i data-lucide="zap" class="text-neon-green mb-3" style="width: 50px; height: 50px;"></i>
+                    <h3>Velocidade Extrema</h3>
+                    <p>Sites leves que carregam instantaneamente para não perder nenhum cliente.</p>
+                </div>
+            </div>
+            <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+                <div class="feature-box">
+                    <i data-lucide="shield-check" class="text-neon-cyan mb-3" style="width: 50px; height: 50px;"></i>
+                    <h3>Segurança Máxima</h3>
+                    <p>Proteção de dados e certificados SSL inclusos em todos os projetos.</p>
+                </div>
+            </div>
+        </div>
+
+        <section class="py-5" data-aos="fade-up">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <h2 class="section-title">Design que Vende</h2>
+                    <div class="title-underline ms-0" style="margin-left: 0 !important;"></div>
+                    <p class="text-glass lead">
+                        Não criamos apenas sites, criamos ferramentas de faturamento. Focamos na experiência do usuário (UX) para converter visitantes em lucro.
+                    </p>
+                    <ul class="service-list">
+                        <li><i data-lucide="check" class="text-neon-green me-2"></i> Interfaces Modernas e Clean</li>
+                        <li><i data-lucide="check" class="text-neon-green me-2"></i> SEO Integrado para o Google</li>
+                        <li><i data-lucide="check" class="text-neon-green me-2"></i> Painel de Controle Fácil de Usar</li>
+                    </ul>
+                </div>
+                <div class="col-lg-6">
+                    <div class="benefit-card text-center p-5">
+                        <i data-lucide="layout" class="text-neon-green mb-4" style="width: 80px; height: 80px;"></i>
+                        <h4>Sua Empresa no Próximo Nível</h4>
+                        <p>Destaque-se da concorrência com uma vitrine digital que transmite confiança e inovação.</p>
+                        <a href="https://wa.me/5521983225806" class="btn btn-neon mt-3">Solicitar Orçamento</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="py-5 bg-black border-top border-secondary">
+        <div class="container text-center">
+            <h3 class="footer-logo">INOVADOR <span class="text-neon-cyan">TECH</span></h3>
+            <p class="text-muted">Soluções inteligentes para o seu negócio.</p>
+            <p class="mb-0"><strong>Contato:</strong> (21) 98322-5806</p>
+            <hr class="my-4 op-2">
+            <div class="text-center text-muted small">
+                &copy; 2026 Inovador Tech. Todos os direitos reservados.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    
+    <script>
+        AOS.init();
+        lucide.createIcons();
+    </script>
+</body>
+</html>
