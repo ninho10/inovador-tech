@@ -414,3 +414,49 @@ h1, h2, h3, h4, .navbar-brand {
         width: 100%;
     }
 }
+
+/* Contact Form Styles */
+.bg-darker-blue {
+    background: #020611;
+}
+
+.contact-card {
+    background: rgba(10, 20, 40, 0.4);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(0, 243, 255, 0.1);
+    transition: all 0.3s ease;
+    padding: 3rem;
+    border-radius: 2rem;
+}
+
+.contact-card:hover {
+    border-color: var(--neon-cyan);
+    box-shadow: 0 0 40px rgba(0, 243, 255, 0.1);
+}
+
+.form-floating > .form-control {
+    background: rgba(255, 255, 255, 0.05) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    color: #fff !important;
+    border-radius: 12px;
+}
+
+.form-floating > .form-control:focus {
+    background: rgba(255, 255, 255, 0.08) !important;
+    border-color: var(--neon-cyan) !important;
+    box-shadow: 0 0 15px rgba(0, 243, 255, 0.2) !important;
+}
+
+.form-floating > label {
+    color: rgba(255, 255, 255, 0.5) !important;
+}
+
+.form-floating > .form-control:focus ~ label,
+.form-floating > .form-control:not(:placeholder-shown) ~ label {
+    color: var(--neon-cyan) !important;
+}
+
+/* Scroll Snap Adjustments */
+html {
+    scroll-behavior: smooth;
+}

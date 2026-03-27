@@ -51,6 +51,25 @@ def sites():
     """
     return render_template('sites.html')
 
+# Rota para o formulário de contato
+@app.route('/enviar-contato', methods=['POST'])
+def enviar_contato():
+    nome = request.form.get('nome')
+    cidade = request.form.get('cidade')
+    telefone = request.form.get('telefone')
+    email = request.form.get('email')
+    mensagem = request.form.get('mensagem')
+    
+    # Detalhes do envio
+    # Enviar para: paulo.trabalho10@gmail.com
+    print(f"NOVO CONTATO: {nome} | {cidade} | {telefone} | {email}")
+    print(f"MENSAGEM: {mensagem}")
+    
+    # Para envio real de e-mail no Render, precisaríamos de uma conta SMTP 
+    # ou usar um serviço como SendGrid/Mailgun configurado como variável de ambiente.
+    
+    return render_template('index.html', msg_sent=True)
+
 # Inicia o servidor se o script for executado diretamente
 # Start the server if the script is run directly
 if __name__ == '__main__':

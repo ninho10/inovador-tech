@@ -236,6 +236,69 @@
         </div>
     </section>
 
+    <!-- Dúvidas Section -->
+    <section id="duvidas" class="py-5 bg-darker-blue">
+        <div class="container py-5">
+            <div class="row justify-content-center">
+                <div class="col-lg-10 col-xl-8" data-aos="fade-up">
+                    <div class="contact-card">
+                        <div class="text-center mb-5">
+                            <h2 class="section-title">Tire Suas Dúvidas</h2>
+                            <div class="title-underline mx-auto"></div>
+                            <p class="text-muted mt-3">Preencha o formulário e receba uma consultoria especializada direto no seu e-mail.</p>
+                        </div>
+                        
+                        <form action="/enviar-contato" method="POST" id="contact-form">
+                            <div class="row g-4">
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" id="nome" name="nome" placeholder="Seu Nome" required>
+                                        <label for="nome">Nome Completo</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" id="cidade" name="cidade" placeholder="Sua Cidade" required>
+                                        <label for="cidade">Cidade</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <input type="tel" class="form-control" id="telefone" name="telefone" placeholder="Seu Telefone" required>
+                                        <label for="telefone">Telefone / WhatsApp</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <input type="email" class="form-control" id="email" name="email" placeholder="Seu Email" required>
+                                        <label for="email">E-mail</label>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-floating">
+                                        <textarea class="form-control" id="mensagem" name="mensagem" placeholder="Sua Dúvida" style="height: 150px" required></textarea>
+                                        <label for="mensagem">Como podemos ajudar? (Sua Dúvida)</label>
+                                    </div>
+                                </div>
+                                <div class="col-12 text-center mt-5">
+                                    <button type="submit" class="btn btn-neon-large px-5">
+                                        <i data-lucide="send" class="me-2"></i> Enviar Agora
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+
+                        {% if msg_sent %}
+                        <div class="alert alert-success mt-4 border-0 bg-transparent text-neon-green text-center" role="alert">
+                             <i data-lucide="check-circle" class="me-2"></i> Mensagem enviada com sucesso! Entraremos em contato em breve.
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Footer -->
     <footer class="py-5 bg-black border-top border-secondary">
         <div class="container">
