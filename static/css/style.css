@@ -447,19 +447,18 @@ h1, h2, h3, h4, .navbar-brand {
 
 @media (max-width: 576px) {
     .container {
-        padding-left: 8px !important;
-        padding-right: 8px !important;
+        padding-left: 15px !important; /* Aumentado para 15px em todos os celulares / Increased to 15px for all mobile */
+        padding-right: 15px !important;
     }
     .row {
-        margin-left: -8px !important; /* Alinhamento perfeito com o padding do container / Perfect alignment with container padding */
-        margin-right: -8px !important;
+        margin-left: -15px !important;
+        margin-right: -15px !important;
     }
     .hero-title {
-        font-size: 2rem; /* Reduzido para não "espremer" as palavras / Reduced for better flow */
-        line-height: 1.2;
-        overflow-wrap: break-word;
-        word-wrap: break-word;
-        hyphens: auto;
+        font-size: 1.5rem; /* Reduzido para garantir espaço lateral / Reduced for horizontal clearance */
+        line-height: 1.25;
+        overflow-wrap: normal;
+        word-break: normal;
     }
     .btn-neon {
         width: 100%;
@@ -483,21 +482,20 @@ h1, h2, h3, h4, .navbar-brand {
 
 @media (max-width: 360px) {
     .navbar-brand {
-        font-size: 1.15rem !important; /* Ajuste finíssimo para iPhone SE / Very fine adjustment for tiny screens */
+        font-size: 1.05rem !important; /* Ainda mais espaço / Even more room */
         letter-spacing: -0.5px;
     }
     .hero-title {
-        font-size: 1.6rem !important;
-        word-break: break-word;
-        overflow-wrap: break-word;
+        font-size: 1.2rem !important; /* Segurança ultra para não cortar palavras / Ultra safety against word clipping */
+        word-break: normal;
     }
     .container {
-        padding-left: 8px !important;
-        padding-right: 8px !important;
+        padding-left: 15px !important; /* Aumentado para criar margem de segurança / Increased for safety margin */
+        padding-right: 15px !important;
     }
     .row {
-        margin-left: -8px !important;
-        margin-right: -8px !important;
+        margin-left: -15px !important;
+        margin-right: -15px !important;
     }
 }
 
