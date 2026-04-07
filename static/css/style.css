@@ -87,6 +87,9 @@ h1, h2, h3, h4, .navbar-brand {
 
 /* Mobile Menu Expanded - Fundo sobre tudo / Expanded background */
 @media (max-width: 991.98px) {
+    .navbar {
+        padding: 0.8rem 0; /* Menor espaço inicial no mobile / Smaller initial mobile padding */
+    }
     #mainNav .container {
         display: flex !important;
         flex-wrap: nowrap !important; /* Impede que o botão caia para a linha de baixo / Prevents toggler from wrapping */
@@ -469,8 +472,11 @@ h1, h2, h3, h4, .navbar-brand {
     .section-title {
         font-size: 1.8rem;
     }
+    .hero-section {
+        padding-top: 50px !important; /* Aproximando o título da navbar / Bringing title closer to navbar */
+    }
     .ai-hero, .sites-hero {
-        padding-top: 100px !important;
+        padding-top: 60px !important;
         padding-bottom: 40px !important;
     }
 }
