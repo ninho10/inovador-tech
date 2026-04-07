@@ -121,24 +121,24 @@
     <!-- Hero Section -->
     <header id="home" class="hero-section">
         <div class="container">
-            <div class="row align-items-center min-vh-100">
-                <div class="col-lg-6" data-aos="fade-right">
+            <div class="row align-items-center hero-row">
+                <div class="col-lg-6 text-center text-lg-start" data-aos="fade-right">
                     <h1 class="hero-title">
                         TENHA O <span class="text-neon-cyan">CONTROLE TOTAL</span> <br>
                         DO SEU <span class="text-neon-green">NEGÓCIO</span>
                     </h1>
-                    <p class="hero-subtitle mb-4">
+                    <p class="hero-subtitle mb-4 mx-auto mx-lg-0">
                         Oferecemos controle total com sistemas inteligentes, dados em tempo real e Inteligência Artificial que trabalham para você.
                     </p>
                     <a href="https://wa.me/5521983225806" class="btn btn-neon btn-lg">
                         <i data-lucide="message-circle" class="me-2"></i> Fale conosco no WhatsApp
                     </a>
                 </div>
-                <div class="col-lg-6 d-none d-lg-block" data-aos="zoom-in">
-                    <div class="hero-visual">
+                <div class="col-lg-6 mt-5 mt-lg-0 text-center" data-aos="zoom-in">
+                    <div class="hero-visual d-flex justify-content-center position-relative">
                         <!-- Imagem ou elemento visual futurista -->
-                        <div class="glow-sphere"></div>
-                        <img src="{{ url_for('static', filename='img/hero_robot.png') }}" alt="Robô futurista representando Inteligência Artificial e Código" class="img-fluid floating shadow-neon">
+                        <div class="glow-sphere" style="top: 50%; left: 50%; transform: translate(-50%, -50%);"></div>
+                        <img src="{{ url_for('static', filename='img/hero_robot.png') }}" alt="Robô futurista representando Inteligência Artificial e Código" class="img-fluid floating shadow-neon" style="max-height: 70vh;">
                     </div>
                 </div>
             </div>

@@ -209,6 +209,18 @@ h1, h2, h3, h4, .navbar-brand {
                 radial-gradient(circle at 90% 80%, rgba(0, 255, 136, 0.05) 0%, transparent 40%);
 }
 
+.hero-row {
+    min-height: 100vh;
+}
+
+@media (max-width: 991px) {
+    .hero-row {
+        min-height: auto;
+        padding-top: 30px;
+        padding-bottom: 50px;
+    }
+}
+
 /* Glitch Effect para o Título */
 .hero-title {
     font-size: 4.5rem;
