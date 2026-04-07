@@ -67,6 +67,7 @@ h1, h2, h3, h4, .navbar-brand {
     border: 2px solid var(--neon-cyan);
     box-shadow: 0 0 15px rgba(0, 243, 255, 0.4);
     transition: 0.3s;
+    margin-left: 10px; /* Alinhado mais perto do logo / Closer to logo */
 }
 
 .navbar-toggler:focus {
@@ -80,8 +81,14 @@ h1, h2, h3, h4, .navbar-brand {
 
 /* Mobile Menu Expanded - Fundo sobre tudo / Expanded background */
 @media (max-width: 991.98px) {
+    #mainNav .container {
+        display: flex;
+        justify-content: flex-start !important; /* Alinhamento à esquerda / Left alignment */
+        align-items: center;
+    }
+
     .navbar-collapse {
-        background: rgba(2, 6, 17, 0.98);
+        margin-top: 15px;
         backdrop-filter: blur(25px);
         margin-top: 15px;
         padding: 25px;
@@ -403,6 +410,10 @@ h1, h2, h3, h4, .navbar-brand {
 @media (max-width: 991px) {
     .hero-title {
         font-size: 2.8rem;
+    }
+    .navbar-brand {
+        font-size: 1.4rem; /* Reduzido para caber bem no mobile / Reduced for mobile */
+        letter-spacing: 1px;
     }
 }
 
