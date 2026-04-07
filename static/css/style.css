@@ -19,8 +19,15 @@ body {
     background-color: var(--bg-dark);
     color: #ffffff;
     font-family: var(--secondary-font);
-    overflow-x: hidden;
+    overflow-x: hidden !important; /* Trava de segurança horizontal / Horizontal safety lock */
+    width: 100%;
+    position: relative;
     cursor: none; /* Esconde o cursor padrão para o customizado / Hides default cursor */
+}
+
+html {
+    overflow-x: hidden !important;
+    width: 100%;
 }
 
 /* Scanline Overlay */
@@ -66,7 +73,7 @@ h1, h2, h3, h4, .navbar-brand {
 .navbar-toggler {
     border: 2px solid var(--neon-cyan);
     box-shadow: 0 0 15px rgba(0, 243, 255, 0.4);
-    transition: 0.3s;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
 }
 
 .navbar-toggler:focus {
@@ -81,11 +88,13 @@ h1, h2, h3, h4, .navbar-brand {
 /* Mobile Menu Expanded - Fundo sobre tudo / Expanded background */
 @media (max-width: 991.98px) {
     #mainNav .container {
-        display: flex;
+        display: flex !important;
+        flex-wrap: nowrap !important; /* Impede que o botão caia para a linha de baixo / Prevents toggler from wrapping */
         justify-content: space-between !important; /* Espalhado pelas pontas / Full width alignment */
         align-items: center;
         padding-left: 8px !important;
         padding-right: 8px !important;
+        max-width: 100% !important; /* Garante que aproveite todo o espaço / Full width utility */
     }
 
     .navbar-collapse {
@@ -144,10 +153,20 @@ h1, h2, h3, h4, .navbar-brand {
 }
 
 .navbar-brand {
-    font-size: 1.8rem;
-    letter-spacing: 2px;
+    font-size: 1.35rem; /* Base estável para mobile / Stable mobile-first base */
+    letter-spacing: 0.5px;
     color: #fff !important;
     text-transform: uppercase;
+    white-space: nowrap !important; /* Nunca quebra / Never wraps */
+    display: inline-block;
+    transition: color 0.3s ease; /* Removido transition: all ou transition genérica / Removed generic transition */
+}
+
+@media (min-width: 992px) {
+    .navbar-brand {
+        font-size: 1.8rem;
+        letter-spacing: 1px;
+    }
 }
 
 .brand-accent {
@@ -266,6 +285,9 @@ h1, h2, h3, h4, .navbar-brand {
     font-size: 2.5rem;
     position: relative;
     display: inline-block;
+    overflow-wrap: break-word; /* Previne que palavras longas vazem / Prevents long words overflow */
+    word-wrap: break-word;
+    hyphens: auto;
 }
 
 .title-underline {
@@ -418,16 +440,23 @@ h1, h2, h3, h4, .navbar-brand {
     .hero-title {
         font-size: 2.8rem;
     }
-    .navbar-brand {
-        font-size: 1.75rem; /* Levemente reduzido para caber no desktop-mobile / Slightly reduced for desktop-mobile */
-        letter-spacing: 0px;
-    }
 }
 
 @media (max-width: 576px) {
+    .container {
+        padding-left: 8px !important;
+        padding-right: 8px !important;
+    }
+    .row {
+        margin-left: -8px !important; /* Alinhamento perfeito com o padding do container / Perfect alignment with container padding */
+        margin-right: -8px !important;
+    }
     .hero-title {
         font-size: 2rem; /* Reduzido para não "espremer" as palavras / Reduced for better flow */
         line-height: 1.2;
+        overflow-wrap: break-word;
+        word-wrap: break-word;
+        hyphens: auto;
     }
     .btn-neon {
         width: 100%;
@@ -448,16 +477,21 @@ h1, h2, h3, h4, .navbar-brand {
 
 @media (max-width: 360px) {
     .navbar-brand {
-        font-size: 1.3rem !important; /* Ajuste para iPhone SE / Adjustment for tiny screens */
+        font-size: 1.15rem !important; /* Ajuste finíssimo para iPhone SE / Very fine adjustment for tiny screens */
         letter-spacing: -0.5px;
     }
     .hero-title {
         font-size: 1.6rem !important;
         word-break: break-word;
+        overflow-wrap: break-word;
     }
     .container {
         padding-left: 8px !important;
         padding-right: 8px !important;
+    }
+    .row {
+        margin-left: -8px !important;
+        margin-right: -8px !important;
     }
 }
 
