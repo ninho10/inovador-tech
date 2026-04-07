@@ -209,6 +209,12 @@ h1, h2, h3, h4, .navbar-brand {
     max-width: 600px;
 }
 
+@media (max-width: 576px) {
+    .hero-subtitle {
+        font-size: 1.1rem;
+    }
+}
+
 .btn-neon {
     background: linear-gradient(45deg, var(--neon-cyan), var(--neon-green));
     border: none;
@@ -413,17 +419,45 @@ h1, h2, h3, h4, .navbar-brand {
         font-size: 2.8rem;
     }
     .navbar-brand {
-        font-size: 1.9rem; /* Aumentado para preencher melhor / Increased to fill better */
+        font-size: 1.75rem; /* Levemente reduzido para caber no desktop-mobile / Slightly reduced for desktop-mobile */
         letter-spacing: 0px;
     }
 }
 
 @media (max-width: 576px) {
     .hero-title {
-        font-size: 2.2rem;
+        font-size: 2rem; /* Reduzido para não "espremer" as palavras / Reduced for better flow */
+        line-height: 1.2;
     }
     .btn-neon {
         width: 100%;
+        padding: 12px 25px;
+        font-size: 0.95rem;
+    }
+    .benefit-card, .service-card, .agent-card, .feature-box {
+        padding: 20px !important; /* Mais espaço para conteúdo no mobile / More space for mobile content */
+    }
+    .section-title {
+        font-size: 1.8rem;
+    }
+    .ai-hero, .sites-hero {
+        padding-top: 100px !important;
+        padding-bottom: 40px !important;
+    }
+}
+
+@media (max-width: 360px) {
+    .navbar-brand {
+        font-size: 1.3rem !important; /* Ajuste para iPhone SE / Adjustment for tiny screens */
+        letter-spacing: -0.5px;
+    }
+    .hero-title {
+        font-size: 1.6rem !important;
+        word-break: break-word;
+    }
+    .container {
+        padding-left: 8px !important;
+        padding-right: 8px !important;
     }
 }
 
