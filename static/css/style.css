@@ -67,7 +67,6 @@ h1, h2, h3, h4, .navbar-brand {
     border: 2px solid var(--neon-cyan);
     box-shadow: 0 0 15px rgba(0, 243, 255, 0.4);
     transition: 0.3s;
-    margin-left: 10px; /* Alinhado mais perto do logo / Closer to logo */
 }
 
 .navbar-toggler:focus {
@@ -83,7 +82,7 @@ h1, h2, h3, h4, .navbar-brand {
 @media (max-width: 991.98px) {
     #mainNav .container {
         display: flex;
-        justify-content: flex-start !important; /* Alinhamento à esquerda / Left alignment */
+        justify-content: space-between !important; /* Espalhado pelas pontas / Full width alignment */
         align-items: center;
     }
 
@@ -412,8 +411,8 @@ h1, h2, h3, h4, .navbar-brand {
         font-size: 2.8rem;
     }
     .navbar-brand {
-        font-size: 1.4rem; /* Reduzido para caber bem no mobile / Reduced for mobile */
-        letter-spacing: 1px;
+        font-size: 1.7rem; /* Aumentado para melhor visibilidade / Increased for better visibility */
+        letter-spacing: 0.5px;
     }
 }
 
