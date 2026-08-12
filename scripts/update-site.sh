@@ -87,16 +87,18 @@ fi
 
 previous_commit="$deployed_commit"
 
-if [[ "$source_commit" != "$previous_commit" ]]; then
-    fail_before_update "checkout local diverge do commit registrado como implantado; intervenção manual necessária"
-fi
-
 stamp="$(date -u +%Y%m%dT%H%M%SZ)"
 backup_dir="$STATE_ROOT/$stamp"
 mkdir -p "$backup_dir"
 log_file="$backup_dir/update.log"
 
 previous_image="$(sudo -n docker inspect "$CONTAINER" --format '{{.Image}}' 2>/dev/null || true)"
+if [[ "$source_commit" != "$previous_commit" ]]; then
+    log_file="$backup_dir/preflight.log"
+    log "ERROR: checkout local diverge do commit registrado como implantado; intervenção manual necessária"
+    exit 1
+fi
+
 printf '%s\n' "$previous_commit" > "$backup_dir/previous_commit"
 printf '%s\n' "$source_commit" > "$backup_dir/source_commit_before_update"
 printf '%s\n' "$remote_commit" > "$backup_dir/target_commit"
