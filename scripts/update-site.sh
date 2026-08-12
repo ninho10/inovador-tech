@@ -93,9 +93,8 @@ mkdir -p "$backup_dir"
 log_file="$backup_dir/update.log"
 
 previous_image="$(sudo -n docker inspect "$CONTAINER" --format '{{.Image}}' 2>/dev/null || true)"
-if [[ "$source_commit" != "$previous_commit" ]]; then
-    log_file="$backup_dir/preflight.log"
-    log "ERROR: checkout local diverge do commit registrado como implantado; intervenção manual necessária"
+if ! git merge-base --is-ancestor "$previous_commit" "$source_commit"; then
+    log "ERROR: commit implantado não é ancestral do checkout local; intervenção manual necessária"
     exit 1
 fi
 
