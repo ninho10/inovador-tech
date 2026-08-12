@@ -71,6 +71,11 @@ if [[ -f "$DEPLOYED_COMMIT_FILE" ]]; then
     deployed_commit="$(tr -d '[:space:]' < "$DEPLOYED_COMMIT_FILE")"
 fi
 
+if [[ -z "$deployed_commit" ]]; then
+    deployed_commit="$source_commit"
+    printf '%s\n' "$deployed_commit" > "$DEPLOYED_COMMIT_FILE"
+fi
+
 if [[ -n "$deployed_commit" ]] && ! git cat-file -e "$deployed_commit^{commit}" 2>/dev/null; then
     fail_before_update "commit registrado como implantado não existe no clone local"
 fi
@@ -81,9 +86,6 @@ if [[ "$source_commit" == "$remote_commit" ]] && [[ "$deployed_commit" == "$remo
 fi
 
 previous_commit="$deployed_commit"
-if [[ -z "$previous_commit" ]]; then
-    fail_before_update "estado current_commit ausente; inicialização manual necessária antes do primeiro update"
-fi
 
 if [[ "$source_commit" != "$previous_commit" ]]; then
     fail_before_update "checkout local diverge do commit registrado como implantado; intervenção manual necessária"
