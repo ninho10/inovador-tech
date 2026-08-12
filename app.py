@@ -52,6 +52,53 @@ def sites():
     return render_template('sites.html')
 
 
+# Rota para o menu Nossos Serviços (Catálogo de 10 nichos de mercado)
+# Route for Our Services menu (Catalog of 10 market niches)
+@app.route('/nossos-servicos')
+def nossos_servicos():
+    """
+    Renderiza o catálogo de 10 produtos e nichos com acesso às demonstrações ao vivo.
+    """
+    return render_template('nossos_servicos.html')
+
+
+# Rota dinâmica para os sites demonstrativos dos 10 nichos
+# Dynamic route for 10 niche demonstration websites
+@app.route('/demo/<nicho>')
+def demo(nicho):
+    """
+    Renderiza a demonstração navegável do nicho selecionado.
+    """
+    valid_demos = {
+        'consultorio': 'Consultório (Site com Agendamento)',
+        'barbearia': 'Barbearia (Site com Agendamento)',
+        'restaurante': 'Restaurante (Site + Cardápio Online)',
+        'academia': 'Academia (Planos e Matrícula)',
+        'salao': 'Salão de Beleza (Serviços + Agendamento)',
+        'clinica': 'Clínica Estética (Serviços + Agendamento)',
+        'loja': 'Loja (Catálogo de Produtos)',
+        'imobiliaria': 'Imobiliária (Imóveis e Contato)',
+        'hotel': 'Hotel / Pousada (Quartos + Reservas)',
+        'oficina': 'Oficina (Serviços + Agendamento)',
+        'escola': 'Escola / Cursos Online',
+        'planilha': 'Sistema Financeiro (Planilha → Sistema Web)'
+    }
+    if nicho in valid_demos:
+        return render_template(f'demos/{nicho}.html', nicho=nicho, nicho_nome=valid_demos[nicho])
+    return render_template('nossos_servicos.html'), 404
+
+
+
+# Handler de erro 404 personalizado / Custom 404 error handler
+@app.errorhandler(404)
+def page_not_found(e):
+    """
+    Renderiza uma página 404 personalizada estilizada.
+    Renders a custom styled 404 error page.
+    """
+    return render_template('nossos_servicos.html'), 404
+
+
 # Inicia o servidor se o script for executado diretamente
 # Start the server if the script is run directly
 if __name__ == '__main__':

@@ -1,0 +1,276 @@
+/* 
+   Estilos compartilhados para os Sites Demonstrativos da Inovador Tech
+   Design Ultra Moderno, Alta Legibilidade, Neon Contrastante e Componentes Interativos
+   v2.0 — Sem botões Desktop/Mobile, com fotos de fundo
+*/
+
+:root {
+    --demo-bg: #050a1a;
+    --demo-topbar-bg: rgba(5, 10, 26, 0.96);
+    --demo-cyan: #00f3ff;
+    --demo-green: #00ff88;
+    --demo-orange: #ff9900;
+    --demo-purple: #a855f7;
+}
+
+/* OVERRIDE CRÍTICO DE LEGIBILIDADE PARA TODAS AS DEMOS */
+body.demo-page {
+    padding-top: 56px;
+    background-color: #070c18 !important;
+    color: #ffffff !important;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Sobrescreve text-muted do Bootstrap nas demos para garantir 100% de leitura */
+body.demo-page .text-muted {
+    color: rgba(255, 255, 255, 0.85) !important;
+    font-weight: 500 !important;
+}
+
+body.demo-page p {
+    color: rgba(255, 255, 255, 0.92) !important;
+    line-height: 1.65;
+}
+
+body.demo-page h1, 
+body.demo-page h2, 
+body.demo-page h3, 
+body.demo-page h4, 
+body.demo-page h5, 
+body.demo-page h6 {
+    color: #ffffff !important;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 700;
+}
+
+/* Card base ultra moderno com borda neon e glassmorphism */
+.demo-card-glow {
+    background: rgba(255, 255, 255, 0.04) !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    border-radius: 20px !important;
+    backdrop-filter: blur(15px);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+    overflow: hidden;
+}
+
+.demo-card-glow:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 15px 35px rgba(0, 243, 255, 0.25);
+    border-color: var(--demo-cyan) !important;
+    background: rgba(255, 255, 255, 0.07) !important;
+}
+
+/* Top bar fixa de controle da demonstração — SEM botões Desktop/Mobile */
+.demo-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 56px;
+    background: var(--demo-topbar-bg);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(0, 243, 255, 0.25);
+    z-index: 1050;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 1.25rem;
+    box-shadow: 0 4px 25px rgba(0, 0, 0, 0.8);
+}
+
+.demo-bar-brand {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+}
+
+.demo-bar-badge {
+    background: rgba(0, 243, 255, 0.15);
+    border: 1px solid var(--demo-cyan);
+    color: var(--demo-cyan);
+    font-size: 0.72rem;
+    padding: 3px 10px;
+    border-radius: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 700;
+    animation: pulse-badge 2.5s ease-in-out infinite;
+}
+
+@keyframes pulse-badge {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(0,243,255,0.4); }
+    50% { box-shadow: 0 0 0 6px rgba(0,243,255,0); }
+}
+
+.demo-controls {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.demo-cta-btn {
+    background: linear-gradient(45deg, var(--demo-green), var(--demo-cyan));
+    color: #050a1a !important;
+    font-weight: 800;
+    font-size: 0.85rem;
+    padding: 8px 20px;
+    border-radius: 20px;
+    text-decoration: none;
+    transition: 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    box-shadow: 0 0 15px rgba(0, 255, 136, 0.4);
+}
+
+.demo-cta-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 28px rgba(0, 255, 136, 0.75);
+}
+
+.demo-back-btn {
+    color: rgba(255, 255, 255, 0.9);
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 12px;
+    border-radius: 8px;
+    transition: 0.2s;
+    border: 1px solid transparent;
+}
+
+.demo-back-btn:hover {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(255,255,255,0.2);
+}
+
+/* Viewport wrapper — modo desktop apenas */
+.demo-viewport-wrapper {
+    width: 100%;
+    min-height: calc(100vh - 56px);
+}
+
+/* Hero com foto de fundo */
+.demo-hero-photo {
+    position: relative;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    overflow: hidden;
+}
+
+.demo-hero-photo::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom,
+        rgba(5, 10, 26, 0.75) 0%,
+        rgba(5, 10, 26, 0.5) 40%,
+        rgba(5, 10, 26, 0.85) 100%
+    );
+    z-index: 1;
+}
+
+.demo-hero-photo > * {
+    position: relative;
+    z-index: 2;
+}
+
+/* Toast de notificação interativa */
+.demo-toast {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    background: rgba(10, 18, 38, 0.98);
+    border: 2px solid var(--demo-cyan);
+    border-radius: 16px;
+    padding: 18px 22px;
+    color: #fff;
+    z-index: 9999;
+    box-shadow: 0 10px 35px rgba(0, 243, 255, 0.35);
+    backdrop-filter: blur(15px);
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    animation: slideUpToast 0.4s ease-out;
+    max-width: 420px;
+}
+
+@keyframes slideUpToast {
+    from { transform: translateY(100px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+.demo-toast-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 14px;
+    background: rgba(0, 243, 255, 0.2);
+    color: var(--demo-cyan);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    flex-shrink: 0;
+}
+
+/* Badges de estatística flutuantes */
+.stat-pill {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 30px;
+    padding: 8px 20px;
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: #ffffff;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    backdrop-filter: blur(10px);
+}
+
+/* Section spacing helpers */
+.demo-section {
+    padding: 80px 0;
+}
+
+.demo-section-alt {
+    padding: 80px 0;
+    background: rgba(0,0,0,0.2);
+}
+
+@media (max-width: 768px) {
+    .demo-bar {
+        padding: 0 0.75rem;
+    }
+    .demo-bar-badge {
+        display: none;
+    }
+    .demo-bar-brand span:last-child {
+        display: none;
+    }
+}
+
+/* Rodapé das páginas demo / Demo page footer */
+.demo-footer {
+    background: rgba(5, 10, 26, 0.98);
+    border-top: 1px solid rgba(0, 243, 255, 0.15);
+    padding: 30px 0;
+    text-align: center;
+    margin-top: 0;
+}
+
+.demo-footer a:hover {
+    opacity: 0.85;
+}

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MecaTech | Oficina Automotiva & Agendamento Online</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/demo.css') }}">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root { --orange: #f97316; --yellow: #eab308; --dark: #0a0600; }
+        body.demo-page { background-color: var(--dark) !important; }
+        .text-orange { color: var(--orange) !important; text-shadow: 0 0 25px rgba(249,115,22,0.4); }
+
+        .hero { min-height:100vh; display:flex; align-items:center; position:relative;
+            background-image:url('https://images.unsplash.com/photo-1632823469850-2f77dd9c7f93?w=1600&q=85&auto=format&fit=crop');
+            background-size:cover; background-position:center; padding:180px 0 100px; }
+        .hero::before { content:""; position:absolute; inset:0;
+            background:linear-gradient(135deg,rgba(10,6,0,0.93) 0%,rgba(10,6,0,0.55) 60%,rgba(10,6,0,0.88) 100%); }
+        .hero .container { position:relative; z-index:2; }
+
+        .page-title { font-family:'Outfit',sans-serif; font-weight:900; font-size:clamp(2.3rem,5vw,4rem); line-height:1.05; }
+        .btn-orange { background:linear-gradient(45deg,var(--orange),var(--yellow)); color:#000!important; font-weight:900; padding:14px 30px; border-radius:14px; border:none; transition:0.3s; box-shadow:0 0 20px rgba(249,115,22,0.4); }
+        .btn-orange:hover { transform:scale(1.04); box-shadow:0 0 35px rgba(249,115,22,0.7); }
+        .btn-outline-orange { border:2px solid var(--orange); color:var(--orange)!important; background:rgba(249,115,22,0.05); padding:12px 28px; border-radius:14px; font-weight:700; transition:0.3s; }
+        .btn-outline-orange:hover { background:var(--orange); color:#000!important; }
+
+        .serv-card { background:rgba(255,255,255,0.03); border:1px solid rgba(249,115,22,0.15); border-radius:20px; padding:28px; transition:0.35s; cursor:pointer; }
+        .serv-card:hover { border-color:var(--orange); transform:translateY(-6px); box-shadow:0 15px 40px rgba(249,115,22,0.2); }
+        .serv-icon { width:56px; height:56px; border-radius:14px; background:rgba(249,115,22,0.1); border:1px solid rgba(249,115,22,0.3); display:flex; align-items:center; justify-content:center; font-size:1.5rem; margin-bottom:16px; }
+
+        .tracker-box { background:rgba(249,115,22,0.05); border:1px solid rgba(249,115,22,0.25); border-radius:24px; padding:36px; }
+        .tracker-input { background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.2); color:#fff; border-radius:12px; padding:13px 16px; font-size:1rem; flex:1; }
+        .tracker-input:focus { outline:none; border-color:var(--orange); }
+
+        .status-timeline { list-style:none; padding:0; position:relative; }
+        .status-timeline::before { content:""; position:absolute; left:22px; top:10px; bottom:10px; width:2px; background:rgba(255,255,255,0.1); }
+        .status-step { display:flex; align-items:flex-start; gap:20px; padding-bottom:24px; position:relative; }
+        .status-dot { width:44px; height:44px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:1rem; flex-shrink:0; z-index:1; }
+        .status-dot.done { background:var(--orange); }
+        .status-dot.active { background:rgba(249,115,22,0.2); border:2px solid var(--orange); animation:pulse-dot 2s ease-in-out infinite; }
+        .status-dot.pending { background:rgba(255,255,255,0.05); border:2px solid rgba(255,255,255,0.15); }
+        @keyframes pulse-dot { 0%,100%{box-shadow:0 0 0 0 rgba(249,115,22,0.4)} 50%{box-shadow:0 0 0 10px rgba(249,115,22,0)} }
+
+        .sec { padding:90px 0; }
+        .sec-alt { padding:90px 0; background:rgba(249,115,22,0.025); }
+        .modal-content { background:#100800; border:1px solid rgba(249,115,22,0.25); border-radius:24px; }
+        .dark-input { background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.15); color:#fff; border-radius:12px; padding:13px 16px; width:100%; }
+        .dark-input:focus { outline:none; border-color:var(--orange); }
+    </style>
+</head>
+<body class="demo-page">
+    <div class="demo-bar">
+        <a href="/nossos-servicos" class="demo-back-btn"><i data-lucide="arrow-left"></i> Voltar</a>
+        <div class="demo-bar-brand"><span class="demo-bar-badge">🔴 DEMO AO VIVO</span><span>Oficina Automotiva — Serviços & Agendamento</span></div>
+        <div class="demo-controls">
+            <a href="https://wa.me/5521983225806?text=Quero+site+de+oficina+mecanica" target="_blank" class="demo-cta-btn">
+                <i data-lucide="message-circle"></i> Quero um Site Assim
+            </a>
+        </div>
+    </div>
+
+    <nav style="background:rgba(10,6,0,0.97);border-bottom:1px solid rgba(249,115,22,0.15);position:fixed;top:56px;width:100%;z-index:999;padding:14px 0;">
+        <div class="container d-flex align-items-center justify-content-between">
+            <a href="#" style="font-family:'Outfit',sans-serif;font-weight:900;font-size:1.4rem;text-decoration:none">🔧 <span class="text-orange">MECA</span><span class="text-white">TECH</span></a>
+            <div class="d-flex gap-3 align-items-center">
+                <a href="#servicos" class="text-white text-decoration-none d-none d-md-inline" style="opacity:0.8">Serviços</a>
+                <a href="#rastrear" class="text-white text-decoration-none d-none d-md-inline" style="opacity:0.8">Rastrear OS</a>
+                <button class="btn-orange btn border-0 btn-sm" data-bs-toggle="modal" data-bs-target="#agModal">🔧 Agendar Revisão</button>
+            </div>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="container">
+            <div class="col-lg-6">
+                <div class="d-flex flex-wrap gap-2 mb-4">
+                    <span class="stat-pill">🔧 +18.000 revisões realizadas</span>
+                    <span class="stat-pill">⭐ 4.9/5 · Google</span>
+                </div>
+                <h1 class="page-title text-white mb-4">SEU CARRO EM <span class="text-orange">BOAS MÃOS</span>,<br>ATENDIMENTO <span class="text-orange">AGENDADO</span></h1>
+                <p class="text-white mb-5" style="font-size:1.1rem;opacity:0.88;max-width:500px;line-height:1.7">Agende sua revisão online, acompanhe o status em tempo real e receba aprovação pelo WhatsApp antes de qualquer serviço.</p>
+                <div class="d-flex flex-wrap gap-3">
+                    <button class="btn-orange btn border-0 btn-lg" data-bs-toggle="modal" data-bs-target="#agModal">🔧 Agendar Agora</button>
+                    <a href="#rastrear" class="btn-outline-orange btn btn-lg">📍 Rastrear OS</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Serviços -->
+    <section class="sec" id="servicos">
+        <div class="container">
+            <h2 class="text-white text-center mb-5" style="font-size:2.2rem">Nossos <span class="text-orange">Serviços</span></h2>
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-4"><div class="serv-card" onclick="selectServ('Revisão Completa')"><div class="serv-icon">🔍</div><h5 class="text-white fw-700 mb-2">Revisão Completa</h5><p style="font-size:0.88rem;opacity:0.8;margin-bottom:12px">Motor, freios, suspensão, fluidos e 50 pontos de verificação.</p><span class="text-orange fw-700">A partir de R$ 180</span></div></div>
+                <div class="col-md-6 col-lg-4"><div class="serv-card" onclick="selectServ('Troca de Óleo')"><div class="serv-icon">🛢️</div><h5 class="text-white fw-700 mb-2">Troca de Óleo</h5><p style="font-size:0.88rem;opacity:0.8;margin-bottom:12px">Óleo sintético ou semissintético + filtro + diagnóstico grátis.</p><span class="text-orange fw-700">A partir de R$ 120</span></div></div>
+                <div class="col-md-6 col-lg-4"><div class="serv-card" onclick="selectServ('Alinhamento & Balanceamento')"><div class="serv-icon">🎯</div><h5 class="text-white fw-700 mb-2">Alinhamento & Balanceamento</h5><p style="font-size:0.88rem;opacity:0.8;margin-bottom:12px">Equipamento computadorizado 3D para máxima precisão.</p><span class="text-orange fw-700">R$ 80</span></div></div>
+                <div class="col-md-6 col-lg-4"><div class="serv-card" onclick="selectServ('Freios')"><div class="serv-icon">🛑</div><h5 class="text-white fw-700 mb-2">Sistema de Freios</h5><p style="font-size:0.88rem;opacity:0.8;margin-bottom:12px">Pastilhas, discos, fluido e verificação do ABS.</p><span class="text-orange fw-700">A partir de R$ 200</span></div></div>
+                <div class="col-md-6 col-lg-4"><div class="serv-card" onclick="selectServ('Ar Condicionado')"><div class="serv-icon">❄️</div><h5 class="text-white fw-700 mb-2">Ar Condicionado</h5><p style="font-size:0.88rem;opacity:0.8;margin-bottom:12px">Higienização, recarga de gás e troca de filtro de habitáculo.</p><span class="text-orange fw-700">R$ 150</span></div></div>
+                <div class="col-md-6 col-lg-4"><div class="serv-card" onclick="selectServ('Diagnóstico Eletrônico')"><div class="serv-icon">💻</div><h5 class="text-white fw-700 mb-2">Diagnóstico Eletrônico</h5><p style="font-size:0.88rem;opacity:0.8;margin-bottom:12px">Scanner OBD2 com relatório detalhado em PDF enviado por email.</p><span class="text-orange fw-700">R$ 60 (grátis na revisão)</span></div></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Rastreador de OS -->
+    <section class="sec-alt" id="rastrear">
+        <div class="container">
+            <div class="row align-items-center g-5">
+                <div class="col-lg-5">
+                    <h2 class="text-white mb-3" style="font-size:2.2rem">Rastreie sua <span class="text-orange">Ordem de Serviço</span></h2>
+                    <p style="opacity:0.8">Digite a placa do seu veículo e veja o status em tempo real, sem precisar ligar.</p>
+                </div>
+                <div class="col-lg-7">
+                    <div class="tracker-box">
+                        <div class="d-flex gap-3 mb-4">
+                            <input type="text" id="placaInput" class="tracker-input" placeholder="Digite a placa (ex: ABC-1234)" style="text-transform:uppercase">
+                            <button class="btn-orange btn border-0 px-4 fw-900" onclick="rastrearOS()">RASTREAR</button>
+                        </div>
+                        <div id="tracker-result" style="display:none">
+                            <div class="text-white fw-700 mb-4">🚗 <span id="veiculo-nome">Honda Civic 2023 — OS #44571</span></div>
+                            <ul class="status-timeline">
+                                <li class="status-step"><div class="status-dot done">✅</div><div><div class="text-white fw-700">Veículo Recebido</div><div style="font-size:0.82rem;opacity:0.6">Hoje às 08:30</div></div></li>
+                                <li class="status-step"><div class="status-dot done">✅</div><div><div class="text-white fw-700">Diagnóstico Eletrônico</div><div style="font-size:0.82rem;opacity:0.6">Hoje às 09:15</div></div></li>
+                                <li class="status-step"><div class="status-dot active">🔧</div><div><div class="text-orange fw-700">Em Manutenção ← EM ANDAMENTO</div><div style="font-size:0.82rem;opacity:0.6">Troca de óleo + pastilhas de freio</div></div></li>
+                                <li class="status-step"><div class="status-dot pending">🕐</div><div><div style="opacity:0.5" class="text-white fw-700">Vistoria Final</div><div style="font-size:0.82rem;opacity:0.4">Aguardando</div></div></li>
+                                <li class="status-step"><div class="status-dot pending">📲</div><div><div style="opacity:0.5" class="text-white fw-700">Pronto para Retirada</div><div style="font-size:0.82rem;opacity:0.4">Notificação via WhatsApp</div></div></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="demo-footer"><div class="container text-center"><div class="text-orange fw-900 mb-2" style="font-size:1.5rem;font-family:'Outfit',sans-serif">🔧 MECATECH</div><p style="opacity:0.5;font-size:0.85rem">© 2026 · Demo por Inovador Tech · <a href="https://wa.me/5521983225806" class="text-orange text-decoration-none">Solicitar este site</a></p></div></footer>
+
+    <div class="modal fade" id="agModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content p-4">
+                <div class="modal-header border-0 pb-0"><h5 class="modal-title text-white fw-800">🔧 Agendar Serviço</h5><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div>
+                <div class="modal-body">
+                    <form onsubmit="confirmAg(event)">
+                        <div class="mb-3"><input id="agNome" type="text" class="dark-input" placeholder="Nome" required></div>
+                        <div class="mb-3"><input type="tel" class="dark-input" placeholder="WhatsApp" required></div>
+                        <div class="mb-3"><input type="text" class="dark-input" placeholder="Placa do veículo" style="text-transform:uppercase" required></div>
+                        <div class="mb-3"><input type="text" class="dark-input" placeholder="Modelo e ano (ex: Onix 2022)" required></div>
+                        <div class="mb-3"><select id="agServ" class="dark-input"><option>Revisão Completa</option><option>Troca de Óleo</option><option>Alinhamento & Balanceamento</option><option>Sistema de Freios</option><option>Ar Condicionado</option><option>Diagnóstico Eletrônico</option></select></div>
+                        <div class="mb-4"><input type="date" class="dark-input" required></div>
+                        <button type="submit" class="btn-orange btn border-0 w-100 py-3 fw-900">CONFIRMAR AGENDAMENTO</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        lucide.createIcons();
+        function selectServ(nome) { document.getElementById('agServ').value = nome; new bootstrap.Modal(document.getElementById('agModal')).show(); }
+        function rastrearOS() {
+            const placa = document.getElementById('placaInput').value.trim();
+            if (!placa) { showToast('⚠️ Digite a placa do veículo.'); return; }
+            document.getElementById('veiculo-nome').textContent = `Veículo placa ${placa.toUpperCase()} — OS #44571`;
+            document.getElementById('tracker-result').style.display = 'block';
+            showToast(`🔍 OS encontrada para ${placa.toUpperCase()}! Veículo em manutenção — previsão 14:00h.`);
+        }
+        function confirmAg(e) { e.preventDefault(); const n = document.getElementById('agNome').value; bootstrap.Modal.getInstance(document.getElementById('agModal')).hide(); showToast(`✅ Agendamento confirmado para ${n}! Número da OS enviada no WhatsApp.`); }
+        function showToast(msg) { const t=document.createElement('div'); t.className='demo-toast'; t.innerHTML=`<div class="demo-toast-icon">🔧</div><div><strong class="text-white">MecaTech</strong><p class="mb-0 small text-white mt-1">${msg}</p></div>`; document.body.appendChild(t); setTimeout(()=>t.remove(),6000); }
+    </script>
+</body>
+</html>

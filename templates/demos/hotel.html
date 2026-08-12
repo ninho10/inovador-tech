@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vila das Estrelas | Hotel & Pousada — Reservas Online</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/demo.css') }}">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root { --gold: #d4a017; --cream: #f5e6c8; --dark: #08070a; }
+        body.demo-page { background-color: var(--dark) !important; }
+        .text-gold { color: var(--gold) !important; text-shadow: 0 0 20px rgba(212,160,23,0.4); }
+
+        .hero { min-height:100vh; display:flex; align-items:center; position:relative;
+            background-image:url('https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=1600&q=85&auto=format&fit=crop');
+            background-size:cover; background-position:center 40%; padding:180px 0 100px; }
+        .hero::before { content:""; position:absolute; inset:0;
+            background:linear-gradient(135deg,rgba(8,7,10,0.92) 0%,rgba(8,7,10,0.55) 60%,rgba(8,7,10,0.88) 100%); }
+        .hero .container { position:relative; z-index:2; }
+
+        .page-title { font-family:'Outfit',sans-serif; font-weight:900; font-size:clamp(2.2rem,4.5vw,3.8rem); line-height:1.05; }
+        .btn-gold { background:linear-gradient(45deg,#b8860b,var(--gold)); color:#fff!important; font-weight:900; padding:14px 30px; border-radius:14px; border:none; transition:0.3s; box-shadow:0 0 20px rgba(212,160,23,0.4); }
+        .btn-gold:hover { transform:scale(1.04); box-shadow:0 0 35px rgba(212,160,23,0.7); }
+        .btn-outline-gold { border:2px solid var(--gold); color:var(--gold)!important; background:rgba(212,160,23,0.05); padding:12px 28px; border-radius:14px; font-weight:700; transition:0.3s; }
+        .btn-outline-gold:hover { background:var(--gold); color:#fff!important; }
+
+        .booking-box { background:rgba(8,7,10,0.92); backdrop-filter:blur(20px); border:1px solid rgba(212,160,23,0.25); border-radius:20px; padding:28px; }
+        .booking-input { background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.2); color:#fff; border-radius:12px; padding:12px 16px; width:100%; font-size:0.95rem; }
+        .booking-input:focus { outline:none; border-color:var(--gold); }
+        .booking-input::placeholder { color:rgba(255,255,255,0.5); }
+
+        .suite-card { background:rgba(255,255,255,0.03); border:1px solid rgba(212,160,23,0.12); border-radius:22px; overflow:hidden; transition:0.35s; }
+        .suite-card:hover { border-color:var(--gold); transform:translateY(-6px); box-shadow:0 15px 40px rgba(212,160,23,0.2); }
+        .suite-img { height:240px; background-size:cover; background-position:center; position:relative; }
+        .suite-badge { position:absolute; top:12px; right:12px; background:rgba(8,7,10,0.9); border:1px solid var(--gold); color:var(--gold); font-size:0.72rem; font-weight:900; padding:4px 12px; border-radius:20px; }
+        .suite-price { color:var(--gold); font-weight:900; font-size:1.3rem; font-family:'Outfit',sans-serif; }
+        .suite-feat { background:rgba(255,255,255,0.05); border-radius:8px; padding:6px 12px; font-size:0.8rem; color:rgba(255,255,255,0.8); }
+
+        .sec { padding:90px 0; }
+        .sec-alt { padding:90px 0; background:rgba(212,160,23,0.025); }
+        .modal-content { background:#0d0b10; border:1px solid rgba(212,160,23,0.25); border-radius:24px; }
+        .dark-input { background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.15); color:#fff; border-radius:12px; padding:13px 16px; width:100%; }
+        .dark-input:focus { outline:none; border-color:var(--gold); }
+    </style>
+</head>
+<body class="demo-page">
+    <div class="demo-bar">
+        <a href="/nossos-servicos" class="demo-back-btn"><i data-lucide="arrow-left"></i> Voltar</a>
+        <div class="demo-bar-brand"><span class="demo-bar-badge">🔴 DEMO AO VIVO</span><span>Hotel & Pousada — Quartos & Reservas</span></div>
+        <div class="demo-controls">
+            <a href="https://wa.me/5521983225806?text=Quero+site+de+hotel+pousada" target="_blank" class="demo-cta-btn">
+                <i data-lucide="message-circle"></i> Quero um Site Assim
+            </a>
+        </div>
+    </div>
+
+    <nav style="background:rgba(8,7,10,0.97);border-bottom:1px solid rgba(212,160,23,0.15);position:fixed;top:56px;width:100%;z-index:999;padding:14px 0;">
+        <div class="container d-flex align-items-center justify-content-between">
+            <a href="#" style="font-family:'Outfit',sans-serif;font-weight:900;font-size:1.4rem;text-decoration:none">⭐ <span class="text-gold">VILA DAS</span><span class="text-white"> ESTRELAS</span></a>
+            <div class="d-flex gap-3 align-items-center">
+                <a href="#suites" class="text-white text-decoration-none d-none d-md-inline" style="opacity:0.8">Suítes</a>
+                <a href="#reserva" class="text-white text-decoration-none d-none d-md-inline" style="opacity:0.8">Reservar</a>
+                <button class="btn-gold btn border-0 btn-sm" data-bs-toggle="modal" data-bs-target="#reservaModal">🗓️ Reservar Agora</button>
+            </div>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="container">
+            <div class="col-lg-7">
+                <div class="d-flex flex-wrap gap-2 mb-4">
+                    <span class="stat-pill">⭐ 5 Estrelas · Tripadvisor</span>
+                    <span class="stat-pill">🏆 Melhor Pousada 2025</span>
+                </div>
+                <h1 class="page-title text-white mb-4">EXPERIÊNCIAS <span class="text-gold">INESQUECÍVEIS</span><br>NO LUGAR MAIS LINDO</h1>
+                <p class="text-white mb-6" style="font-size:1.1rem;opacity:0.88;max-width:560px;line-height:1.7">Vista para o mar, café da manhã gourmet, spa exclusivo e reserva online em instantes. Faça sua viagem dos sonhos realidade.</p>
+
+                <!-- Booking Widget -->
+                <div class="booking-box">
+                    <div class="row g-3 align-items-end">
+                        <div class="col-md-3">
+                            <label class="text-white mb-1 fw-600" style="font-size:0.82rem">Check-in</label>
+                            <input type="date" id="checkIn" class="booking-input" required>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="text-white mb-1 fw-600" style="font-size:0.82rem">Check-out</label>
+                            <input type="date" id="checkOut" class="booking-input" required>
+                        </div>
+                        <div class="col-md-2">
+                            <label class="text-white mb-1 fw-600" style="font-size:0.82rem">Hóspedes</label>
+                            <select class="booking-input"><option>1</option><option>2</option><option>3</option><option>4</option></select>
+                        </div>
+                        <div class="col-md-4">
+                            <button class="btn-gold btn border-0 w-100 py-3 fw-900" onclick="calcReserva()">🔍 Verificar Disponibilidade</button>
+                        </div>
+                    </div>
+                    <div id="calc-result" style="display:none;margin-top:16px;padding:16px;background:rgba(212,160,23,0.08);border:1px solid rgba(212,160,23,0.3);border-radius:12px" class="text-white"></div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="sec" id="suites">
+        <div class="container">
+            <h2 class="text-white text-center mb-5" style="font-size:2.2rem">Nossas <span class="text-gold">Suítes</span></h2>
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-4">
+                    <div class="suite-card">
+                        <div class="suite-img" style="background-image:url('https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=600&q=80&auto=format&fit=crop')"><span class="suite-badge">Vista Mar</span></div>
+                        <div class="p-4"><h5 class="text-white fw-700 mb-2">Suíte Standard</h5><div class="suite-price mb-3">R$ 450<span style="font-size:0.8rem;color:rgba(255,255,255,0.5)">/noite</span></div><div class="d-flex flex-wrap gap-2 mb-3"><span class="suite-feat">👥 2 pessoas</span><span class="suite-feat">🌊 Vista Jardim</span><span class="suite-feat">🛁 Banheiro luxo</span></div><button class="btn-gold btn border-0 w-100 btn-sm" onclick="reservarSuite('Standard', 450)">Reservar</button></div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="suite-card">
+                        <div class="suite-img" style="background-image:url('https://images.unsplash.com/photo-1578683010236-d716f9a3f461?w=600&q=80&auto=format&fit=crop')"><span class="suite-badge">🔥 Mais Escolhida</span></div>
+                        <div class="p-4"><h5 class="text-white fw-700 mb-2">Suíte Premium Mar</h5><div class="suite-price mb-3">R$ 750<span style="font-size:0.8rem;color:rgba(255,255,255,0.5)">/noite</span></div><div class="d-flex flex-wrap gap-2 mb-3"><span class="suite-feat">👥 2 pessoas</span><span class="suite-feat">🌊 Vista Mar</span><span class="suite-feat">🛁 Hidromassagem</span></div><button class="btn-gold btn border-0 w-100 btn-sm" onclick="reservarSuite('Premium Mar', 750)">Reservar</button></div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="suite-card">
+                        <div class="suite-img" style="background-image:url('https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=600&q=80&auto=format&fit=crop')"><span class="suite-badge" style="color:#00ff88;border-color:#00ff88">Exclusiva</span></div>
+                        <div class="p-4"><h5 class="text-white fw-700 mb-2">Suíte Master VIP</h5><div class="suite-price mb-3">R$ 1.400<span style="font-size:0.8rem;color:rgba(255,255,255,0.5)">/noite</span></div><div class="d-flex flex-wrap gap-2 mb-3"><span class="suite-feat">👥 4 pessoas</span><span class="suite-feat">🌊 Vista Panorâmica</span><span class="suite-feat">♾️ Piscina Privativa</span></div><button class="btn-gold btn border-0 w-100 btn-sm" onclick="reservarSuite('Master VIP', 1400)">Reservar</button></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Diferenciais -->
+    <section class="sec-alt">
+        <div class="container">
+            <h2 class="text-white text-center mb-5" style="font-size:2.2rem">Por que <span class="text-gold">Vila das Estrelas</span>?</h2>
+            <div class="row g-4 text-center">
+                <div class="col-md-3"><div style="font-size:2.5rem mb-2">🌅</div><h5 class="text-white fw-700 mt-3">Vista Espetacular</h5><p style="opacity:0.75;font-size:0.9rem">Localização privilegiada com vista panorâmica do oceano</p></div>
+                <div class="col-md-3"><div style="font-size:2.5rem mb-2">🍳</div><h5 class="text-white fw-700 mt-3">Café Gourmet</h5><p style="opacity:0.75;font-size:0.9rem">Café da manhã com frutas tropicais, tapioca e açaí</p></div>
+                <div class="col-md-3"><div style="font-size:2.5rem mb-2">💆</div><h5 class="text-white fw-700 mt-3">Spa Completo</h5><p style="opacity:0.75;font-size:0.9rem">Massagens, sauna, piscina aquecida e tratamentos faciais</p></div>
+                <div class="col-md-3"><div style="font-size:2.5rem mb-2">📱</div><h5 class="text-white fw-700 mt-3">Check-in Digital</h5><p style="opacity:0.75;font-size:0.9rem">Reserva e check-in 100% online, sem filas, sem espera</p></div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="demo-footer"><div class="container text-center"><div class="text-gold fw-900 mb-2" style="font-size:1.5rem;font-family:'Outfit',sans-serif">⭐ VILA DAS ESTRELAS</div><p style="opacity:0.5;font-size:0.85rem">© 2026 · Demo por Inovador Tech · <a href="https://wa.me/5521983225806" class="text-gold text-decoration-none">Solicitar este site</a></p></div></footer>
+
+    <div class="modal fade" id="reservaModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content p-4">
+                <div class="modal-header border-0 pb-0"><h5 class="modal-title text-white fw-800">🗓️ Fazer Reserva</h5><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div>
+                <div class="modal-body">
+                    <form onsubmit="confirmReserva(event)">
+                        <div class="mb-3"><input id="rvNome" type="text" class="dark-input" placeholder="Nome do hóspede" required></div>
+                        <div class="mb-3"><input type="tel" class="dark-input" placeholder="WhatsApp" required></div>
+                        <div class="mb-3"><select id="rvSuite" class="dark-input"><option>Suíte Standard – R$450/noite</option><option>Suíte Premium Mar – R$750/noite</option><option>Suíte Master VIP – R$1.400/noite</option></select></div>
+                        <div class="row g-3 mb-4"><div class="col-6"><input type="date" class="dark-input" placeholder="Check-in" required></div><div class="col-6"><input type="date" class="dark-input" placeholder="Check-out" required></div></div>
+                        <button type="submit" class="btn-gold btn border-0 w-100 py-3 fw-900">CONFIRMAR RESERVA</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        lucide.createIcons();
+        function calcReserva() {
+            const ci = document.getElementById('checkIn').value; const co = document.getElementById('checkOut').value;
+            if (!ci || !co) { showToast('⚠️ Selecione as datas de check-in e check-out.'); return; }
+            const days = Math.round((new Date(co) - new Date(ci)) / 86400000);
+            if (days <= 0) { showToast('⚠️ A data de check-out deve ser após o check-in.'); return; }
+            document.getElementById('calc-result').style.display = 'block';
+            document.getElementById('calc-result').innerHTML = `✅ <strong>${days} noite(s) disponível!</strong> — Suíte Premium: <strong>R$ ${days * 750}</strong> total. <button class="btn-gold btn border-0 btn-sm ms-3 py-1 px-3 fw-700" data-bs-toggle="modal" data-bs-target="#reservaModal">Reservar Agora</button>`;
+        }
+        function reservarSuite(nome, preco) { document.getElementById('rvSuite').value = `Suíte ${nome} – R$${preco}/noite`; new bootstrap.Modal(document.getElementById('reservaModal')).show(); }
+        function confirmReserva(e) { e.preventDefault(); const n = document.getElementById('rvNome').value; bootstrap.Modal.getInstance(document.getElementById('reservaModal')).hide(); showToast(`✅ Reserva confirmada para ${n}! Voucher enviado no WhatsApp. Bem-vindo!`); }
+        function showToast(msg) { const t=document.createElement('div'); t.className='demo-toast'; t.innerHTML=`<div class="demo-toast-icon">⭐</div><div><strong class="text-white">Vila das Estrelas</strong><p class="mb-0 small text-white mt-1">${msg}</p></div>`; document.body.appendChild(t); setTimeout(()=>t.remove(),6000); }
+    </script>
+</body>
+</html>

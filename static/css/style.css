@@ -25,6 +25,12 @@ body {
     cursor: none; /* Esconde o cursor padrão para o customizado / Hides default cursor */
 }
 
+/* Em touch devices, restaurar cursor padrão / On touch devices, restore default cursor */
+@media (hover: none) and (pointer: coarse) {
+    body { cursor: auto; }
+    #custom-cursor, #cursor-glow { display: none !important; }
+}
+
 html {
     overflow-x: hidden !important;
     width: 100%;
@@ -103,7 +109,6 @@ h1, h2, h3, h4, .navbar-brand {
     .navbar-collapse {
         margin-top: 15px;
         backdrop-filter: blur(25px);
-        margin-top: 15px;
         padding: 25px;
         border-radius: 25px;
         border: 1px solid rgba(0, 243, 255, 0.3);
@@ -511,8 +516,61 @@ h1, h2, h3, h4, .navbar-brand {
     }
 }
 
-
 /* Scroll Snap Adjustments */
 html {
     scroll-behavior: smooth;
+}
+
+/* ============================
+   CLASSES UTILITÁRIAS GLOBAIS
+   ============================ */
+
+/* Texto com opacidade / Glass text helper */
+.text-glass {
+    color: rgba(255, 255, 255, 0.82);
+}
+
+/* Fundo escuro profundo para seções / Deep dark section background */
+.bg-dark-deep {
+    background-color: var(--bg-deep);
+}
+
+/* Logo do rodapé / Footer logo */
+.footer-logo {
+    font-family: var(--primary-font);
+    font-size: 1.5rem;
+    font-weight: 900;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #ffffff;
+    margin-bottom: 0.5rem;
+}
+
+/* Card item de diferencial / Differential item card */
+.diff-item {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(0, 243, 255, 0.08);
+    border-radius: 20px;
+    padding: 30px 20px;
+    transition: 0.4s ease;
+    height: 100%;
+}
+
+.diff-item:hover {
+    border-color: rgba(0, 243, 255, 0.3);
+    background: rgba(0, 243, 255, 0.04);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 243, 255, 0.1);
+}
+
+.diff-item h4 {
+    color: #ffffff;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.diff-item p {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.95rem;
+    margin-bottom: 0;
 }

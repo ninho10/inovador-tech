@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ImóvelTech | Imobiliária Digital & Busca Avançada</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/demo.css') }}">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root { --emerald: #10b981; --teal: #14b8a6; --dark: #050e0a; }
+        body.demo-page { background-color: var(--dark) !important; }
+        .text-emerald { color: var(--emerald) !important; text-shadow: 0 0 20px rgba(16,185,129,0.4); }
+
+        .hero { min-height:100vh; display:flex; align-items:center; position:relative;
+            background-image:url('https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1600&q=85&auto=format&fit=crop');
+            background-size:cover; background-position:center; padding:180px 0 100px; }
+        .hero::before { content:""; position:absolute; inset:0;
+            background:linear-gradient(135deg,rgba(5,14,10,0.93) 0%,rgba(5,14,10,0.55) 60%,rgba(5,14,10,0.88) 100%); }
+        .hero .container { position:relative; z-index:2; }
+
+        .page-title { font-family:'Outfit',sans-serif; font-weight:900; font-size:clamp(2.2rem,4.5vw,3.8rem); line-height:1.05; }
+        .btn-emerald { background:linear-gradient(45deg,var(--emerald),var(--teal)); color:#fff!important; font-weight:900; padding:14px 30px; border-radius:14px; border:none; transition:0.3s; box-shadow:0 0 20px rgba(16,185,129,0.4); }
+        .btn-emerald:hover { transform:scale(1.04); box-shadow:0 0 35px rgba(16,185,129,0.7); }
+        .btn-outline-emerald { border:2px solid var(--emerald); color:var(--emerald)!important; background:rgba(16,185,129,0.05); padding:12px 28px; border-radius:14px; font-weight:700; transition:0.3s; }
+        .btn-outline-emerald:hover { background:var(--emerald); color:#fff!important; }
+
+        .search-form { background:rgba(5,14,10,0.92); backdrop-filter:blur(20px); border:1px solid rgba(16,185,129,0.25); border-radius:20px; padding:28px; }
+        .search-input { background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.15); color:#fff; border-radius:12px; padding:13px 16px; width:100%; font-size:0.95rem; }
+        .search-input:focus { outline:none; border-color:var(--emerald); }
+        .search-input::placeholder { color:rgba(255,255,255,0.4); }
+
+        .imovel-card { background:rgba(255,255,255,0.03); border:1px solid rgba(16,185,129,0.12); border-radius:22px; overflow:hidden; transition:0.35s; }
+        .imovel-card:hover { border-color:var(--emerald); transform:translateY(-6px); box-shadow:0 15px 40px rgba(16,185,129,0.2); }
+        .imovel-img { height:220px; background-size:cover; background-position:center; position:relative; }
+        .imovel-badge { position:absolute; top:12px; left:12px; background:var(--emerald); color:#fff; font-size:0.72rem; font-weight:900; padding:4px 12px; border-radius:20px; }
+        .imovel-price { color:var(--emerald); font-weight:900; font-size:1.3rem; font-family:'Outfit',sans-serif; }
+        .imovel-feature { background:rgba(255,255,255,0.05); border-radius:8px; padding:6px 12px; font-size:0.8rem; color:rgba(255,255,255,0.8); }
+
+        .sec { padding:90px 0; }
+        .sec-alt { padding:90px 0; background:rgba(16,185,129,0.025); }
+        .modal-content { background:#040e08; border:1px solid rgba(16,185,129,0.25); border-radius:24px; }
+        .dark-input { background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.15); color:#fff; border-radius:12px; padding:13px 16px; width:100%; }
+        .dark-input:focus { outline:none; border-color:var(--emerald); }
+    </style>
+</head>
+<body class="demo-page">
+    <div class="demo-bar">
+        <a href="/nossos-servicos" class="demo-back-btn"><i data-lucide="arrow-left"></i> Voltar</a>
+        <div class="demo-bar-brand"><span class="demo-bar-badge">🔴 DEMO AO VIVO</span><span>Imobiliária — Imóveis & Contato</span></div>
+        <div class="demo-controls">
+            <a href="https://wa.me/5521983225806?text=Quero+site+de+imobiliaria" target="_blank" class="demo-cta-btn">
+                <i data-lucide="message-circle"></i> Quero um Site Assim
+            </a>
+        </div>
+    </div>
+
+    <nav style="background:rgba(5,14,10,0.97);border-bottom:1px solid rgba(16,185,129,0.15);position:fixed;top:56px;width:100%;z-index:999;padding:14px 0;">
+        <div class="container d-flex align-items-center justify-content-between">
+            <a href="#" style="font-family:'Outfit',sans-serif;font-weight:900;font-size:1.4rem;text-decoration:none">🏠 <span class="text-emerald">IMÓVEL</span><span class="text-white">TECH</span></a>
+            <div class="d-flex gap-3 align-items-center">
+                <a href="#imoveis" class="text-white text-decoration-none d-none d-md-inline" style="opacity:0.8">Imóveis</a>
+                <a href="#busca" class="text-white text-decoration-none d-none d-md-inline" style="opacity:0.8">Busca Avançada</a>
+                <button class="btn-emerald btn border-0 btn-sm" data-bs-toggle="modal" data-bs-target="#contatoModal">📞 Falar com Corretor</button>
+            </div>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="container">
+            <div class="col-lg-6">
+                <div class="d-flex flex-wrap gap-2 mb-4">
+                    <span class="stat-pill">🏠 +2.400 imóveis disponíveis</span>
+                    <span class="stat-pill">⭐ Creci 123456-J</span>
+                </div>
+                <h1 class="page-title text-white mb-4">ENCONTRE SEU <span class="text-emerald">LAR IDEAL</span><br>AQUI E AGORA</h1>
+                <p class="text-white mb-5" style="font-size:1.1rem;opacity:0.88;max-width:500px;line-height:1.7">Busca inteligente com filtros avançados, tour virtual e agendamento de visita em segundos.</p>
+                <div class="d-flex flex-wrap gap-3">
+                    <a href="#busca" class="btn-emerald btn border-0 btn-lg">🔍 Buscar Imóveis</a>
+                    <button class="btn-outline-emerald btn btn-lg" data-bs-toggle="modal" data-bs-target="#contatoModal">Falar com Corretor</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Busca Avançada -->
+    <section class="sec" id="busca">
+        <div class="container">
+            <h2 class="text-white text-center mb-5" style="font-size:2.2rem">Busca <span class="text-emerald">Inteligente</span></h2>
+            <div class="search-form">
+                <div class="row g-3">
+                    <div class="col-md-3">
+                        <label class="text-white mb-2 fw-600" style="font-size:0.85rem">Tipo de negócio</label>
+                        <select class="search-input"><option>Comprar</option><option>Alugar</option></select>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="text-white mb-2 fw-600" style="font-size:0.85rem">Tipo de imóvel</label>
+                        <select class="search-input" id="tipoImovel"><option>Todos</option><option>Apartamento</option><option>Casa</option><option>Cobertura</option><option>Comercial</option></select>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="text-white mb-2 fw-600" style="font-size:0.85rem">Bairro / Cidade</label>
+                        <input type="text" class="search-input" placeholder="Ex: Copacabana, Barra...">
+                    </div>
+                    <div class="col-md-3">
+                        <label class="text-white mb-2 fw-600" style="font-size:0.85rem">Preço máximo</label>
+                        <select class="search-input"><option>Sem limite</option><option>Até R$ 500k</option><option>Até R$ 1M</option><option>Até R$ 2M</option><option>Acima de R$ 2M</option></select>
+                    </div>
+                </div>
+                <div class="row g-3 mt-1">
+                    <div class="col-md-3">
+                        <select class="search-input"><option>Quartos: Todos</option><option>1 quarto</option><option>2 quartos</option><option>3 quartos</option><option>4+</option></select>
+                    </div>
+                    <div class="col-md-3">
+                        <select class="search-input"><option>Garagem: Todos</option><option>Sem garagem</option><option>1 vaga</option><option>2 vagas</option><option>3+</option></select>
+                    </div>
+                    <div class="col-md-6">
+                        <button class="btn-emerald btn border-0 w-100 py-3 fw-900" onclick="buscarImoveis()">🔍 BUSCAR IMÓVEIS</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Imóveis -->
+    <section class="sec-alt" id="imoveis">
+        <div class="container">
+            <h2 class="text-white text-center mb-5" style="font-size:2.2rem">Imóveis em <span class="text-emerald">Destaque</span></h2>
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-4">
+                    <div class="imovel-card">
+                        <div class="imovel-img" style="background-image:url('https://images.unsplash.com/photo-1560185127-6a8e3bec72c4?w=500&q=80&auto=format&fit=crop')"><span class="imovel-badge">VENDA</span></div>
+                        <div class="p-4"><h5 class="text-white fw-700 mb-2">Apartamento Copacabana</h5><div class="imovel-price mb-3">R$ 1.200.000</div><div class="d-flex flex-wrap gap-2 mb-3"><span class="imovel-feature">🛏️ 3 quartos</span><span class="imovel-feature">🚗 2 vagas</span><span class="imovel-feature">📐 120m²</span></div><button class="btn-emerald btn border-0 w-100 btn-sm" onclick="agendarVisita('Apto Copacabana')">Agendar Visita</button></div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="imovel-card">
+                        <div class="imovel-img" style="background-image:url('https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=500&q=80&auto=format&fit=crop')"><span class="imovel-badge">VENDA</span></div>
+                        <div class="p-4"><h5 class="text-white fw-700 mb-2">Casa na Barra da Tijuca</h5><div class="imovel-price mb-3">R$ 2.850.000</div><div class="d-flex flex-wrap gap-2 mb-3"><span class="imovel-feature">🛏️ 5 quartos</span><span class="imovel-feature">🚗 4 vagas</span><span class="imovel-feature">📐 380m²</span></div><button class="btn-emerald btn border-0 w-100 btn-sm" onclick="agendarVisita('Casa Barra')">Agendar Visita</button></div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="imovel-card">
+                        <div class="imovel-img" style="background-image:url('https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=500&q=80&auto=format&fit=crop')"><span class="imovel-badge" style="background:#f59e0b">ALUGUEL</span></div>
+                        <div class="p-4"><h5 class="text-white fw-700 mb-2">Cobertura Ipanema</h5><div class="imovel-price mb-3">R$ 18.000<span style="font-size:0.8rem;color:rgba(255,255,255,0.5)">/mês</span></div><div class="d-flex flex-wrap gap-2 mb-3"><span class="imovel-feature">🛏️ 4 quartos</span><span class="imovel-feature">🚗 3 vagas</span><span class="imovel-feature">📐 280m²</span></div><button class="btn-emerald btn border-0 w-100 btn-sm" onclick="agendarVisita('Cobertura Ipanema')">Agendar Visita</button></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="demo-footer"><div class="container text-center"><div class="text-emerald fw-900 mb-2" style="font-size:1.5rem;font-family:'Outfit',sans-serif">🏠 IMÓVELTECH</div><p style="opacity:0.5;font-size:0.85rem">© 2026 · Demo por Inovador Tech · <a href="https://wa.me/5521983225806" class="text-emerald text-decoration-none">Solicitar este site</a></p></div></footer>
+
+    <div class="modal fade" id="contatoModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content p-4">
+                <div class="modal-header border-0 pb-0"><h5 class="modal-title text-white fw-800">📞 Falar com Corretor</h5><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div>
+                <div class="modal-body">
+                    <form onsubmit="confirmContato(event)">
+                        <div class="mb-3"><input id="ctNome" type="text" class="dark-input" placeholder="Nome" required></div>
+                        <div class="mb-3"><input type="tel" class="dark-input" placeholder="WhatsApp" required></div>
+                        <div class="mb-3"><select id="ctInteresse" class="dark-input"><option>Quero comprar um imóvel</option><option>Quero alugar um imóvel</option><option>Quero vender meu imóvel</option><option>Avaliação do meu imóvel</option></select></div>
+                        <div class="mb-4"><textarea class="dark-input" rows="3" placeholder="Descreva o que está procurando..."></textarea></div>
+                        <button type="submit" class="btn-emerald btn border-0 w-100 py-3 fw-900">ENVIAR MENSAGEM</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        lucide.createIcons();
+        function buscarImoveis() { showToast('🔍 Busca realizada! Exibindo 47 imóveis que correspondem aos seus filtros.'); }
+        function agendarVisita(nome) { showToast(`📅 Visita agendada para "${nome}"! Um corretor entrará em contato no WhatsApp.`); }
+        function confirmContato(e) { e.preventDefault(); bootstrap.Modal.getInstance(document.getElementById('contatoModal')).hide(); showToast(`✅ Mensagem enviada! Um corretor especializado entrará em contato em até 2h.`); }
+        function showToast(msg) { const t=document.createElement('div'); t.className='demo-toast'; t.innerHTML=`<div class="demo-toast-icon">🏠</div><div><strong class="text-white">ImóvelTech</strong><p class="mb-0 small text-white mt-1">${msg}</p></div>`; document.body.appendChild(t); setTimeout(()=>t.remove(),6000); }
+    </script>
+</body>
+</html>

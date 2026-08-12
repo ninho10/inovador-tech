@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bella Glamour | Salão de Beleza & Agendamento</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/demo.css') }}">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root { --rose: #f43f5e; --pink: #ec4899; --dark: #0d060a; }
+        body.demo-page { background-color: var(--dark) !important; }
+        .text-rose { color: var(--rose) !important; text-shadow: 0 0 25px rgba(244,63,94,0.4); }
+        .text-pink { color: var(--pink) !important; }
+
+        .hero { min-height:100vh; display:flex; align-items:center; position:relative;
+            background-image:url('https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=1600&q=85&auto=format&fit=crop');
+            background-size:cover; background-position:center 40%; padding:180px 0 100px; }
+        .hero::before { content:""; position:absolute; inset:0;
+            background:linear-gradient(135deg,rgba(13,6,10,0.92) 0%,rgba(13,6,10,0.55) 60%,rgba(13,6,10,0.88) 100%); }
+        .hero .container { position:relative; z-index:2; }
+
+        .page-title { font-family:'Outfit',sans-serif; font-weight:900; font-size:clamp(2.4rem,5vw,4.2rem); line-height:1.05; }
+        .btn-rose { background:linear-gradient(45deg,var(--rose),var(--pink)); color:#fff!important; font-weight:900; padding:14px 30px; border-radius:14px; border:none; transition:0.3s; box-shadow:0 0 20px rgba(244,63,94,0.4); }
+        .btn-rose:hover { transform:scale(1.04); box-shadow:0 0 35px rgba(244,63,94,0.7); }
+        .btn-outline-rose { border:2px solid var(--rose); color:var(--rose)!important; background:rgba(244,63,94,0.05); padding:12px 28px; border-radius:14px; font-weight:700; transition:0.3s; }
+        .btn-outline-rose:hover { background:var(--rose); color:#fff!important; }
+
+        .serv-card { background:rgba(255,255,255,0.03); border:1px solid rgba(244,63,94,0.15); border-radius:22px; overflow:hidden; transition:0.35s; cursor:pointer; }
+        .serv-card:hover { border-color:var(--rose); transform:translateY(-6px); box-shadow:0 15px 40px rgba(244,63,94,0.2); }
+        .serv-img { height:200px; background-size:cover; background-position:center; }
+        .serv-body { padding:20px; }
+
+        .prof-card { background:rgba(255,255,255,0.03); border:1px solid rgba(244,63,94,0.15); border-radius:22px; padding:28px; text-align:center; transition:0.35s; }
+        .prof-card:hover { border-color:var(--rose); box-shadow:0 12px 35px rgba(244,63,94,0.2); }
+        .prof-avatar { width:90px; height:90px; border-radius:50%; border:3px solid var(--rose); margin:0 auto 16px; font-size:2.5rem; display:flex; align-items:center; justify-content:center; background:rgba(244,63,94,0.08); }
+
+        .time-slot { background:rgba(255,255,255,0.04); border:1px solid rgba(244,63,94,0.2); border-radius:10px; padding:10px 14px; text-align:center; cursor:pointer; transition:0.25s; font-size:0.9rem; color:#fff; }
+        .time-slot:hover { background:var(--rose); color:#fff; font-weight:700; border-color:var(--rose); }
+
+        .sec { padding:90px 0; }
+        .sec-alt { padding:90px 0; background:rgba(244,63,94,0.025); }
+        .modal-content { background:#120008; border:1px solid rgba(244,63,94,0.25); border-radius:24px; }
+        .dark-input { background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.15); color:#fff; border-radius:12px; padding:13px 16px; width:100%; }
+        .dark-input:focus { outline:none; border-color:var(--rose); }
+    </style>
+</head>
+<body class="demo-page">
+
+    <div class="demo-bar">
+        <a href="/nossos-servicos" class="demo-back-btn"><i data-lucide="arrow-left"></i> Voltar</a>
+        <div class="demo-bar-brand"><span class="demo-bar-badge">🔴 DEMO AO VIVO</span><span>Salão de Beleza — Serviços & Agendamento</span></div>
+        <div class="demo-controls">
+            <a href="https://wa.me/5521983225806?text=Quero+um+site+de+salao+de+beleza" target="_blank" class="demo-cta-btn">
+                <i data-lucide="message-circle"></i> Quero um Site Assim
+            </a>
+        </div>
+    </div>
+
+    <nav style="background:rgba(13,6,10,0.97);border-bottom:1px solid rgba(244,63,94,0.15);position:fixed;top:56px;width:100%;z-index:999;padding:14px 0;">
+        <div class="container d-flex align-items-center justify-content-between">
+            <a href="#" style="font-family:'Outfit',sans-serif;font-weight:900;font-size:1.4rem;text-decoration:none">
+                💄 <span class="text-rose">BELLA</span><span class="text-white"> GLAMOUR</span>
+            </a>
+            <div class="d-flex gap-3 align-items-center">
+                <a href="#servicos" class="text-white text-decoration-none d-none d-md-inline" style="opacity:0.8">Serviços</a>
+                <a href="#profissionais" class="text-white text-decoration-none d-none d-md-inline" style="opacity:0.8">Equipe</a>
+                <button class="btn-rose btn border-0 btn-sm" data-bs-toggle="modal" data-bs-target="#agModal">💅 Agendar</button>
+            </div>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="container">
+            <div class="col-lg-6">
+                <div class="d-flex flex-wrap gap-2 mb-4">
+                    <span class="stat-pill">💄 +8.500 clientes atendidas</span>
+                    <span class="stat-pill">⭐ 4.97 · Nota Google</span>
+                </div>
+                <h1 class="page-title text-white mb-4">
+                    BELEZA QUE <span class="text-rose">TRANSFORMA</span>,<br>ESTILO QUE <span class="text-rose">ENCANTA</span>
+                </h1>
+                <p class="text-white mb-5" style="font-size:1.1rem;opacity:0.88;max-width:500px;line-height:1.7">
+                    Do corte ao colorido, do alongamento ao penteado de festa — tudo agendado em segundos, com confirmação instantânea no WhatsApp.
+                </p>
+                <div class="d-flex flex-wrap gap-3">
+                    <button class="btn-rose btn border-0 btn-lg" data-bs-toggle="modal" data-bs-target="#agModal">💅 Agendar Agora</button>
+                    <a href="#servicos" class="btn-outline-rose btn btn-lg">Ver Serviços</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Serviços -->
+    <section class="sec" id="servicos">
+        <div class="container">
+            <h2 class="text-white text-center mb-2" style="font-size:2.2rem">Nossos <span class="text-rose">Serviços</span></h2>
+            <p class="text-center mb-5" style="opacity:0.7">Clique no serviço para agendar instantaneamente.</p>
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-4">
+                    <div class="serv-card" onclick="selectService('Corte Feminino', 80)">
+                        <div class="serv-img" style="background-image:url('https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=500&q=80&auto=format&fit=crop')"></div>
+                        <div class="serv-body">
+                            <h5 class="text-white fw-700 mb-1">Corte Feminino</h5>
+                            <p style="font-size:0.85rem;opacity:0.75;margin-bottom:12px">Corte personalizado com lavagem e escovação incluída</p>
+                            <div class="d-flex justify-content-between"><span class="text-rose fw-900">R$ 80</span><span style="color:#00ff88;font-size:0.8rem;font-weight:700">+ Agendar</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="serv-card" onclick="selectService('Coloração Completa', 200)">
+                        <div class="serv-img" style="background-image:url('https://images.unsplash.com/photo-1560869713-7d0a29430803?w=500&q=80&auto=format&fit=crop')"></div>
+                        <div class="serv-body">
+                            <h5 class="text-white fw-700 mb-1">Coloração Completa</h5>
+                            <p style="font-size:0.85rem;opacity:0.75;margin-bottom:12px">Coloração profissional L'Oréal com máscara hidratante</p>
+                            <div class="d-flex justify-content-between"><span class="text-rose fw-900">R$ 200+</span><span style="color:#00ff88;font-size:0.8rem;font-weight:700">+ Agendar</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="serv-card" onclick="selectService('Progressiva Premium', 350)">
+                        <div class="serv-img" style="background-image:url('https://images.unsplash.com/photo-1527799820374-87991a7a11a5?w=500&q=80&auto=format&fit=crop')"></div>
+                        <div class="serv-body">
+                            <h5 class="text-white fw-700 mb-1">Progressiva Premium</h5>
+                            <p style="font-size:0.85rem;opacity:0.75;margin-bottom:12px">Alisamento com queratina de alta fixação e brilho intenso</p>
+                            <div class="d-flex justify-content-between"><span class="text-rose fw-900">R$ 350+</span><span style="color:#00ff88;font-size:0.8rem;font-weight:700">+ Agendar</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="serv-card" onclick="selectService('Manicure + Pedicure', 75)">
+                        <div class="serv-img" style="background-image:url('https://images.unsplash.com/photo-1604654894610-df63bc536371?w=500&q=80&auto=format&fit=crop')"></div>
+                        <div class="serv-body">
+                            <h5 class="text-white fw-700 mb-1">Manicure + Pedicure</h5>
+                            <p style="font-size:0.85rem;opacity:0.75;margin-bottom:12px">Combo completo com esmaltação em gel e hidratação</p>
+                            <div class="d-flex justify-content-between"><span class="text-rose fw-900">R$ 75</span><span style="color:#00ff88;font-size:0.8rem;font-weight:700">+ Agendar</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="serv-card" onclick="selectService('Maquiagem de Festa', 280)">
+                        <div class="serv-img" style="background-image:url('https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?w=500&q=80&auto=format&fit=crop')"></div>
+                        <div class="serv-body">
+                            <h5 class="text-white fw-700 mb-1">Maquiagem de Festa</h5>
+                            <p style="font-size:0.85rem;opacity:0.75;margin-bottom:12px">Make artística com produtos MAC e NYX profissional</p>
+                            <div class="d-flex justify-content-between"><span class="text-rose fw-900">R$ 280</span><span style="color:#00ff88;font-size:0.8rem;font-weight:700">+ Agendar</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="serv-card" onclick="selectService('Pacote Noiva', 800)">
+                        <div class="serv-img" style="background-image:url('https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=500&q=80&auto=format&fit=crop')"></div>
+                        <div class="serv-body">
+                            <h5 class="text-white fw-700 mb-1">Pacote Noiva</h5>
+                            <p style="font-size:0.85rem;opacity:0.75;margin-bottom:12px">Penteado + maquiagem + manicure + teste incluso</p>
+                            <div class="d-flex justify-content-between"><span class="text-rose fw-900">R$ 800+</span><span style="color:#00ff88;font-size:0.8rem;font-weight:700">+ Agendar</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Equipe -->
+    <section class="sec-alt" id="profissionais">
+        <div class="container">
+            <h2 class="text-white text-center mb-5" style="font-size:2.2rem">Nossa <span class="text-rose">Equipe</span></h2>
+            <div class="row g-4 justify-content-center">
+                <div class="col-md-4 col-lg-3">
+                    <div class="prof-card">
+                        <div class="prof-avatar">👩🏻‍🦱</div>
+                        <h5 class="text-white fw-800 mb-1">Fernanda Lima</h5>
+                        <div class="text-rose fw-700 mb-2" style="font-size:0.85rem">⭐ 4.99 · Coloração & Corte</div>
+                        <p style="font-size:0.85rem;opacity:0.75;margin-bottom:16px">12 anos. Especialista em técnicas de coloração e babylights.</p>
+                        <button class="btn-rose btn border-0 w-100 btn-sm" onclick="selectProf('Fernanda')">Agendar com Fernanda</button>
+                    </div>
+                </div>
+                <div class="col-md-4 col-lg-3">
+                    <div class="prof-card">
+                        <div class="prof-avatar">👩🏽‍🦰</div>
+                        <h5 class="text-white fw-800 mb-1">Juliana Rocha</h5>
+                        <div class="text-rose fw-700 mb-2" style="font-size:0.85rem">⭐ 4.98 · Make & Penteados</div>
+                        <p style="font-size:0.85rem;opacity:0.75;margin-bottom:16px">Artista de maquiagem referência em noivas e debutantes.</p>
+                        <button class="btn-rose btn border-0 w-100 btn-sm" onclick="selectProf('Juliana')">Agendar com Juliana</button>
+                    </div>
+                </div>
+                <div class="col-md-4 col-lg-3">
+                    <div class="prof-card">
+                        <div class="prof-avatar">👩🏿‍🦳</div>
+                        <h5 class="text-white fw-800 mb-1">Patricia Souza</h5>
+                        <div class="text-rose fw-700 mb-2" style="font-size:0.85rem">⭐ 4.97 · Química & Tratamentos</div>
+                        <p style="font-size:0.85rem;opacity:0.75;margin-bottom:16px">Especialista em progressivas, relaxamentos e cronogramas.</p>
+                        <button class="btn-rose btn border-0 w-100 btn-sm" onclick="selectProf('Patricia')">Agendar com Patricia</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Horários -->
+    <section class="sec">
+        <div class="container">
+            <div class="row g-5 align-items-center">
+                <div class="col-lg-5">
+                    <h2 class="text-white mb-3" style="font-size:2.2rem">Horários <span class="text-rose">disponíveis</span></h2>
+                    <p style="opacity:0.8">Selecione o melhor horário para você. Confirmação instantânea!</p>
+                </div>
+                <div class="col-lg-7">
+                    <div class="row g-3">
+                        <div class="col-4"><div class="time-slot" onclick="bookSlot('09:00')">09:00</div></div>
+                        <div class="col-4"><div class="time-slot" onclick="bookSlot('10:00')">10:00</div></div>
+                        <div class="col-4"><div class="time-slot" onclick="bookSlot('11:00')">11:00</div></div>
+                        <div class="col-4"><div class="time-slot" onclick="bookSlot('13:30')">13:30</div></div>
+                        <div class="col-4"><div class="time-slot" onclick="bookSlot('14:30')">14:30</div></div>
+                        <div class="col-4"><div class="time-slot" onclick="bookSlot('15:30')">15:30</div></div>
+                        <div class="col-4"><div class="time-slot" onclick="bookSlot('16:30')">16:30</div></div>
+                        <div class="col-4"><div class="time-slot" onclick="bookSlot('17:30')">17:30</div></div>
+                        <div class="col-4"><div class="time-slot" onclick="bookSlot('18:30')">18:30</div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="demo-footer">
+        <div class="container text-center">
+            <div class="text-rose fw-900 mb-2" style="font-size:1.5rem;font-family:'Outfit',sans-serif">💄 BELLA GLAMOUR</div>
+            <p style="opacity:0.5;font-size:0.85rem">© 2026 · Demo por Inovador Tech · <a href="https://wa.me/5521983225806" class="text-rose text-decoration-none">Solicitar este site</a></p>
+        </div>
+    </footer>
+
+    <div class="modal fade" id="agModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content p-4">
+                <div class="modal-header border-0 pb-0"><h5 class="modal-title text-white fw-800">💅 Agendar Serviço</h5><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div>
+                <div class="modal-body">
+                    <form onsubmit="confirmAg(event)">
+                        <div class="mb-3"><input id="agNome" type="text" class="dark-input" placeholder="Nome" required></div>
+                        <div class="mb-3"><input type="tel" class="dark-input" placeholder="WhatsApp" required></div>
+                        <div class="mb-3"><select id="agServ" class="dark-input"><option>Corte Feminino – R$80</option><option>Coloração Completa – R$200+</option><option>Progressiva Premium – R$350+</option><option>Manicure + Pedicure – R$75</option><option>Maquiagem de Festa – R$280</option><option>Pacote Noiva – R$800+</option></select></div>
+                        <div class="mb-3"><select id="agProf" class="dark-input"><option>Fernanda Lima</option><option>Juliana Rocha</option><option>Patricia Souza</option></select></div>
+                        <div class="mb-4"><input type="date" class="dark-input" required></div>
+                        <button type="submit" class="btn-rose btn border-0 w-100 py-3 fw-900">CONFIRMAR AGENDAMENTO</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        lucide.createIcons();
+        function selectService(nome, preco) { document.getElementById('agServ').value = `${nome} – R$${preco}`; new bootstrap.Modal(document.getElementById('agModal')).show(); }
+        function selectProf(nome) { document.getElementById('agProf').value = nome === 'Fernanda' ? 'Fernanda Lima' : nome === 'Juliana' ? 'Juliana Rocha' : 'Patricia Souza'; new bootstrap.Modal(document.getElementById('agModal')).show(); }
+        function bookSlot(h) { showToast(`✅ Horário ${h} reservado! Complete o agendamento e receba confirmação no WhatsApp.`); }
+        function confirmAg(e) { e.preventDefault(); const n = document.getElementById('agNome').value; bootstrap.Modal.getInstance(document.getElementById('agModal')).hide(); showToast(`💄 Agendamento confirmado para ${n}! Até logo!`); }
+        function showToast(msg) { const t = document.createElement('div'); t.className = 'demo-toast'; t.innerHTML = `<div class="demo-toast-icon">💄</div><div><strong class="text-white">Bella Glamour</strong><p class="mb-0 small text-white mt-1">${msg}</p></div>`; document.body.appendChild(t); setTimeout(() => t.remove(), 6000); }
+    </script>
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduClass | Escola & Cursos Online</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/demo.css') }}">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root { --indigo: #6366f1; --purple: #a855f7; --dark: #07050f; }
+        body.demo-page { background-color: var(--dark) !important; }
+        .text-indigo { color: var(--indigo) !important; text-shadow: 0 0 20px rgba(99,102,241,0.5); }
+        .page-title { font-family:'Outfit',sans-serif; font-weight:900; font-size:clamp(2.3rem,5vw,4rem); line-height:1.05; }
+        .hero { min-height:100vh; display:flex; align-items:center; position:relative;
+            background-image:url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=1600&q=85&auto=format&fit=crop');
+            background-size:cover; background-position:center; padding:180px 0 100px; }
+        .hero::before { content:""; position:absolute; inset:0;
+            background:linear-gradient(135deg,rgba(7,5,15,0.93) 0%,rgba(7,5,15,0.55) 60%,rgba(7,5,15,0.88) 100%); }
+        .hero .container { position:relative; z-index:2; }
+        .btn-indigo { background:linear-gradient(45deg,var(--indigo),var(--purple)); color:#fff!important; font-weight:900; padding:14px 30px; border-radius:14px; border:none; transition:0.3s; box-shadow:0 0 20px rgba(99,102,241,0.4); }
+        .btn-indigo:hover { transform:scale(1.04); box-shadow:0 0 35px rgba(99,102,241,0.7); }
+        .btn-outline-indigo { border:2px solid var(--indigo); color:var(--indigo)!important; background:rgba(99,102,241,0.05); padding:12px 28px; border-radius:14px; font-weight:700; transition:0.3s; }
+        .btn-outline-indigo:hover { background:var(--indigo); color:#fff!important; }
+        .course-card { background:rgba(255,255,255,0.03); border:1px solid rgba(99,102,241,0.15); border-radius:22px; overflow:hidden; transition:0.35s; cursor:pointer; }
+        .course-card:hover { border-color:var(--indigo); transform:translateY(-6px); box-shadow:0 15px 40px rgba(99,102,241,0.25); }
+        .course-img { height:200px; background-size:cover; background-position:center; position:relative; }
+        .course-level { position:absolute; top:12px; left:12px; background:rgba(7,5,15,0.85); border:1px solid var(--indigo); color:var(--indigo); font-size:0.72rem; font-weight:900; padding:4px 12px; border-radius:20px; }
+        .rating-stars { color:#f59e0b; font-size:0.9rem; }
+        .progress-bar-custom { height:6px; border-radius:3px; background:linear-gradient(90deg,var(--indigo),var(--purple)); }
+        .sec { padding:90px 0; }
+        .sec-alt { padding:90px 0; background:rgba(99,102,241,0.025); }
+        .modal-content { background:#0c0816; border:1px solid rgba(99,102,241,0.25); border-radius:24px; }
+        .dark-input { background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.15); color:#fff; border-radius:12px; padding:13px 16px; width:100%; }
+        .dark-input:focus { outline:none; border-color:var(--indigo); }
+    </style>
+</head>
+<body class="demo-page">
+    <div class="demo-bar">
+        <a href="/nossos-servicos" class="demo-back-btn"><i data-lucide="arrow-left"></i> Voltar</a>
+        <div class="demo-bar-brand"><span class="demo-bar-badge">🔴 DEMO AO VIVO</span><span>Escola & Cursos Online</span></div>
+        <div class="demo-controls"><a href="https://wa.me/5521983225806?text=Quero+site+de+escola+cursos" target="_blank" class="demo-cta-btn"><i data-lucide="message-circle"></i> Quero um Site Assim</a></div>
+    </div>
+    <nav style="background:rgba(7,5,15,0.97);border-bottom:1px solid rgba(99,102,241,0.15);position:fixed;top:56px;width:100%;z-index:999;padding:14px 0;">
+        <div class="container d-flex align-items-center justify-content-between">
+            <a href="#" style="font-family:'Outfit',sans-serif;font-weight:900;font-size:1.4rem;text-decoration:none">📚 <span class="text-indigo">EDU</span><span class="text-white">CLASS</span></a>
+            <div class="d-flex gap-3 align-items-center">
+                <a href="#cursos" class="text-white text-decoration-none d-none d-md-inline" style="opacity:0.8">Cursos</a>
+                <button class="btn-indigo btn border-0 btn-sm" data-bs-toggle="modal" data-bs-target="#inscModal">📝 Inscrever-se</button>
+            </div>
+        </div>
+    </nav>
+    <header class="hero">
+        <div class="container">
+            <div class="col-lg-6">
+                <div class="d-flex flex-wrap gap-2 mb-4"><span class="stat-pill">👩‍🎓 +12.000 alunos</span><span class="stat-pill">⭐ 4.9/5 satisfação</span></div>
+                <h1 class="page-title text-white mb-4">APRENDA COM OS <span class="text-indigo">MELHORES</span>,<br>AVANCE NA CARREIRA</h1>
+                <p class="text-white mb-5" style="font-size:1.1rem;opacity:0.88;max-width:500px;line-height:1.7">Cursos 100% online, certificados reconhecidos e professores de mercado. Do básico ao avançado, no seu ritmo.</p>
+                <div class="d-flex flex-wrap gap-3">
+                    <a href="#cursos" class="btn-indigo btn border-0 btn-lg">📚 Ver Cursos</a>
+                    <button class="btn-outline-indigo btn btn-lg" data-bs-toggle="modal" data-bs-target="#inscModal">Primeira Aula Grátis</button>
+                </div>
+            </div>
+        </div>
+    </header>
+    <section class="sec" id="cursos">
+        <div class="container">
+            <h2 class="text-white text-center mb-5" style="font-size:2.2rem">Nossos <span class="text-indigo">Cursos</span></h2>
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-4"><div class="course-card" onclick="inscreverse('Marketing Digital')"><div class="course-img" style="background-image:url('https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=500&q=80&auto=format&fit=crop')"><span class="course-level">Iniciante</span></div><div class="p-4"><h5 class="text-white fw-700 mb-2">Marketing Digital</h5><div class="rating-stars mb-2">⭐⭐⭐⭐⭐ <span class="text-white ms-1" style="font-size:0.85rem">(1.240 avaliações)</span></div><p style="font-size:0.85rem;opacity:0.75;margin-bottom:12px">Tráfego pago, SEO, redes sociais e estratégias de conversão.</p><div class="d-flex justify-content-between align-items-center"><span class="text-indigo fw-900">R$ 197</span><span style="font-size:0.8rem;opacity:0.6">40h de conteúdo</span></div></div></div></div>
+                <div class="col-md-6 col-lg-4"><div class="course-card" onclick="inscreverse('Programação Web')"><div class="course-img" style="background-image:url('https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=500&q=80&auto=format&fit=crop')"><span class="course-level">Intermediário</span></div><div class="p-4"><h5 class="text-white fw-700 mb-2">Programação Web</h5><div class="rating-stars mb-2">⭐⭐⭐⭐⭐ <span class="text-white ms-1" style="font-size:0.85rem">(890 avaliações)</span></div><p style="font-size:0.85rem;opacity:0.75;margin-bottom:12px">HTML, CSS, JavaScript, React e Node.js do zero ao emprego.</p><div class="d-flex justify-content-between align-items-center"><span class="text-indigo fw-900">R$ 297</span><span style="font-size:0.8rem;opacity:0.6">80h de conteúdo</span></div></div></div></div>
+                <div class="col-md-6 col-lg-4"><div class="course-card" onclick="inscreverse('Design & UX/UI')"><div class="course-img" style="background-image:url('https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?w=500&q=80&auto=format&fit=crop')"><span class="course-level">Iniciante</span></div><div class="p-4"><h5 class="text-white fw-700 mb-2">Design & UX/UI</h5><div class="rating-stars mb-2">⭐⭐⭐⭐⭐ <span class="text-white ms-1" style="font-size:0.85rem">(640 avaliações)</span></div><p style="font-size:0.85rem;opacity:0.75;margin-bottom:12px">Figma, prototipagem, pesquisa com usuário e design de produtos.</p><div class="d-flex justify-content-between align-items-center"><span class="text-indigo fw-900">R$ 247</span><span style="font-size:0.8rem;opacity:0.6">60h de conteúdo</span></div></div></div></div>
+            </div>
+        </div>
+    </section>
+    <footer class="demo-footer"><div class="container text-center"><div class="text-indigo fw-900 mb-2" style="font-size:1.5rem;font-family:'Outfit',sans-serif">📚 EDUCLASS</div><p style="opacity:0.5;font-size:0.85rem">© 2026 · Demo por Inovador Tech · <a href="https://wa.me/5521983225806" class="text-indigo text-decoration-none">Solicitar este site</a></p></div></footer>
+    <div class="modal fade" id="inscModal" tabindex="-1"><div class="modal-dialog modal-dialog-centered"><div class="modal-content p-4"><div class="modal-header border-0 pb-0"><h5 class="modal-title text-white fw-800">📝 Inscrição no Curso</h5><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div><div class="modal-body"><form onsubmit="confirmInsc(event)"><div class="mb-3"><input id="inscNome" type="text" class="dark-input" placeholder="Nome completo" required></div><div class="mb-3"><input type="email" class="dark-input" placeholder="E-mail" required></div><div class="mb-3"><input type="tel" class="dark-input" placeholder="WhatsApp" required></div><div class="mb-4"><select id="inscCurso" class="dark-input"><option>Marketing Digital – R$197</option><option>Programação Web – R$297</option><option>Design & UX/UI – R$247</option></select></div><button type="submit" class="btn-indigo btn border-0 w-100 py-3 fw-900">GARANTIR MINHA VAGA</button></form></div></div></div></div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        lucide.createIcons();
+        function inscreverse(curso) { document.getElementById('inscCurso').value = curso === 'Marketing Digital' ? 'Marketing Digital – R$197' : curso === 'Programação Web' ? 'Programação Web – R$297' : 'Design & UX/UI – R$247'; new bootstrap.Modal(document.getElementById('inscModal')).show(); }
+        function confirmInsc(e) { e.preventDefault(); const n = document.getElementById('inscNome').value; bootstrap.Modal.getInstance(document.getElementById('inscModal')).hide(); showToast(`🎓 Inscrição confirmada para ${n}! Acesso imediato enviado no e-mail.`); }
+        function showToast(msg) { const t=document.createElement('div'); t.className='demo-toast'; t.innerHTML=`<div class="demo-toast-icon">📚</div><div><strong class="text-white">EduClass</strong><p class="mb-0 small text-white mt-1">${msg}</p></div>`; document.body.appendChild(t); setTimeout(()=>t.remove(),6000); }
+    </script>
+</body>
+</html>

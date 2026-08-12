@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NexStore | Loja & E-commerce Moderno</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/demo.css') }}">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root { --neon: #00f3ff; --green: #00ff88; --dark: #050a12; }
+        body.demo-page { background-color: var(--dark) !important; }
+        .text-neon { color: var(--neon) !important; text-shadow: 0 0 20px rgba(0,243,255,0.4); }
+
+        .hero { min-height:100vh; display:flex; align-items:center; position:relative;
+            background-image:url('https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=1600&q=85&auto=format&fit=crop');
+            background-size:cover; background-position:center; padding:180px 0 100px; }
+        .hero::before { content:""; position:absolute; inset:0;
+            background:linear-gradient(135deg,rgba(5,10,18,0.93) 0%,rgba(5,10,18,0.55) 60%,rgba(5,10,18,0.88) 100%); }
+        .hero .container { position:relative; z-index:2; }
+
+        .page-title { font-family:'Outfit',sans-serif; font-weight:900; font-size:clamp(2.4rem,5vw,4.2rem); line-height:1.05; }
+        .btn-neon { background:linear-gradient(45deg,var(--neon),var(--green)); color:#050a12!important; font-weight:900; padding:14px 30px; border-radius:14px; border:none; transition:0.3s; box-shadow:0 0 20px rgba(0,243,255,0.4); }
+        .btn-neon:hover { transform:scale(1.04); box-shadow:0 0 35px rgba(0,243,255,0.7); }
+        .btn-outline-neon { border:2px solid var(--neon); color:var(--neon)!important; background:rgba(0,243,255,0.05); padding:12px 28px; border-radius:14px; font-weight:700; transition:0.3s; }
+        .btn-outline-neon:hover { background:var(--neon); color:#050a12!important; }
+
+        .cat-pill { background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.15); color:#fff; padding:8px 18px; border-radius:30px; cursor:pointer; transition:0.25s; font-size:0.9rem; }
+        .cat-pill.active, .cat-pill:hover { background:var(--neon); color:#050a12; font-weight:700; border-color:var(--neon); }
+
+        .prod-card { background:rgba(255,255,255,0.03); border:1px solid rgba(0,243,255,0.12); border-radius:22px; overflow:hidden; transition:0.35s; cursor:pointer; }
+        .prod-card:hover { border-color:var(--neon); transform:translateY(-6px); box-shadow:0 15px 40px rgba(0,243,255,0.2); }
+        .prod-img { height:200px; background-size:cover; background-position:center; position:relative; }
+        .prod-badge { position:absolute; top:12px; left:12px; background:var(--neon); color:#050a12; font-size:0.72rem; font-weight:900; padding:4px 10px; border-radius:20px; }
+        .prod-price { color:var(--neon); font-weight:900; font-size:1.2rem; font-family:'Outfit',sans-serif; }
+        .prod-old-price { color:rgba(255,255,255,0.4); text-decoration:line-through; font-size:0.85rem; }
+
+        .cart-badge { background:#ef4444; color:#fff; border-radius:50%; width:18px; height:18px; font-size:0.68rem; font-weight:900; display:flex; align-items:center; justify-content:center; position:absolute; top:-4px; right:-4px; }
+
+        .search-bar { background:rgba(255,255,255,0.06); border:1px solid rgba(0,243,255,0.2); color:#fff; border-radius:14px; padding:12px 18px; font-size:0.95rem; width:100%; }
+        .search-bar:focus { outline:none; border-color:var(--neon); }
+        .search-bar::placeholder { color:rgba(255,255,255,0.4); }
+
+        .sec { padding:80px 0; }
+        .modal-content { background:#070f1a; border:1px solid rgba(0,243,255,0.25); border-radius:24px; }
+        .dark-input { background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.15); color:#fff; border-radius:12px; padding:13px 16px; width:100%; }
+    </style>
+</head>
+<body class="demo-page">
+
+    <div class="demo-bar">
+        <a href="/nossos-servicos" class="demo-back-btn"><i data-lucide="arrow-left"></i> Voltar</a>
+        <div class="demo-bar-brand"><span class="demo-bar-badge">🔴 DEMO AO VIVO</span><span>Loja — Catálogo de Produtos & E-commerce</span></div>
+        <div class="demo-controls">
+            <button class="btn-outline-neon btn border-2 btn-sm position-relative" data-bs-toggle="modal" data-bs-target="#cartModal">
+                <i data-lucide="shopping-cart" style="width:16px;height:16px"></i>
+                <span id="cart-badge" class="cart-badge d-none">0</span>
+            </button>
+            <a href="https://wa.me/5521983225806?text=Quero+site+de+loja+ecommerce" target="_blank" class="demo-cta-btn">
+                <i data-lucide="message-circle"></i> Quero um Site Assim
+            </a>
+        </div>
+    </div>
+
+    <nav style="background:rgba(5,10,18,0.97);border-bottom:1px solid rgba(0,243,255,0.15);position:fixed;top:56px;width:100%;z-index:999;padding:14px 0;">
+        <div class="container d-flex align-items-center justify-content-between">
+            <a href="#" style="font-family:'Outfit',sans-serif;font-weight:900;font-size:1.4rem;text-decoration:none">🛍️ <span class="text-neon">NEX</span><span class="text-white">STORE</span></a>
+            <div class="d-flex gap-3 align-items-center">
+                <input type="text" class="search-bar d-none d-lg-block" placeholder="🔍 Buscar produtos..." style="width:280px;padding:8px 16px" oninput="searchProducts(this.value)">
+                <button class="btn-outline-neon btn border-2 btn-sm position-relative" data-bs-toggle="modal" data-bs-target="#cartModal">
+                    🛒 <span id="cart-count-nav"></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="container">
+            <div class="col-lg-6">
+                <div class="d-flex flex-wrap gap-2 mb-4">
+                    <span class="stat-pill">📦 +5.000 produtos disponíveis</span>
+                    <span class="stat-pill">⭐ 4.9 · Entrega express</span>
+                </div>
+                <h1 class="page-title text-white mb-4">COMPRAS SEM <span class="text-neon">LIMITE</span>,<br>ENTREGA <span class="text-neon">RÁPIDA</span></h1>
+                <p class="text-white mb-5" style="font-size:1.1rem;opacity:0.88;max-width:480px;line-height:1.7">Os melhores produtos de tecnologia, moda e casa com o melhor preço do mercado e entrega em todo o Brasil.</p>
+                <div class="d-flex flex-wrap gap-3">
+                    <a href="#produtos" class="btn-neon btn border-0 btn-lg">🛍️ Ver Produtos</a>
+                    <button class="btn-outline-neon btn btn-lg" data-bs-toggle="modal" data-bs-target="#cartModal">🛒 Meu Carrinho</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="sec" id="produtos">
+        <div class="container">
+            <h2 class="text-white text-center mb-4" style="font-size:2.2rem">Catálogo de <span class="text-neon">Produtos</span></h2>
+            <div class="d-flex flex-wrap justify-content-center gap-2 mb-5">
+                <button class="cat-pill active" onclick="filterProds('todos',this)">⚡ Todos</button>
+                <button class="cat-pill" onclick="filterProds('tecnologia',this)">💻 Tecnologia</button>
+                <button class="cat-pill" onclick="filterProds('moda',this)">👗 Moda</button>
+                <button class="cat-pill" onclick="filterProds('casa',this)">🏠 Casa</button>
+                <button class="cat-pill" onclick="filterProds('esporte',this)">🏃 Esporte</button>
+            </div>
+            <div class="row g-4" id="prod-grid">
+                <div class="col-md-6 col-lg-3 prod-item" data-cat="tecnologia" data-name="Fone Bluetooth Pro">
+                    <div class="prod-card" onclick="addToCart('Fone Bluetooth Pro', 289)">
+                        <div class="prod-img" style="background-image:url('https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&q=80&auto=format&fit=crop')"><span class="prod-badge">-30%</span></div>
+                        <div class="p-3"><h5 class="text-white fw-700 mb-1" style="font-size:0.95rem">Fone Bluetooth Pro</h5><div class="d-flex align-items-center gap-2 mb-2"><span class="prod-price">R$ 289</span><span class="prod-old-price">R$ 420</span></div><button class="btn-neon btn border-0 w-100 btn-sm py-2">+ Adicionar</button></div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3 prod-item" data-cat="tecnologia" data-name="Smartwatch Fitness X">
+                    <div class="prod-card" onclick="addToCart('Smartwatch Fitness X', 459)">
+                        <div class="prod-img" style="background-image:url('https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400&q=80&auto=format&fit=crop')"><span class="prod-badge">NOVO</span></div>
+                        <div class="p-3"><h5 class="text-white fw-700 mb-1" style="font-size:0.95rem">Smartwatch Fitness X</h5><div class="d-flex align-items-center gap-2 mb-2"><span class="prod-price">R$ 459</span></div><button class="btn-neon btn border-0 w-100 btn-sm py-2">+ Adicionar</button></div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3 prod-item" data-cat="moda" data-name="Tênis Urban Street">
+                    <div class="prod-card" onclick="addToCart('Tênis Urban Street', 199)">
+                        <div class="prod-img" style="background-image:url('https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400&q=80&auto=format&fit=crop')"></div>
+                        <div class="p-3"><h5 class="text-white fw-700 mb-1" style="font-size:0.95rem">Tênis Urban Street</h5><div class="d-flex align-items-center gap-2 mb-2"><span class="prod-price">R$ 199</span><span class="prod-old-price">R$ 280</span></div><button class="btn-neon btn border-0 w-100 btn-sm py-2">+ Adicionar</button></div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3 prod-item" data-cat="casa" data-name="Luminária LED Inteligente">
+                    <div class="prod-card" onclick="addToCart('Luminária LED Inteligente', 149)">
+                        <div class="prod-img" style="background-image:url('https://images.unsplash.com/photo-1507473885765-e6ed057f782c?w=400&q=80&auto=format&fit=crop')"></div>
+                        <div class="p-3"><h5 class="text-white fw-700 mb-1" style="font-size:0.95rem">Luminária LED Smart</h5><div class="d-flex align-items-center gap-2 mb-2"><span class="prod-price">R$ 149</span></div><button class="btn-neon btn border-0 w-100 btn-sm py-2">+ Adicionar</button></div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3 prod-item" data-cat="esporte" data-name="Mochila Outdoor Pro">
+                    <div class="prod-card" onclick="addToCart('Mochila Outdoor Pro', 179)">
+                        <div class="prod-img" style="background-image:url('https://images.unsplash.com/photo-1622560480605-d83c853bc5c3?w=400&q=80&auto=format&fit=crop')"></div>
+                        <div class="p-3"><h5 class="text-white fw-700 mb-1" style="font-size:0.95rem">Mochila Outdoor Pro</h5><div class="d-flex align-items-center gap-2 mb-2"><span class="prod-price">R$ 179</span></div><button class="btn-neon btn border-0 w-100 btn-sm py-2">+ Adicionar</button></div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3 prod-item" data-cat="tecnologia" data-name="Carregador Wireless 30W">
+                    <div class="prod-card" onclick="addToCart('Carregador Wireless 30W', 89)">
+                        <div class="prod-img" style="background-image:url('https://images.unsplash.com/photo-1586953208448-b95a79798f07?w=400&q=80&auto=format&fit=crop')"></div>
+                        <div class="p-3"><h5 class="text-white fw-700 mb-1" style="font-size:0.95rem">Carregador Wireless 30W</h5><div class="d-flex align-items-center gap-2 mb-2"><span class="prod-price">R$ 89</span><span class="prod-old-price">R$ 130</span></div><button class="btn-neon btn border-0 w-100 btn-sm py-2">+ Adicionar</button></div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3 prod-item" data-cat="moda" data-name="Óculos Aviador Dark">
+                    <div class="prod-card" onclick="addToCart('Óculos Aviador Dark', 129)">
+                        <div class="prod-img" style="background-image:url('https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=400&q=80&auto=format&fit=crop')"></div>
+                        <div class="p-3"><h5 class="text-white fw-700 mb-1" style="font-size:0.95rem">Óculos Aviador Dark</h5><div class="d-flex align-items-center gap-2 mb-2"><span class="prod-price">R$ 129</span></div><button class="btn-neon btn border-0 w-100 btn-sm py-2">+ Adicionar</button></div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3 prod-item" data-cat="casa" data-name="Cafeteira Presto">
+                    <div class="prod-card" onclick="addToCart('Cafeteira Presto', 219)">
+                        <div class="prod-img" style="background-image:url('https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=400&q=80&auto=format&fit=crop')"></div>
+                        <div class="p-3"><h5 class="text-white fw-700 mb-1" style="font-size:0.95rem">Cafeteira Presto</h5><div class="d-flex align-items-center gap-2 mb-2"><span class="prod-price">R$ 219</span><span class="prod-old-price">R$ 320</span></div><button class="btn-neon btn border-0 w-100 btn-sm py-2">+ Adicionar</button></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="demo-footer"><div class="container text-center"><div class="text-neon fw-900 mb-2" style="font-size:1.5rem;font-family:'Outfit',sans-serif">🛍️ NEXSTORE</div><p style="opacity:0.5;font-size:0.85rem">© 2026 · Demo por Inovador Tech · <a href="https://wa.me/5521983225806" class="text-neon text-decoration-none">Solicitar este site</a></p></div></footer>
+
+    <!-- Cart Modal -->
+    <div class="modal fade" id="cartModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content p-4">
+                <div class="modal-header border-0 pb-0"><h5 class="modal-title text-white fw-800">🛒 Carrinho de Compras</h5><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div>
+                <div class="modal-body">
+                    <div id="cart-list"></div>
+                    <div id="cart-empty2" class="text-center py-4"><p class="text-white" style="opacity:0.5">Carrinho vazio. Adicione produtos!</p></div>
+                    <div id="cart-total2" style="display:none" class="text-neon fw-900 text-end mt-2" style="font-size:1.2rem"></div>
+                    <div id="checkout-section" style="display:none" class="mt-3">
+                        <form onsubmit="finalizarCompra(event)">
+                            <div class="mb-3"><input type="text" class="dark-input" placeholder="Nome completo" required></div>
+                            <div class="mb-3"><input type="tel" class="dark-input" placeholder="WhatsApp" required></div>
+                            <div class="mb-3"><input type="text" class="dark-input" placeholder="CEP para entrega" required></div>
+                            <button type="submit" class="btn-neon btn border-0 w-100 py-3 fw-900">FINALIZAR COMPRA</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        lucide.createIcons();
+        let cart = [];
+
+        function filterProds(cat, btn) {
+            document.querySelectorAll('.cat-pill').forEach(b => b.classList.remove('active')); btn.classList.add('active');
+            document.querySelectorAll('.prod-item').forEach(i => { i.style.display = (cat === 'todos' || i.dataset.cat === cat) ? 'block' : 'none'; });
+        }
+        function searchProducts(q) {
+            const lq = q.toLowerCase();
+            document.querySelectorAll('.prod-item').forEach(i => { i.style.display = i.dataset.name.toLowerCase().includes(lq) ? 'block' : 'none'; });
+        }
+        function addToCart(nome, preco) { cart.push({nome, preco}); updateCart(); showToast(`✅ ${nome} adicionado ao carrinho!`); }
+        function removeFromCart(i) { cart.splice(i,1); updateCart(); }
+        function updateCart() {
+            const count = cart.length; const total = cart.reduce((s,i)=>s+i.preco,0);
+            document.getElementById('cart-badge').textContent = count;
+            document.getElementById('cart-badge').classList.toggle('d-none', count===0);
+            document.getElementById('cart-count-nav').textContent = count ? `(${count})` : '';
+            const list = document.getElementById('cart-list'); const empty = document.getElementById('cart-empty2');
+            const totalEl = document.getElementById('cart-total2'); const checkout = document.getElementById('checkout-section');
+            empty.style.display = count ? 'none' : 'block'; totalEl.style.display = count ? 'block' : 'none'; checkout.style.display = count ? 'block' : 'none';
+            list.innerHTML = cart.map((i,idx)=>`<div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:12px 16px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center"><span class="text-white">${i.nome}</span><span class="text-neon fw-700">R$ ${i.preco}<button class="btn btn-sm ms-2" style="color:rgba(255,255,255,0.4)" onclick="removeFromCart(${idx})">✕</button></span></div>`).join('');
+            totalEl.textContent = `Total: R$ ${total}`;
+        }
+        function finalizarCompra(e) { e.preventDefault(); const total = cart.reduce((s,i)=>s+i.preco,0); cart=[]; updateCart(); bootstrap.Modal.getInstance(document.getElementById('cartModal')).hide(); showToast(`🎉 Pedido confirmado! Total R$ ${total}. Rastreamento via WhatsApp.`); }
+        function showToast(msg) { const t=document.createElement('div'); t.className='demo-toast'; t.innerHTML=`<div class="demo-toast-icon">🛍️</div><div><strong class="text-white">NexStore</strong><p class="mb-0 small text-white mt-1">${msg}</p></div>`; document.body.appendChild(t); setTimeout(()=>t.remove(),6000); }
+        updateCart();
+    </script>
+</body>
+</html>

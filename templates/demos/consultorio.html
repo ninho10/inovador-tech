@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dra. Ana Mello | Consultório Médico Online</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/demo.css') }}">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root { --blue: #3b82f6; --cyan: #06b6d4; --dark: #050d1a; }
+        body.demo-page { background-color: var(--dark) !important; }
+        .text-blue { color: var(--blue) !important; text-shadow: 0 0 20px rgba(59,130,246,0.4); }
+        .text-cyan2 { color: var(--cyan) !important; }
+
+        .hero { min-height:100vh; display:flex; align-items:center; position:relative;
+            background-image:url('https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=1600&q=85&auto=format&fit=crop');
+            background-size:cover; background-position:center; padding:180px 0 100px; }
+        .hero::before { content:""; position:absolute; inset:0;
+            background:linear-gradient(135deg,rgba(5,13,26,0.93) 0%,rgba(5,13,26,0.55) 60%,rgba(5,13,26,0.88) 100%); }
+        .hero .container { position:relative; z-index:2; }
+
+        .page-title { font-family:'Outfit',sans-serif; font-weight:900; font-size:clamp(2.2rem,4.5vw,3.8rem); line-height:1.05; }
+        .btn-blue { background:linear-gradient(45deg,var(--blue),var(--cyan)); color:#fff!important; font-weight:900; padding:14px 30px; border-radius:14px; border:none; transition:0.3s; box-shadow:0 0 20px rgba(59,130,246,0.4); }
+        .btn-blue:hover { transform:scale(1.04); box-shadow:0 0 35px rgba(59,130,246,0.7); }
+        .btn-outline-blue { border:2px solid var(--blue); color:var(--blue)!important; background:rgba(59,130,246,0.05); padding:12px 28px; border-radius:14px; font-weight:700; transition:0.3s; }
+        .btn-outline-blue:hover { background:var(--blue); color:#fff!important; }
+
+        .spec-card { background:rgba(255,255,255,0.03); border:1px solid rgba(59,130,246,0.15); border-radius:20px; padding:28px; transition:0.35s; cursor:pointer; }
+        .spec-card:hover { border-color:var(--blue); transform:translateY(-6px); box-shadow:0 15px 40px rgba(59,130,246,0.2); }
+        .spec-icon { width:56px; height:56px; border-radius:14px; background:rgba(59,130,246,0.1); border:1px solid rgba(59,130,246,0.3); display:flex; align-items:center; justify-content:center; font-size:1.5rem; margin-bottom:16px; }
+
+        .doctor-card { background:rgba(255,255,255,0.03); border:1px solid rgba(59,130,246,0.15); border-radius:22px; padding:28px; text-align:center; transition:0.35s; }
+        .doctor-card:hover { border-color:var(--blue); box-shadow:0 12px 35px rgba(59,130,246,0.2); }
+        .doctor-avatar { width:90px; height:90px; border-radius:50%; border:3px solid var(--blue); margin:0 auto 16px; font-size:2.5rem; display:flex; align-items:center; justify-content:center; background:rgba(59,130,246,0.08); }
+
+        .time-slot { background:rgba(255,255,255,0.04); border:1px solid rgba(59,130,246,0.2); border-radius:10px; padding:10px 14px; text-align:center; cursor:pointer; transition:0.25s; font-size:0.9rem; color:#fff; }
+        .time-slot:hover { background:var(--blue); color:#fff; font-weight:700; border-color:var(--blue); }
+
+        .sec { padding:90px 0; }
+        .sec-alt { padding:90px 0; background:rgba(59,130,246,0.025); }
+        .modal-content { background:#04101e; border:1px solid rgba(59,130,246,0.25); border-radius:24px; }
+        .dark-input { background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.15); color:#fff; border-radius:12px; padding:13px 16px; width:100%; }
+        .dark-input:focus { outline:none; border-color:var(--blue); }
+    </style>
+</head>
+<body class="demo-page">
+    <div class="demo-bar">
+        <a href="/nossos-servicos" class="demo-back-btn"><i data-lucide="arrow-left"></i> Voltar</a>
+        <div class="demo-bar-brand"><span class="demo-bar-badge">🔴 DEMO AO VIVO</span><span>Consultório — Site com Agendamento</span></div>
+        <div class="demo-controls">
+            <a href="https://wa.me/5521983225806?text=Quero+site+de+consultorio" target="_blank" class="demo-cta-btn">
+                <i data-lucide="message-circle"></i> Quero um Site Assim
+            </a>
+        </div>
+    </div>
+
+    <nav style="background:rgba(5,13,26,0.97);border-bottom:1px solid rgba(59,130,246,0.15);position:fixed;top:56px;width:100%;z-index:999;padding:14px 0;">
+        <div class="container d-flex align-items-center justify-content-between">
+            <a href="#" style="font-family:'Outfit',sans-serif;font-weight:900;font-size:1.3rem;text-decoration:none">
+                🏥 <span class="text-blue">CLÍNICA</span><span class="text-white"> MELLO SAÚDE</span>
+            </a>
+            <div class="d-flex gap-3 align-items-center">
+                <a href="#especialidades" class="text-white text-decoration-none d-none d-md-inline" style="opacity:0.8">Especialidades</a>
+                <a href="#medicos" class="text-white text-decoration-none d-none d-md-inline" style="opacity:0.8">Médicos</a>
+                <button class="btn-blue btn border-0 btn-sm" data-bs-toggle="modal" data-bs-target="#agModal">📅 Agendar Consulta</button>
+            </div>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="container">
+            <div class="col-lg-6">
+                <div class="d-flex flex-wrap gap-2 mb-4">
+                    <span class="stat-pill">🏥 +15.000 consultas realizadas</span>
+                    <span class="stat-pill">⭐ 4.9/5 · iDoctors</span>
+                </div>
+                <h1 class="page-title text-white mb-4">
+                    SUA SAÚDE EM <span class="text-blue">BOAS MÃOS</span>,<br>CONSULTA EM <span class="text-blue">MINUTOS</span>
+                </h1>
+                <p class="text-white mb-5" style="font-size:1.1rem;opacity:0.88;max-width:500px;line-height:1.7">
+                    Agende consultas online 24h, escolha sua especialidade e receba confirmação instantânea. Atendimento presencial e telemedicina.
+                </p>
+                <div class="d-flex flex-wrap gap-3">
+                    <button class="btn-blue btn border-0 btn-lg" data-bs-toggle="modal" data-bs-target="#agModal">📅 Agendar Consulta</button>
+                    <a href="#especialidades" class="btn-outline-blue btn btn-lg">Ver Especialidades</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="sec" id="especialidades">
+        <div class="container">
+            <h2 class="text-white text-center mb-5" style="font-size:2.2rem">Nossas <span class="text-blue">Especialidades</span></h2>
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-4"><div class="spec-card" onclick="selectEspec('Cardiologia')"><div class="spec-icon">❤️</div><h5 class="text-white fw-700 mb-2">Cardiologia</h5><p style="font-size:0.88rem;opacity:0.8">Eletrocardiograma, Holter, teste ergométrico e consultas preventivas.</p></div></div>
+                <div class="col-md-6 col-lg-4"><div class="spec-card" onclick="selectEspec('Dermatologia')"><div class="spec-icon">🔬</div><h5 class="text-white fw-700 mb-2">Dermatologia</h5><p style="font-size:0.88rem;opacity:0.8">Tratamentos estéticos, mapeamento de manchas e dermatoscopia digital.</p></div></div>
+                <div class="col-md-6 col-lg-4"><div class="spec-card" onclick="selectEspec('Ortopedia')"><div class="spec-icon">🦴</div><h5 class="text-white fw-700 mb-2">Ortopedia</h5><p style="font-size:0.88rem;opacity:0.8">Análise biomecânica, reabilitação esportiva e cirurgias minimamente invasivas.</p></div></div>
+                <div class="col-md-6 col-lg-4"><div class="spec-card" onclick="selectEspec('Neurologia')"><div class="spec-icon">🧠</div><h5 class="text-white fw-700 mb-2">Neurologia</h5><p style="font-size:0.88rem;opacity:0.8">Enxaqueca, insônia, EEG digital e acompanhamento neurológico preventivo.</p></div></div>
+                <div class="col-md-6 col-lg-4"><div class="spec-card" onclick="selectEspec('Psicologia')"><div class="spec-icon">🧘</div><h5 class="text-white fw-700 mb-2">Psicologia</h5><p style="font-size:0.88rem;opacity:0.8">TCC, psicoterapia e atendimento por telemedicina com sigilo total.</p></div></div>
+                <div class="col-md-6 col-lg-4"><div class="spec-card" onclick="selectEspec('Clínica Geral')"><div class="spec-icon">🩺</div><h5 class="text-white fw-700 mb-2">Clínica Geral</h5><p style="font-size:0.88rem;opacity:0.8">Consultas gerais, check-up anual e solicitação de exames laboratoriais.</p></div></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="sec-alt" id="medicos">
+        <div class="container">
+            <h2 class="text-white text-center mb-5" style="font-size:2.2rem">Nossa <span class="text-blue">Equipe Médica</span></h2>
+            <div class="row g-4 justify-content-center">
+                <div class="col-md-4 col-lg-3"><div class="doctor-card"><div class="doctor-avatar">👩🏻‍⚕️</div><h5 class="text-white fw-800 mb-1">Dra. Ana Mello</h5><div class="text-blue fw-700 mb-1" style="font-size:0.85rem">Cardiologista · CRM 12345</div><div style="opacity:0.7;font-size:0.85rem">⭐ 4.99 · 18 anos de experiência</div><button class="btn-blue btn border-0 w-100 btn-sm mt-3" onclick="selectDoc('Dra. Ana Mello')">Agendar</button></div></div>
+                <div class="col-md-4 col-lg-3"><div class="doctor-card"><div class="doctor-avatar">👨🏽‍⚕️</div><h5 class="text-white fw-800 mb-1">Dr. Carlos Viana</h5><div class="text-blue fw-700 mb-1" style="font-size:0.85rem">Ortopedista · CRM 23456</div><div style="opacity:0.7;font-size:0.85rem">⭐ 4.97 · 12 anos de experiência</div><button class="btn-blue btn border-0 w-100 btn-sm mt-3" onclick="selectDoc('Dr. Carlos Viana')">Agendar</button></div></div>
+                <div class="col-md-4 col-lg-3"><div class="doctor-card"><div class="doctor-avatar">👩🏾‍⚕️</div><h5 class="text-white fw-800 mb-1">Dra. Priscila Faria</h5><div class="text-blue fw-700 mb-1" style="font-size:0.85rem">Dermatologista · CRM 34567</div><div style="opacity:0.7;font-size:0.85rem">⭐ 4.98 · 9 anos de experiência</div><button class="btn-blue btn border-0 w-100 btn-sm mt-3" onclick="selectDoc('Dra. Priscila Faria')">Agendar</button></div></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="sec">
+        <div class="container">
+            <div class="row g-5 align-items-center">
+                <div class="col-lg-5"><h2 class="text-white mb-3" style="font-size:2.2rem">Horários <span class="text-blue">disponíveis</span></h2><p style="opacity:0.8">Clique para reservar sua consulta agora mesmo.</p></div>
+                <div class="col-lg-7"><div class="row g-3">
+                    <div class="col-4"><div class="time-slot" onclick="bookSlot('08:00')">08:00</div></div>
+                    <div class="col-4"><div class="time-slot" onclick="bookSlot('09:00')">09:00</div></div>
+                    <div class="col-4"><div class="time-slot" onclick="bookSlot('10:00')">10:00</div></div>
+                    <div class="col-4"><div class="time-slot" onclick="bookSlot('14:00')">14:00</div></div>
+                    <div class="col-4"><div class="time-slot" onclick="bookSlot('15:00')">15:00</div></div>
+                    <div class="col-4"><div class="time-slot" onclick="bookSlot('16:00')">16:00</div></div>
+                </div></div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="demo-footer"><div class="container text-center"><div class="text-blue fw-900 mb-2" style="font-size:1.5rem;font-family:'Outfit',sans-serif">🏥 CLÍNICA MELLO SAÚDE</div><p style="opacity:0.5;font-size:0.85rem">© 2026 · Demo por Inovador Tech · <a href="https://wa.me/5521983225806" class="text-blue text-decoration-none">Solicitar este site</a></p></div></footer>
+
+    <div class="modal fade" id="agModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content p-4">
+                <div class="modal-header border-0 pb-0"><h5 class="modal-title text-white fw-800">📅 Agendar Consulta</h5><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div>
+                <div class="modal-body">
+                    <form onsubmit="confirmAg(event)">
+                        <div class="mb-3"><input id="agNome" type="text" class="dark-input" placeholder="Nome completo" required></div>
+                        <div class="mb-3"><input type="tel" class="dark-input" placeholder="WhatsApp" required></div>
+                        <div class="mb-3"><select id="agEspec" class="dark-input"><option>Cardiologia</option><option>Dermatologia</option><option>Ortopedia</option><option>Neurologia</option><option>Psicologia</option><option>Clínica Geral</option></select></div>
+                        <div class="mb-3"><select id="agDoc" class="dark-input"><option>Dra. Ana Mello</option><option>Dr. Carlos Viana</option><option>Dra. Priscila Faria</option></select></div>
+                        <div class="mb-3"><input type="date" class="dark-input" required></div>
+                        <div class="mb-4"><select class="dark-input"><option>Presencial</option><option>Telemedicina (online)</option></select></div>
+                        <button type="submit" class="btn-blue btn border-0 w-100 py-3 fw-900">CONFIRMAR CONSULTA</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        lucide.createIcons();
+        function selectEspec(e) { document.getElementById('agEspec').value = e; new bootstrap.Modal(document.getElementById('agModal')).show(); }
+        function selectDoc(d) { document.getElementById('agDoc').value = d; new bootstrap.Modal(document.getElementById('agModal')).show(); }
+        function bookSlot(h) { showToast(`📅 Horário ${h} reservado! Confirme seus dados pelo WhatsApp.`); }
+        function confirmAg(e) { e.preventDefault(); const n = document.getElementById('agNome').value; bootstrap.Modal.getInstance(document.getElementById('agModal')).hide(); showToast(`✅ Consulta agendada para ${n}! Confirmação enviada no WhatsApp.`); }
+        function showToast(msg) { const t = document.createElement('div'); t.className = 'demo-toast'; t.innerHTML = `<div class="demo-toast-icon">🏥</div><div><strong class="text-white">Clínica Mello Saúde</strong><p class="mb-0 small text-white mt-1">${msg}</p></div>`; document.body.appendChild(t); setTimeout(() => t.remove(), 6000); }
+    </script>
+</body>
+</html>

@@ -93,6 +93,7 @@
                     <li class="nav-item"><a class="nav-link active fw-bold text-neon-cyan" href="/dados">📊 Dados</a></li>
                     <li class="nav-item"><a class="nav-link" href="/ai">🤖 IA</a></li>
                     <li class="nav-item"><a class="nav-link" href="/sites">🌐 Sites</a></li>
+                    <li class="nav-item"><a class="nav-link text-neon-cyan" href="/nossos-servicos">🚀 Nossos Serviços</a></li>
                     <li class="nav-item"><a class="nav-link btn-contact ms-lg-3" href="https://wa.me/5521983225806">Fale Conosco</a></li>
                 </ul>
             </div>
@@ -140,7 +141,7 @@
                     <div class="chart-container text-center">
                         <i data-lucide="database" class="text-neon-cyan mb-4" style="width: 100px; height: 100px;"></i>
                         <h4>Sincronização Total</h4>
-                        <p class="text-muted">Integramos suas planilhas legadas em um banco de dados moderno e dinâmico.</p>
+                        <p class="text-glass">Integramos suas planilhas legadas em um banco de dados moderno e dinâmico.</p>
                     </div>
                 </div>
             </div>
@@ -208,8 +209,23 @@
                 height: 350,
                 foreColor: '#fff'
             },
-            colors: ['#00f3ff', '#00ff88', '#0077ff', '#0033ff'],
-            legend: { position: 'bottom' },
+            labels: ['Produtos', 'Serviços', 'Assinaturas', 'Outros'],
+            colors: ['#00f3ff', '#00ff88', '#0077ff', '#a855f7'],
+            legend: { position: 'bottom', labels: { colors: '#fff' } },
+            plotOptions: {
+                pie: {
+                    donut: {
+                        labels: {
+                            show: true,
+                            total: {
+                                show: true,
+                                label: 'Total',
+                                color: '#00f3ff'
+                            }
+                        }
+                    }
+                }
+            },
             responsive: [{
                 breakpoint: 480,
                 options: {

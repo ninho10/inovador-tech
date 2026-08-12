@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pulse Cyber Gym | A Academia do Futuro</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/demo.css') }}">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root {
+            --lime: #ccff00;
+            --green: #00ff88;
+            --dark: #060b12;
+        }
+        body.demo-page { background-color: var(--dark) !important; }
+
+        .gym-hero {
+            min-height: 100vh;
+            display: flex; align-items: center;
+            background-image: url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1600&q=85&auto=format&fit=crop');
+            background-size: cover; background-position: center; background-attachment: fixed;
+            padding: 120px 0 80px;
+        }
+        .gym-hero::before {
+            content: "";
+            position: absolute; inset: 0;
+            background: linear-gradient(135deg, rgba(6,11,18,0.88) 0%, rgba(6,11,18,0.55) 60%, rgba(0,0,0,0.8) 100%);
+        }
+        .gym-hero .container { position: relative; z-index: 2; }
+
+        .gym-title {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 900; font-size: clamp(2.5rem, 5vw, 4.5rem);
+            line-height: 1.05; letter-spacing: -1px;
+        }
+        .text-lime { color: var(--lime) !important; text-shadow: 0 0 30px rgba(204,255,0,0.5); }
+
+        .gym-card {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(204,255,0,0.2);
+            border-radius: 24px; padding: 32px;
+            transition: all 0.35s ease;
+            backdrop-filter: blur(15px);
+            height: 100%;
+        }
+        .gym-card:hover {
+            border-color: var(--lime);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 50px rgba(204,255,0,0.2);
+        }
+        .gym-icon {
+            width: 60px; height: 60px; border-radius: 16px;
+            background: rgba(204,255,0,0.1);
+            border: 1px solid rgba(204,255,0,0.3);
+            display: flex; align-items: center; justify-content: center;
+            color: var(--lime); font-size: 1.6rem; margin-bottom: 18px;
+        }
+        .plan-card {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 24px; padding: 36px 28px;
+            transition: 0.4s; position: relative; overflow: hidden;
+        }
+        .plan-card.featured {
+            border: 2px solid var(--lime);
+            box-shadow: 0 0 40px rgba(204,255,0,0.25);
+            background: linear-gradient(135deg, rgba(204,255,0,0.06) 0%, rgba(0,255,136,0.03) 100%);
+        }
+        .plan-card:hover { transform: translateY(-6px); }
+        .plan-badge {
+            position: absolute; top: -1px; left: 50%; transform: translateX(-50%);
+            background: var(--lime); color: #000;
+            font-size: 0.72rem; font-weight: 900;
+            padding: 4px 18px; border-radius: 0 0 12px 12px;
+            letter-spacing: 0.5px; text-transform: uppercase;
+        }
+        .plan-price { font-family: 'Outfit', sans-serif; font-size: 3rem; font-weight: 900; color: var(--lime); }
+        .plan-price sup { font-size: 1.2rem; top: -1.2rem; }
+        .plan-price span { font-size: 1rem; color: rgba(255,255,255,0.6); }
+
+        .btn-lime {
+            background: linear-gradient(45deg, var(--lime), var(--green));
+            color: #000 !important; font-weight: 900;
+            padding: 14px 32px; border-radius: 14px; border: none;
+            font-size: 1rem; transition: 0.3s; text-transform: uppercase; letter-spacing: 0.5px;
+            box-shadow: 0 0 20px rgba(204,255,0,0.4);
+        }
+        .btn-lime:hover { transform: scale(1.04); box-shadow: 0 0 35px rgba(204,255,0,0.7); }
+        .btn-outline-lime {
+            border: 2px solid var(--lime); color: var(--lime) !important;
+            background: rgba(204,255,0,0.05);
+            padding: 12px 28px; border-radius: 14px; font-weight: 700; transition: 0.3s;
+        }
+        .btn-outline-lime:hover { background: var(--lime); color: #000 !important; box-shadow: 0 0 20px var(--lime); }
+
+        .section-dark { background: #060b12; padding: 90px 0; }
+        .section-mid { background: rgba(10,16,28,1); padding: 90px 0; }
+
+        .imc-box {
+            background: rgba(204,255,0,0.05); border: 1px solid rgba(204,255,0,0.25);
+            border-radius: 24px; padding: 36px;
+        }
+        .imc-input {
+            background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.2);
+            color: #fff; border-radius: 12px; padding: 14px 18px;
+            font-size: 1rem; width: 100%; transition: 0.3s;
+        }
+        .imc-input:focus { outline: none; border-color: var(--lime); box-shadow: 0 0 12px rgba(204,255,0,0.2); }
+        .imc-select {
+            background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.2);
+            color: #fff; border-radius: 12px; padding: 14px 18px;
+            font-size: 1rem; width: 100%;
+        }
+        .imc-result {
+            background: rgba(204,255,0,0.08); border: 1px solid rgba(204,255,0,0.35);
+            border-radius: 16px; padding: 24px; margin-top: 20px; display: none;
+        }
+
+        .schedule-grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 14px;
+        }
+        .schedule-slot {
+            background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 14px; padding: 16px 12px; text-align: center;
+            cursor: pointer; transition: 0.3s;
+        }
+        .schedule-slot:hover {
+            border-color: var(--lime); background: rgba(204,255,0,0.08);
+            transform: scale(1.04);
+        }
+
+        .modal-content { background: #0d1524; border: 1px solid rgba(204,255,0,0.2); border-radius: 24px; }
+        .modal-header { border-bottom: 1px solid rgba(255,255,255,0.08); }
+
+        footer.demo-footer {
+            background: #040810; border-top: 1px solid rgba(255,255,255,0.07);
+            padding: 48px 0 32px;
+        }
+    </style>
+</head>
+<body class="demo-page">
+
+    <!-- Barra de Controle da Demonstração -->
+    <div class="demo-bar">
+        <a href="/nossos-servicos" class="demo-back-btn">
+            <i data-lucide="arrow-left"></i> Voltar
+        </a>
+        <div class="demo-bar-brand">
+            <span class="demo-bar-badge">🔴 DEMO AO VIVO</span>
+            <span>Academia — Planos & Matrícula Digital</span>
+        </div>
+        <div class="demo-controls">
+            <a href="https://wa.me/5521983225806?text=Ol%C3%A1!%20Vi%20a%20demo%20de%20Academia%20e%20gostaria%20de%20um%20or%C3%A7amento." target="_blank" class="demo-cta-btn">
+                <i data-lucide="message-circle"></i> Quero um Site Assim
+            </a>
+        </div>
+    </div>
+
+    <!-- Navbar Interna -->
+    <nav style="background: rgba(6,11,18,0.97); border-bottom: 1px solid rgba(204,255,0,0.15); position: fixed; top: 56px; width: 100%; z-index: 999; padding: 14px 0;">
+        <div class="container d-flex align-items-center justify-content-between">
+            <a href="#" style="font-family: 'Outfit', sans-serif; font-weight: 900; font-size: 1.4rem; text-decoration: none;">
+                ⚡ <span class="text-lime">PULSE</span> <span class="text-white">CYBER GYM</span>
+            </a>
+            <div class="d-flex align-items-center gap-3">
+                <a href="#planos" class="text-white text-decoration-none fw-600 d-none d-md-inline" style="opacity:0.8">Planos</a>
+                <a href="#aulas" class="text-white text-decoration-none fw-600 d-none d-md-inline" style="opacity:0.8">Aulas</a>
+                <button class="btn-lime btn border-0 btn-sm px-3 py-2" data-bs-toggle="modal" data-bs-target="#matriculaModal">
+                    <i data-lucide="zap" style="width:14px;height:14px" class="me-1"></i> MATRICULAR
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="gym-hero" style="padding-top: 180px;">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-7">
+                    <div class="d-flex flex-wrap gap-2 mb-4">
+                        <span class="stat-pill">🔥 +3.800 Alunos Ativos</span>
+                        <span class="stat-pill">⭐ 4.9/5 · 950+ Avaliações</span>
+                        <span class="stat-pill">🏆 IA de Performance</span>
+                    </div>
+                    <h1 class="gym-title text-white mb-4">
+                        TRANSFORME SEU CORPO COM <br>
+                        <span class="text-lime">TECNOLOGIA & PERFORMANCE</span>
+                    </h1>
+                    <p class="text-white mb-5" style="font-size:1.15rem; opacity:0.88; max-width:540px; line-height:1.7">
+                        Protocolos de treino personalizados por IA, acompanhamento em tempo real e resultado garantido. A academia que usa tecnologia de ponta para transformar vidas.
+                    </p>
+                    <div class="d-flex flex-wrap gap-3">
+                        <button class="btn-lime btn border-0" data-bs-toggle="modal" data-bs-target="#matriculaModal">
+                            <i data-lucide="zap" class="me-2" style="width:16px;height:16px"></i>MATRICULAR AGORA
+                        </button>
+                        <a href="#planos" class="btn-outline-lime btn">Ver Planos</a>
+                    </div>
+                </div>
+                <div class="col-lg-5 d-none d-lg-block">
+                    <div class="gym-card text-center" style="max-width:320px; margin-left:auto">
+                        <div style="font-size:3rem; margin-bottom:12px">⚡</div>
+                        <div class="text-lime fw-bold mb-1" style="font-size:1.1rem">Check-in Digital Agora</div>
+                        <p class="text-white mb-3" style="opacity:0.75; font-size:0.9rem">Gerencie sua frequência, treinos e evolução direto no app</p>
+                        <div class="d-flex justify-content-around">
+                            <div class="text-center">
+                                <div class="text-lime fw-900" style="font-size:1.8rem; font-family:'Outfit',sans-serif">94%</div>
+                                <div style="font-size:0.75rem; opacity:0.7">Frequência</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-lime fw-900" style="font-size:1.8rem; font-family:'Outfit',sans-serif">28</div>
+                                <div style="font-size:0.75rem; opacity:0.7">Treinos/Mês</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-lime fw-900" style="font-size:1.8rem; font-family:'Outfit',sans-serif">-8kg</div>
+                                <div style="font-size:0.75rem; opacity:0.7">Meta Próxima</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Diferenciais -->
+    <section class="section-dark">
+        <div class="container">
+            <h2 class="text-center text-white mb-2" style="font-size:2.2rem">Por que a <span class="text-lime">Pulse Cyber Gym</span>?</h2>
+            <p class="text-center mb-5" style="opacity:0.7; max-width:560px; margin: 0 auto 50px">Combinamos tecnologia de elite com personal trainers certificados para entregar resultados reais.</p>
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-3">
+                    <div class="gym-card text-center h-100">
+                        <div class="gym-icon mx-auto">🤖</div>
+                        <h5 class="text-white fw-700">Treino por IA</h5>
+                        <p style="font-size:0.9rem; opacity:0.8">Protocolos gerados por inteligência artificial adaptados ao seu biótipo e objetivo</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="gym-card text-center h-100">
+                        <div class="gym-icon mx-auto">📊</div>
+                        <h5 class="text-white fw-700">Dashboard de Evolução</h5>
+                        <p style="font-size:0.9rem; opacity:0.8">Acompanhe medidas, carga, frequência e performance em tempo real pelo app</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="gym-card text-center h-100">
+                        <div class="gym-icon mx-auto">🎯</div>
+                        <h5 class="text-white fw-700">Metas Garantidas</h5>
+                        <p style="font-size:0.9rem; opacity:0.8">Se você não atingir a meta em 90 dias com nossa metodologia, o próximo mês é grátis</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="gym-card text-center h-100">
+                        <div class="gym-icon mx-auto">⚡</div>
+                        <h5 class="text-white fw-700">Check-in Automático</h5>
+                        <p style="font-size:0.9rem; opacity:0.8">Reconhecimento facial na entrada e notificações de treino diretamente no WhatsApp</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Calculadora IMC -->
+    <section class="section-mid" id="imc">
+        <div class="container">
+            <div class="row align-items-center g-5">
+                <div class="col-lg-5">
+                    <h2 class="text-white mb-3" style="font-size:2.2rem">Calcule seu <span class="text-lime">IMC</span> e receba uma recomendação</h2>
+                    <p style="opacity:0.8; line-height:1.7">Descubra qual plano e modalidade é ideal para o seu perfil. Nossa IA analisa seu resultado e indica o protocolo mais eficiente.</p>
+                </div>
+                <div class="col-lg-7">
+                    <div class="imc-box">
+                        <form onsubmit="handleIMC(event)">
+                            <div class="row g-3 mb-3">
+                                <div class="col-sm-6">
+                                    <label class="text-white mb-2 fw-600" style="font-size:0.9rem">Altura (ex: 1.75)</label>
+                                    <input type="number" id="calcHeight" class="imc-input" step="0.01" min="1.2" max="2.5" placeholder="1.75" required>
+                                </div>
+                                <div class="col-sm-6">
+                                    <label class="text-white mb-2 fw-600" style="font-size:0.9rem">Peso em kg</label>
+                                    <input type="number" id="calcWeight" class="imc-input" step="0.1" min="30" max="300" placeholder="80" required>
+                                </div>
+                            </div>
+                            <div class="mb-4">
+                                <label class="text-white mb-2 fw-600" style="font-size:0.9rem">Seu objetivo principal</label>
+                                <select id="calcGoal" class="imc-select">
+                                    <option>Emagrecer e definir</option>
+                                    <option>Ganhar massa muscular</option>
+                                    <option>Condicionamento físico</option>
+                                    <option>Saúde & bem-estar</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn-lime btn border-0 w-100">
+                                <i data-lucide="calculator" class="me-2" style="width:16px;height:16px"></i>Calcular & Receber Recomendação
+                            </button>
+                        </form>
+                        <div id="calcResultBox" class="imc-result">
+                            <div class="text-lime fw-800 mb-1" id="resIMCVal"></div>
+                            <p class="text-white mb-1" id="resIMCText"></p>
+                            <p style="color: rgba(255,255,255,0.75); font-size:0.88rem" id="resRecomText"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Planos -->
+    <section class="section-dark" id="planos">
+        <div class="container">
+            <h2 class="text-center text-white mb-2" style="font-size:2.2rem">Planos & <span class="text-lime">Preços</span></h2>
+            <p class="text-center mb-5" style="opacity:0.7">Matrícula 100% online, sem fila, sem burocracia.</p>
+            <div class="row g-4 justify-content-center">
+                <div class="col-md-6 col-lg-3">
+                    <div class="plan-card">
+                        <div class="text-lime fw-700 mb-1" style="font-size:0.85rem; text-transform:uppercase">BÁSICO</div>
+                        <div class="plan-price"><sup>R$</sup>89<span>/mês</span></div>
+                        <ul class="list-unstyled mt-3 mb-4" style="font-size:0.9rem; opacity:0.85;">
+                            <li class="mb-2">✓ Musculação livre</li>
+                            <li class="mb-2">✓ Check-in digital</li>
+                            <li class="mb-2">✓ App de treinos</li>
+                            <li class="mb-2 opacity-50">✗ Personal incluído</li>
+                            <li class="opacity-50">✗ Aulas coletivas</li>
+                        </ul>
+                        <button class="btn-outline-lime btn w-100 border-2" onclick="openMatricula('Básico', 89)">Escolher Plano</button>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="plan-card featured">
+                        <div class="plan-badge">MAIS POPULAR</div>
+                        <div class="text-lime fw-700 mb-1 mt-3" style="font-size:0.85rem; text-transform:uppercase">VIP CYBER</div>
+                        <div class="plan-price"><sup>R$</sup>159<span>/mês</span></div>
+                        <ul class="list-unstyled mt-3 mb-4" style="font-size:0.9rem; opacity:0.85;">
+                            <li class="mb-2">✓ Musculação livre</li>
+                            <li class="mb-2">✓ 2 Aulas coletivas/sem</li>
+                            <li class="mb-2">✓ Avaliação física IA</li>
+                            <li class="mb-2">✓ Protocolo personalizado</li>
+                            <li>✓ Suplemento de boas-vindas</li>
+                        </ul>
+                        <button class="btn-lime btn border-0 w-100" onclick="openMatricula('VIP Cyber', 159)">Matricular Agora</button>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="plan-card">
+                        <div class="text-lime fw-700 mb-1" style="font-size:0.85rem; text-transform:uppercase">ELITE</div>
+                        <div class="plan-price"><sup>R$</sup>299<span>/mês</span></div>
+                        <ul class="list-unstyled mt-3 mb-4" style="font-size:0.9rem; opacity:0.85;">
+                            <li class="mb-2">✓ Tudo do VIP Cyber</li>
+                            <li class="mb-2">✓ Personal ilimitado</li>
+                            <li class="mb-2">✓ Nutricionista mensal</li>
+                            <li class="mb-2">✓ Aulas ilimitadas</li>
+                            <li>✓ Zona VIP exclusiva</li>
+                        </ul>
+                        <button class="btn-outline-lime btn w-100 border-2" onclick="openMatricula('Elite', 299)">Escolher Plano</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Grade de Aulas -->
+    <section class="section-mid" id="aulas">
+        <div class="container">
+            <h2 class="text-center text-white mb-5" style="font-size:2.2rem">Grade de <span class="text-lime">Aulas Coletivas</span></h2>
+            <div class="schedule-grid">
+                <div class="schedule-slot" onclick="bookClass('Spinning 🚴', '07:00')">
+                    <div style="font-size:1.5rem mb-1">🚴</div>
+                    <div class="text-lime fw-700 mt-1">Spinning</div>
+                    <div style="font-size:0.8rem; opacity:0.7">Seg/Qua · 07:00</div>
+                    <div style="font-size:0.75rem; color:#00ff88" class="mt-1">2 vagas</div>
+                </div>
+                <div class="schedule-slot" onclick="bookClass('Yoga 🧘', '08:00')">
+                    <div style="font-size:1.5rem mb-1">🧘</div>
+                    <div class="text-lime fw-700 mt-1">Yoga Flow</div>
+                    <div style="font-size:0.8rem; opacity:0.7">Ter/Qui · 08:00</div>
+                    <div style="font-size:0.75rem; color:#00ff88" class="mt-1">5 vagas</div>
+                </div>
+                <div class="schedule-slot" onclick="bookClass('Boxe 🥊', '18:00')">
+                    <div style="font-size:1.5rem mb-1">🥊</div>
+                    <div class="text-lime fw-700 mt-1">Boxe Cardio</div>
+                    <div style="font-size:0.8rem; opacity:0.7">Seg/Qua · 18:00</div>
+                    <div style="font-size:0.75rem; color:#ccff00" class="mt-1">Última vaga</div>
+                </div>
+                <div class="schedule-slot" onclick="bookClass('Pilates 🤸', '09:00')">
+                    <div style="font-size:1.5rem mb-1">🤸</div>
+                    <div class="text-lime fw-700 mt-1">Pilates</div>
+                    <div style="font-size:0.8rem; opacity:0.7">Sáb · 09:00</div>
+                    <div style="font-size:0.75rem; color:#00ff88" class="mt-1">4 vagas</div>
+                </div>
+                <div class="schedule-slot" onclick="bookClass('Funcional ⚡', '19:00')">
+                    <div style="font-size:1.5rem mb-1">⚡</div>
+                    <div class="text-lime fw-700 mt-1">Funcional</div>
+                    <div style="font-size:0.8rem; opacity:0.7">Ter/Sex · 19:00</div>
+                    <div style="font-size:0.75rem; color:#00ff88" class="mt-1">3 vagas</div>
+                </div>
+                <div class="schedule-slot" onclick="bookClass('Zumba 💃', '20:00')">
+                    <div style="font-size:1.5rem mb-1">💃</div>
+                    <div class="text-lime fw-700 mt-1">Zumba</div>
+                    <div style="font-size:0.8rem; opacity:0.7">Qua/Sex · 20:00</div>
+                    <div style="font-size:0.75rem; color:#00ff88" class="mt-1">6 vagas</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Final -->
+    <section style="padding:100px 0; background: linear-gradient(135deg, rgba(204,255,0,0.08) 0%, rgba(0,255,136,0.04) 100%);">
+        <div class="container text-center">
+            <h2 class="text-white mb-3" style="font-size:2.5rem; font-family:'Outfit',sans-serif; font-weight:900">
+                Sua transformação começa <span class="text-lime">hoje</span>
+            </h2>
+            <p class="mb-5" style="opacity:0.8; max-width:500px; margin:0 auto 40px; font-size:1.1rem">Primeira semana completamente grátis. Sem cartão de crédito. Sem compromisso.</p>
+            <button class="btn-lime btn border-0 btn-lg" data-bs-toggle="modal" data-bs-target="#matriculaModal">
+                <i data-lucide="zap" class="me-2"></i> QUERO COMEÇAR GRÁTIS
+            </button>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="demo-footer">
+        <div class="container text-center">
+            <div class="text-lime fw-900 mb-2" style="font-size:1.5rem; font-family:'Outfit',sans-serif">⚡ PULSE CYBER GYM</div>
+            <p style="opacity:0.5; font-size:0.85rem">© 2026 · Demonstração desenvolvida por Inovador Tech · <a href="https://wa.me/5521983225806" class="text-lime text-decoration-none">Solicitar este site</a></p>
+        </div>
+    </footer>
+
+    <!-- Modal Matrícula -->
+    <div class="modal fade" id="matriculaModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content p-4">
+                <div class="modal-header border-0 pb-0">
+                    <h5 class="modal-title text-white fw-800">⚡ Matrícula Online</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form onsubmit="handleMatricula(event)">
+                        <div class="mb-3">
+                            <label class="text-white mb-2 fw-600" style="font-size:0.9rem">Plano escolhido</label>
+                            <select id="selectPlanoModal" class="imc-select">
+                                <option>Básico – R$89/mês</option>
+                                <option selected>VIP Cyber – R$159/mês</option>
+                                <option>Elite – R$299/mês</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <input type="text" class="imc-input" placeholder="Nome completo" required>
+                        </div>
+                        <div class="mb-3">
+                            <input type="tel" class="imc-input" placeholder="WhatsApp (DDD + número)" required>
+                        </div>
+                        <div class="mb-4">
+                            <input type="email" class="imc-input" placeholder="E-mail" required>
+                        </div>
+                        <button type="submit" class="btn-lime btn border-0 w-100 py-3 fw-900">CONFIRMAR MATRÍCULA</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        lucide.createIcons();
+
+        function openMatricula(plano, preco) {
+            document.getElementById('selectPlanoModal').value = `${plano} – R$${preco}/mês`;
+            new bootstrap.Modal(document.getElementById('matriculaModal')).show();
+        }
+
+        function handleMatricula(e) {
+            e.preventDefault();
+            const plano = document.getElementById('selectPlanoModal').value;
+            bootstrap.Modal.getInstance(document.getElementById('matriculaModal')).hide();
+            showToast(`⚡ Matrícula confirmada! Primeira semana grátis. Acesse o app e comece hoje!`);
+        }
+
+        function handleIMC(e) {
+            e.preventDefault();
+            const h = parseFloat(document.getElementById('calcHeight').value);
+            const w = parseFloat(document.getElementById('calcWeight').value);
+            const goal = document.getElementById('calcGoal').value;
+            if (!h || !w) return;
+            const imc = w / (h * h);
+            let status = imc < 18.5 ? "Abaixo do peso ideal" : imc < 24.9 ? "Peso saudável — ótima base!" : imc < 29.9 ? "Sobrepeso leve" : "Obesidade — vamos juntos!";
+            document.getElementById('resIMCVal').innerText = `IMC: ${imc.toFixed(1)} · ${status}`;
+            document.getElementById('resIMCText').innerText = `Para "${goal}" recomendamos o Plano VIP Cyber com 4 treinos/semana + aula de cardio.`;
+            document.getElementById('resRecomText').innerText = `Estimativa: resultados visíveis em 3 a 6 semanas com nosso método de IA.`;
+            document.getElementById('calcResultBox').style.display = 'block';
+        }
+
+        function bookClass(aula, horario) {
+            showToast(`✅ Reserva confirmada! ${aula} às ${horario}. Você receberá um lembrete no WhatsApp 1h antes.`);
+        }
+
+        function showToast(msg) {
+            const t = document.createElement('div');
+            t.className = 'demo-toast';
+            t.innerHTML = `<div class="demo-toast-icon">⚡</div><div><strong class="text-white">Pulse Cyber Gym</strong><p class="mb-0 small text-white mt-1">${msg}</p></div>`;
+            document.body.appendChild(t);
+            setTimeout(() => t.remove(), 6000);
+        }
+    </script>
+</body>
+</html>

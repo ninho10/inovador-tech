@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BarberX CyberCut | Barbearia & Agendamento Online</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/demo.css') }}">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root { --gold: #ffb700; --orange: #ff6b00; --dark: #0a0800; }
+        body.demo-page { background-color: var(--dark) !important; }
+
+        .hero {
+            min-height: 100vh; display: flex; align-items: center;
+            background-image: url('https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=1600&q=85&auto=format&fit=crop');
+            background-size: cover; background-position: center 30%; padding: 180px 0 100px;
+            position: relative;
+        }
+        .hero::before {
+            content: ""; position: absolute; inset: 0;
+            background: linear-gradient(135deg, rgba(10,8,0,0.92) 0%, rgba(10,8,0,0.55) 60%, rgba(10,8,0,0.85) 100%);
+        }
+        .hero .container { position: relative; z-index: 2; }
+
+        .text-gold { color: var(--gold) !important; text-shadow: 0 0 25px rgba(255,183,0,0.5); }
+        .page-title { font-family: 'Outfit', sans-serif; font-weight: 900; font-size: clamp(2.5rem,5vw,4.2rem); line-height:1.05; }
+
+        .barber-card {
+            background: rgba(255,183,0,0.04); border: 1px solid rgba(255,183,0,0.2);
+            border-radius: 22px; padding: 28px; transition: 0.35s; backdrop-filter: blur(12px);
+        }
+        .barber-card:hover { border-color: var(--gold); transform: translateY(-8px); box-shadow: 0 20px 50px rgba(255,183,0,0.2); }
+
+        .btn-gold {
+            background: linear-gradient(45deg, var(--orange), var(--gold));
+            color: #000 !important; font-weight: 900;
+            padding: 14px 30px; border-radius: 14px; border: none; transition: 0.3s;
+            box-shadow: 0 0 20px rgba(255,183,0,0.4);
+        }
+        .btn-gold:hover { transform: scale(1.04); box-shadow: 0 0 35px rgba(255,183,0,0.7); }
+        .btn-outline-gold {
+            border: 2px solid var(--gold); color: var(--gold) !important;
+            background: rgba(255,183,0,0.05);
+            padding: 12px 28px; border-radius: 14px; font-weight: 700; transition: 0.3s;
+        }
+        .btn-outline-gold:hover { background: var(--gold); color: #000 !important; }
+
+        .cut-card {
+            background: rgba(255,255,255,0.03); border: 1px solid rgba(255,183,0,0.15);
+            border-radius: 20px; overflow: hidden; transition: 0.35s; cursor: pointer;
+        }
+        .cut-card:hover { border-color: var(--gold); transform: translateY(-6px); box-shadow: 0 15px 40px rgba(255,183,0,0.2); }
+        .cut-img {
+            height: 180px; background-size: cover; background-position: center top;
+            display: flex; align-items: flex-end; padding: 16px;
+        }
+        .cut-badge { background: var(--gold); color: #000; font-size:0.75rem; font-weight:900; padding: 4px 12px; border-radius: 20px; }
+
+        .barber-avatar {
+            width: 80px; height: 80px; border-radius: 50%;
+            border: 3px solid var(--gold); object-fit: cover;
+            background: rgba(255,183,0,0.1);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 2rem;
+        }
+        .time-slot {
+            background: rgba(255,255,255,0.04); border: 1px solid rgba(255,183,0,0.2);
+            border-radius: 10px; padding: 10px 14px; text-align: center;
+            cursor: pointer; transition: 0.25s; font-size: 0.9rem; color: #fff;
+        }
+        .time-slot:hover, .time-slot.selected {
+            background: var(--gold); color: #000; font-weight: 700; border-color: var(--gold);
+        }
+
+        .sec { padding: 90px 0; }
+        .sec-alt { padding: 90px 0; background: rgba(255,183,0,0.025); }
+
+        .modal-content { background: #120e03; border: 1px solid rgba(255,183,0,0.25); border-radius: 24px; }
+        .dark-input {
+            background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15);
+            color: #fff; border-radius: 12px; padding: 13px 16px; width: 100%;
+        }
+        .dark-input:focus { outline: none; border-color: var(--gold); }
+    </style>
+</head>
+<body class="demo-page">
+
+    <div class="demo-bar">
+        <a href="/nossos-servicos" class="demo-back-btn"><i data-lucide="arrow-left"></i> Voltar</a>
+        <div class="demo-bar-brand">
+            <span class="demo-bar-badge">🔴 DEMO AO VIVO</span>
+            <span>Barbearia — Site com Agendamento Online</span>
+        </div>
+        <div class="demo-controls">
+            <a href="https://wa.me/5521983225806?text=Quero+um+site+de+barbearia" target="_blank" class="demo-cta-btn">
+                <i data-lucide="message-circle"></i> Quero um Site Assim
+            </a>
+        </div>
+    </div>
+
+    <!-- Nav Interna -->
+    <nav style="background:rgba(10,8,0,0.97);border-bottom:1px solid rgba(255,183,0,0.15);position:fixed;top:56px;width:100%;z-index:999;padding:14px 0;">
+        <div class="container d-flex align-items-center justify-content-between">
+            <a href="#" style="font-family:'Outfit',sans-serif;font-weight:900;font-size:1.4rem;text-decoration:none">
+                ✂️ <span class="text-gold">BARBER</span><span class="text-white">X</span>
+            </a>
+            <div class="d-flex gap-3 align-items-center">
+                <a href="#servicos" class="text-white text-decoration-none d-none d-md-inline" style="opacity:0.8">Serviços</a>
+                <a href="#barbeiros" class="text-white text-decoration-none d-none d-md-inline" style="opacity:0.8">Barbeiros</a>
+                <button class="btn-gold btn border-0 btn-sm" data-bs-toggle="modal" data-bs-target="#agendamentoModal">
+                    📅 Agendar Agora
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <header class="hero">
+        <div class="container">
+            <div class="col-lg-7">
+                <div class="d-flex flex-wrap gap-2 mb-4">
+                    <span class="stat-pill">✂️ +12.000 Cortes realizados</span>
+                    <span class="stat-pill">⭐ 4.9/5 · Google</span>
+                </div>
+                <h1 class="page-title text-white mb-4">
+                    CORTE DE <span class="text-gold">ELITE</span>,<br>
+                    ESTILO SEM <span class="text-gold">ESPERA</span>
+                </h1>
+                <p class="text-white mb-5" style="font-size:1.1rem;opacity:0.88;max-width:500px;line-height:1.7">
+                    Agende seu horário em segundos, escolha seu barbeiro favorito e chegue direto na cadeira. Sem fila. Sem espera.
+                </p>
+                <div class="d-flex flex-wrap gap-3">
+                    <button class="btn-gold btn border-0 btn-lg" data-bs-toggle="modal" data-bs-target="#agendamentoModal">
+                        📅 Agendar Horário
+                    </button>
+                    <a href="#servicos" class="btn-outline-gold btn btn-lg">Ver Serviços</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Serviços / Cortes -->
+    <section class="sec" id="servicos">
+        <div class="container">
+            <h2 class="text-white text-center mb-2" style="font-size:2.2rem">Nossos <span class="text-gold">Serviços</span></h2>
+            <p class="text-center mb-5" style="opacity:0.7">Do clássico ao moderno — cada detalhe feito com precisão.</p>
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-3">
+                    <div class="cut-card" onclick="selectService('Corte Degradê', 50)">
+                        <div class="cut-img" style="background-image:url('https://images.unsplash.com/photo-1622286342621-4bd786c2447c?w=400&q=80&auto=format&fit=crop')">
+                            <span class="cut-badge">R$ 50</span>
+                        </div>
+                        <div class="p-3">
+                            <h5 class="text-white fw-700 mb-1">Degradê Moderno</h5>
+                            <p style="font-size:0.85rem;opacity:0.75;margin:0">Fade perfeito + acabamento na máquina de precisão</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="cut-card" onclick="selectService('Corte + Barba', 80)">
+                        <div class="cut-img" style="background-image:url('https://images.unsplash.com/photo-1593702288056-7cc0b32a3f1c?w=400&q=80&auto=format&fit=crop')">
+                            <span class="cut-badge">R$ 80</span>
+                        </div>
+                        <div class="p-3">
+                            <h5 class="text-white fw-700 mb-1">Corte + Barba</h5>
+                            <p style="font-size:0.85rem;opacity:0.75;margin:0">Combo completo com toalha quente e hidratação</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="cut-card" onclick="selectService('Barba Tradicional', 45)">
+                        <div class="cut-img" style="background-image:url('https://images.unsplash.com/photo-1585747860715-2ba37e788b70?w=400&q=80&auto=format&fit=crop')">
+                            <span class="cut-badge">R$ 45</span>
+                        </div>
+                        <div class="p-3">
+                            <h5 class="text-white fw-700 mb-1">Barba à Navalha</h5>
+                            <p style="font-size:0.85rem;opacity:0.75;margin:0">Ritual clássico com navalha, espuma e hot towel</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="cut-card" onclick="selectService('Pacote VIP', 130)">
+                        <div class="cut-img" style="background-image:url('https://images.unsplash.com/photo-1599351431202-1e0f0137899a?w=400&q=80&auto=format&fit=crop')">
+                            <span class="cut-badge" style="background:#ff6b00">VIP · R$ 130</span>
+                        </div>
+                        <div class="p-3">
+                            <h5 class="text-white fw-700 mb-1">Pacote Black VIP</h5>
+                            <p style="font-size:0.85rem;opacity:0.75;margin:0">Corte + barba + hidratação + produto profissional</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Barbeiros -->
+    <section class="sec-alt" id="barbeiros">
+        <div class="container">
+            <h2 class="text-white text-center mb-2" style="font-size:2.2rem">Escolha seu <span class="text-gold">Barbeiro</span></h2>
+            <p class="text-center mb-5" style="opacity:0.7">Profissionais certificados, especializados em cortes modernos e clássicos.</p>
+            <div class="row g-4 justify-content-center">
+                <div class="col-md-4 col-lg-3 text-center">
+                    <div class="barber-card">
+                        <div class="barber-avatar mx-auto mb-3">🧑🏽‍🦱</div>
+                        <h5 class="text-white fw-800 mb-1">Lucas "Fade" Silva</h5>
+                        <div class="text-gold fw-700 mb-2" style="font-size:0.85rem">⭐ 4.98 · Especialista em Degradê</div>
+                        <p style="font-size:0.85rem;opacity:0.75;margin-bottom:16px">8 anos de experiência. Campeão estadual 2024.</p>
+                        <button class="btn-gold btn border-0 w-100 btn-sm" onclick="selectBarber('Lucas')">Agendar com Lucas</button>
+                    </div>
+                </div>
+                <div class="col-md-4 col-lg-3 text-center">
+                    <div class="barber-card">
+                        <div class="barber-avatar mx-auto mb-3">👨🏻‍🦳</div>
+                        <h5 class="text-white fw-800 mb-1">Rafael "Navalha" Costa</h5>
+                        <div class="text-gold fw-700 mb-2" style="font-size:0.85rem">⭐ 4.97 · Mestre em Barba</div>
+                        <p style="font-size:0.85rem;opacity:0.75;margin-bottom:16px">Expert em navalha e design de barba clássica.</p>
+                        <button class="btn-gold btn border-0 w-100 btn-sm" onclick="selectBarber('Rafael')">Agendar com Rafael</button>
+                    </div>
+                </div>
+                <div class="col-md-4 col-lg-3 text-center">
+                    <div class="barber-card">
+                        <div class="barber-avatar mx-auto mb-3">👨🏿‍🦲</div>
+                        <h5 class="text-white fw-800 mb-1">Diego "Black" Alves</h5>
+                        <div class="text-gold fw-700 mb-2" style="font-size:0.85rem">⭐ 4.96 · Cortes Afro & Estilizados</div>
+                        <p style="font-size:0.85rem;opacity:0.75;margin-bottom:16px">Referência em cortes artísticos e tranças.</p>
+                        <button class="btn-gold btn border-0 w-100 btn-sm" onclick="selectBarber('Diego')">Agendar com Diego</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Agendamento Rápido -->
+    <section class="sec">
+        <div class="container">
+            <div class="row align-items-center g-5">
+                <div class="col-lg-5">
+                    <h2 class="text-white mb-3" style="font-size:2.2rem">Horários <span class="text-gold">disponíveis hoje</span></h2>
+                    <p style="opacity:0.8">Clique para reservar seu horário instantaneamente.</p>
+                </div>
+                <div class="col-lg-7">
+                    <div class="row g-3">
+                        <div class="col-4"><div class="time-slot" onclick="bookTime('09:00')">09:00</div></div>
+                        <div class="col-4"><div class="time-slot" onclick="bookTime('09:30')">09:30</div></div>
+                        <div class="col-4"><div class="time-slot" onclick="bookTime('10:00')">10:00</div></div>
+                        <div class="col-4"><div class="time-slot" onclick="bookTime('11:00')">11:00</div></div>
+                        <div class="col-4"><div class="time-slot" onclick="bookTime('14:00')">14:00</div></div>
+                        <div class="col-4"><div class="time-slot" onclick="bookTime('15:30')">15:30</div></div>
+                        <div class="col-4"><div class="time-slot" onclick="bookTime('16:00')">16:00</div></div>
+                        <div class="col-4"><div class="time-slot" onclick="bookTime('17:30')">17:30</div></div>
+                        <div class="col-4"><div class="time-slot" onclick="bookTime('18:00')">18:00</div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="demo-footer">
+        <div class="container text-center">
+            <div class="text-gold fw-900 mb-2" style="font-size:1.5rem;font-family:'Outfit',sans-serif">✂️ BARBERX CYBERCUT</div>
+            <p style="opacity:0.5;font-size:0.85rem">© 2026 · Demonstração por Inovador Tech · <a href="https://wa.me/5521983225806" class="text-gold text-decoration-none">Solicitar este site</a></p>
+        </div>
+    </footer>
+
+    <!-- Modal Agendamento -->
+    <div class="modal fade" id="agendamentoModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content p-4">
+                <div class="modal-header border-0 pb-0">
+                    <h5 class="modal-title text-white fw-800">✂️ Agendar Horário</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form onsubmit="confirmAgendamento(event)">
+                        <div class="mb-3">
+                            <input id="agdNome" type="text" class="dark-input" placeholder="Seu nome" required>
+                        </div>
+                        <div class="mb-3">
+                            <input type="tel" class="dark-input" placeholder="WhatsApp" required>
+                        </div>
+                        <div class="mb-3">
+                            <select id="agdServico" class="dark-input">
+                                <option>Degradê Moderno – R$50</option>
+                                <option>Corte + Barba – R$80</option>
+                                <option>Barba à Navalha – R$45</option>
+                                <option>Pacote Black VIP – R$130</option>
+                            </select>
+                        </div>
+                        <div class="mb-4">
+                            <select id="agdBarbeiro" class="dark-input">
+                                <option>Lucas "Fade" Silva</option>
+                                <option>Rafael "Navalha" Costa</option>
+                                <option>Diego "Black" Alves</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn-gold btn border-0 w-100 py-3 fw-900">CONFIRMAR AGENDAMENTO</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        lucide.createIcons();
+        function selectService(nome, preco) {
+            document.getElementById('agdServico').value = `${nome} – R$${preco}`;
+            new bootstrap.Modal(document.getElementById('agendamentoModal')).show();
+        }
+        function selectBarber(nome) {
+            document.getElementById('agdBarbeiro').value = nome.includes('Lucas') ? 'Lucas "Fade" Silva' : nome.includes('Rafael') ? 'Rafael "Navalha" Costa' : 'Diego "Black" Alves';
+            new bootstrap.Modal(document.getElementById('agendamentoModal')).show();
+        }
+        function bookTime(hora) {
+            showToast(`✂️ Horário ${hora} reservado! Confirme pelo WhatsApp e chegue direto na cadeira.`);
+        }
+        function confirmAgendamento(e) {
+            e.preventDefault();
+            const nome = document.getElementById('agdNome').value;
+            bootstrap.Modal.getInstance(document.getElementById('agendamentoModal')).hide();
+            showToast(`✅ Agendamento confirmado para ${nome}! Você receberá um lembrete no WhatsApp 1h antes.`);
+        }
+        function showToast(msg) {
+            const t = document.createElement('div'); t.className = 'demo-toast';
+            t.innerHTML = `<div class="demo-toast-icon">✂️</div><div><strong class="text-white">BarberX CyberCut</strong><p class="mb-0 small text-white mt-1">${msg}</p></div>`;
+            document.body.appendChild(t); setTimeout(() => t.remove(), 6000);
+        }
+    </script>
+</body>
+</html>
