@@ -85,6 +85,10 @@ if [[ -z "$previous_commit" ]]; then
     fail_before_update "estado current_commit ausente; inicialização manual necessária antes do primeiro update"
 fi
 
+if [[ "$source_commit" != "$previous_commit" ]]; then
+    fail_before_update "checkout local diverge do commit registrado como implantado; intervenção manual necessária"
+fi
+
 stamp="$(date -u +%Y%m%dT%H%M%SZ)"
 backup_dir="$STATE_ROOT/$stamp"
 mkdir -p "$backup_dir"
