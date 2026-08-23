@@ -21,25 +21,25 @@ def index():
     """
     return render_template('index.html')
 
-# Rota para a página de dados e insights
-# Route for the data and insights page
-@app.route('/dados')
-def dados():
+# Rota para a página de Sistema Sob Medida
+# Route for the Custom System page
+@app.route('/sistema-sob-medida')
+def sistema_sob_medida():
     """
-    Renderiza o template da página de dados e gráficos.
-    Renders the data and graphics page template.
+    Renderiza o template da página de Sistema Sob Medida.
+    Renders the Custom System page template.
     """
-    return render_template('dados.html')
+    return render_template('sistema_sob_medida.html')
 
-# Rota para a página de inteligência artificial e agentes
-# Route for the AI and agents page
-@app.route('/ai')
-def ai():
+# Rota para a página de transformação de planilhas em sistemas
+# Route for the spreadsheets to systems page
+@app.route('/planilhas')
+def planilhas():
     """
-    Renderiza o template da página de IA e automação.
-    Renders the AI and automation page template.
+    Renderiza o template da página de Planilhas para Sistemas.
+    Renders the Spreadsheets to Systems page template.
     """
-    return render_template('ai.html')
+    return render_template('planilhas.html')
 
 # Rota para a página de desenvolvimento de sites
 # Route for the website development page
