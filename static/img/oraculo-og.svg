@@ -31,8 +31,8 @@
     <path d="M48 20L75 35V61L48 76L21 61V35L48 20Z" stroke="#E2F7EE" stroke-width="3" opacity="0.95"/>
   </g>
   <text x="238" y="160" fill="#EAF0FF" font-family="Inter, Arial, sans-serif" font-size="26" font-weight="700" letter-spacing="4">INOVADOR TECH</text>
-  <text x="238" y="235" fill="#FFFFFF" font-family="Space Grotesk, Inter, Arial, sans-serif" font-size="74" font-weight="700" letter-spacing="-2">Oráculo CRM grátis</text>
-  <text x="238" y="294" fill="#B7C2DF" font-family="Inter, Arial, sans-serif" font-size="28" font-weight="500">Veja por dentro. Entenda o valor. Evolua para versão completa ou solução personalizada.</text>
+  <text x="238" y="235" fill="#FFFFFF" font-family="Space Grotesk, Inter, Arial, sans-serif" font-size="74" font-weight="700" letter-spacing="-2">Oráculo CRM</text>
+  <text x="238" y="294" fill="#B7C2DF" font-family="Inter, Arial, sans-serif" font-size="28" font-weight="500">Conheça a demo. Entenda o valor. Veja como evoluir quando fizer sentido.</text>
 
   <g transform="translate(238 350)">
     <rect width="184" height="54" rx="27" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.12)"/>
