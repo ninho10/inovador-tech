@@ -21,6 +21,18 @@ def index():
     """
     return render_template('index.html')
 
+
+# Rota da landing comercial do Oráculo CRM
+# Route for the Oráculo CRM commercial landing page
+@app.route('/oraculo')
+@app.route('/oraculo/')
+def oraculo():
+    """
+    Renderiza a landing page comercial do Oráculo CRM.
+    Renders the Oráculo CRM commercial landing page.
+    """
+    return render_template('oraculo.html')
+
 # Rota para a página de Sistema Sob Medida
 # Route for the Custom System page
 @app.route('/sistema-sob-medida')

@@ -1,88 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>http://inovadortech.com.br/</loc>
-    <lastmod>2026-08-12</lastmod>
+    <loc>https://sitesinovador.com.br/</loc>
+    <lastmod>2026-08-25</lastmod>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>http://inovadortech.com.br/dados</loc>
-    <lastmod>2026-08-12</lastmod>
-    <priority>0.8</priority>
+    <loc>https://sitesinovador.com.br/oraculo</loc>
+    <lastmod>2026-08-25</lastmod>
+    <priority>0.95</priority>
   </url>
   <url>
-    <loc>http://inovadortech.com.br/ai</loc>
-    <lastmod>2026-08-12</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>http://inovadortech.com.br/sites</loc>
-    <lastmod>2026-08-12</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>http://inovadortech.com.br/nossos-servicos</loc>
-    <lastmod>2026-08-12</lastmod>
+    <loc>https://sitesinovador.com.br/nossos-servicos</loc>
+    <lastmod>2026-08-25</lastmod>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>http://inovadortech.com.br/demo/consultorio</loc>
-    <lastmod>2026-08-12</lastmod>
-    <priority>0.7</priority>
+    <loc>https://sitesinovador.com.br/sistema-sob-medida</loc>
+    <lastmod>2026-08-25</lastmod>
+    <priority>0.8</priority>
   </url>
   <url>
-    <loc>http://inovadortech.com.br/demo/barbearia</loc>
-    <lastmod>2026-08-12</lastmod>
-    <priority>0.7</priority>
+    <loc>https://sitesinovador.com.br/planilhas</loc>
+    <lastmod>2026-08-25</lastmod>
+    <priority>0.8</priority>
   </url>
   <url>
-    <loc>http://inovadortech.com.br/demo/restaurante</loc>
-    <lastmod>2026-08-12</lastmod>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>http://inovadortech.com.br/demo/academia</loc>
-    <lastmod>2026-08-12</lastmod>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>http://inovadortech.com.br/demo/salao</loc>
-    <lastmod>2026-08-12</lastmod>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>http://inovadortech.com.br/demo/clinica</loc>
-    <lastmod>2026-08-12</lastmod>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>http://inovadortech.com.br/demo/loja</loc>
-    <lastmod>2026-08-12</lastmod>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>http://inovadortech.com.br/demo/imobiliaria</loc>
-    <lastmod>2026-08-12</lastmod>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>http://inovadortech.com.br/demo/hotel</loc>
-    <lastmod>2026-08-12</lastmod>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>http://inovadortech.com.br/demo/oficina</loc>
-    <lastmod>2026-08-12</lastmod>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>http://inovadortech.com.br/demo/escola</loc>
-    <lastmod>2026-08-12</lastmod>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>http://inovadortech.com.br/demo/planilha</loc>
-    <lastmod>2026-08-12</lastmod>
-    <priority>0.7</priority>
+    <loc>https://sitesinovador.com.br/sites</loc>
+    <lastmod>2026-08-25</lastmod>
+    <priority>0.8</priority>
   </url>
 </urlset>
