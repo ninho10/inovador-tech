@@ -2,54 +2,447 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bella Glamour | Salão de Beleza & Agendamento</title>
+    <title>Glamour Salon & Studio | Agendamento</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/demo.css') }}">
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-        :root { --rose: #f43f5e; --pink: #ec4899; --dark: #0d060a; }
-        body.demo-page { background-color: var(--dark) !important; }
-        .text-rose { color: var(--rose) !important; text-shadow: 0 0 25px rgba(244,63,94,0.4); }
-        .text-pink { color: var(--pink) !important; }
+        :root { 
+            --rose: #f43f5e; 
+            --pink: #ffb6c1; 
+            --dark: #0f0a0d; 
+            --gold: #e5c158;
+            --rose-gold: #e8b4b8; /* Mais mimosa, suave e delicado */
+            --text-muted: #bdaeb3;
+            --bg-card: #171014;
+            --primary-font: 'Playfair Display', serif;
+            --secondary-font: 'Inter', sans-serif;
+        }
+        body.demo-page { 
+            background-color: var(--dark) !important; 
+            color: #fff;
+            font-family: var(--secondary-font);
+        }
+        .text-rose { color: var(--rose) !important; }
+        .text-rose-gold { color: var(--rose-gold) !important; }
+        .text-gold { color: var(--gold) !important; }
+        
+        h1, h2, h3, h4, h5, .brand-logo {
+            font-family: var(--primary-font);
+        }
 
-        .hero { min-height:100vh; display:flex; align-items:center; position:relative;
-            background-image:url('https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=1600&q=85&auto=format&fit=crop');
-            background-size:cover; background-position:center 40%; padding:180px 0 100px; }
-        .hero::before { content:""; position:absolute; inset:0;
-            background:linear-gradient(135deg,rgba(13,6,10,0.92) 0%,rgba(13,6,10,0.55) 60%,rgba(13,6,10,0.88) 100%); }
-        .hero .container { position:relative; z-index:2; }
+        /* Navbar */
+        .lux-nav {
+            background: rgba(15, 10, 13, 0.95);
+            border-bottom: 1px solid rgba(232,180,184,0.15);
+            position: fixed;
+            top: 56px; 
+            width: 100%;
+            z-index: 999;
+            padding: 15px 0;
+            backdrop-filter: blur(10px);
+        }
+        .brand-logo {
+            font-size: 1.8rem;
+            text-decoration: none;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .brand-logo i { color: var(--rose-gold); }
+        .brand-subtitle {
+            font-family: var(--secondary-font);
+            font-size: 0.6rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            display: block;
+            color: var(--text-muted);
+        }
+        
+        .nav-link {
+            color: #fff !important;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin: 0 12px;
+            transition: 0.3s;
+            opacity: 0.8;
+        }
+        .nav-link:hover { opacity: 1; color: var(--rose-gold) !important; }
+        
+        .btn-lux-outline {
+            background: transparent;
+            border: 1px solid var(--rose-gold);
+            color: var(--rose-gold);
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+            padding: 10px 24px;
+            transition: 0.3s;
+            text-decoration: none;
+            border-radius: 30px;
+        }
+        .btn-lux-outline:hover {
+            background: var(--rose-gold);
+            color: #000;
+        }
 
-        .page-title { font-family:'Outfit',sans-serif; font-weight:900; font-size:clamp(2.4rem,5vw,4.2rem); line-height:1.05; }
-        .btn-rose { background:linear-gradient(45deg,var(--rose),var(--pink)); color:#fff!important; font-weight:900; padding:14px 30px; border-radius:14px; border:none; transition:0.3s; box-shadow:0 0 20px rgba(244,63,94,0.4); }
-        .btn-rose:hover { transform:scale(1.04); box-shadow:0 0 35px rgba(244,63,94,0.7); }
-        .btn-outline-rose { border:2px solid var(--rose); color:var(--rose)!important; background:rgba(244,63,94,0.05); padding:12px 28px; border-radius:14px; font-weight:700; transition:0.3s; }
-        .btn-outline-rose:hover { background:var(--rose); color:#fff!important; }
+        /* Hero */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            background-image: url('https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=1600&q=85&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center 30%;
+            padding: 180px 0 100px;
+        }
+        .hero::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to right, rgba(15,10,13,0.92) 0%, rgba(15,10,13,0.5) 60%, rgba(15,10,13,0.1) 100%);
+        }
+        .hero .container { position: relative; z-index: 2; }
+        
+        .hero-subtitle {
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            font-size: 0.8rem;
+            color: var(--rose-gold);
+            margin-bottom: 20px;
+            display: block;
+        }
+        .hero-title {
+            font-size: clamp(3.2rem, 6vw, 4.8rem);
+            line-height: 1.1;
+            margin-bottom: 25px;
+            font-weight: 400;
+        }
+        .hero-desc {
+            font-size: 1.1rem;
+            color: #e0e0e0;
+            max-width: 450px;
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+        
+        .btn-solid-lux {
+            background: var(--rose-gold);
+            color: #111;
+            border: none;
+            padding: 15px 35px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: 0.3s;
+            text-decoration: none;
+            display: inline-block;
+            border-radius: 30px;
+            box-shadow: 0 10px 25px rgba(232,180,184,0.15);
+        }
+        .btn-solid-lux:hover {
+            background: #fff;
+            color: #000;
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(232,180,184,0.3);
+        }
+        .btn-play {
+            background: transparent;
+            color: #fff;
+            border: 1px solid rgba(255,255,255,0.3);
+            padding: 14px 30px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.85rem;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: 0.3s;
+            border-radius: 30px;
+        }
+        .btn-play:hover {
+            border-color: #fff;
+            background: rgba(255,255,255,0.05);
+        }
 
-        .serv-card { background:rgba(255,255,255,0.03); border:1px solid rgba(244,63,94,0.15); border-radius:22px; overflow:hidden; transition:0.35s; cursor:pointer; }
-        .serv-card:hover { border-color:var(--rose); transform:translateY(-6px); box-shadow:0 15px 40px rgba(244,63,94,0.2); }
-        .serv-img { height:200px; background-size:cover; background-position:center; }
-        .serv-body { padding:20px; }
+        /* Features Strip */
+        .features-strip {
+            background: #130c0f;
+            border-top: 1px solid rgba(232,180,184,0.1);
+            border-bottom: 1px solid rgba(232,180,184,0.1);
+            padding: 50px 0;
+        }
+        .feature-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            border-right: 1px solid rgba(232,180,184,0.1);
+        }
+        .feature-item:last-child { border-right: none; }
+        @media(max-width: 768px) {
+            .feature-item { border-right: none; border-bottom: 1px solid rgba(232,180,184,0.1); padding: 30px 0; }
+            .feature-item:last-child { border-bottom: none; }
+        }
+        .feature-icon {
+            color: var(--rose-gold);
+            margin-bottom: 20px;
+        }
+        .feature-title {
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+            color: #fff;
+        }
+        .feature-desc {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            max-width: 80%;
+        }
 
-        .prof-card { background:rgba(255,255,255,0.03); border:1px solid rgba(244,63,94,0.15); border-radius:22px; padding:28px; text-align:center; transition:0.35s; }
-        .prof-card:hover { border-color:var(--rose); box-shadow:0 12px 35px rgba(244,63,94,0.2); }
-        .prof-avatar { width:100px; height:100px; border-radius:50%; border:3px solid var(--rose); margin:0 auto 16px; background-size:cover; background-position:center; background-color:rgba(244,63,94,0.08); }
+        /* Sections */
+        .sec { padding: 120px 0; }
+        .sec-alt { background: #130c0f; padding: 120px 0; }
+        .sec-title {
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 15px;
+            font-weight: 400;
+        }
+        .sec-subtitle {
+            text-align: center;
+            color: var(--rose-gold);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-size: 0.85rem;
+            margin-bottom: 60px;
+        }
 
-        .time-slot { background:rgba(255,255,255,0.04); border:1px solid rgba(244,63,94,0.2); border-radius:10px; padding:10px 14px; text-align:center; cursor:pointer; transition:0.25s; font-size:0.9rem; color:#fff; }
-        .time-slot:hover { background:var(--rose); color:#fff; font-weight:700; border-color:var(--rose); }
+        /* Service Cards */
+        .serv-card {
+            background: var(--bg-card);
+            border: 1px solid rgba(232,180,184,0.05);
+            border-radius: 24px;
+            overflow: hidden;
+            transition: 0.4s;
+            cursor: pointer;
+            height: 100%;
+        }
+        .serv-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(232,180,184,0.3);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.5);
+        }
+        .serv-card:hover .serv-img {
+            transform: scale(1.05);
+        }
+        .serv-img-wrap {
+            overflow: hidden;
+            height: 240px;
+            border-bottom: 1px solid rgba(232,180,184,0.05);
+        }
+        .serv-img {
+            height: 100%;
+            width: 100%;
+            background-size: cover;
+            background-position: center;
+            transition: 0.6s ease;
+        }
+        .serv-body {
+            padding: 25px;
+            text-align: center;
+        }
+        .serv-title {
+            font-size: 1.15rem;
+            margin-bottom: 8px;
+            font-family: var(--primary-font);
+            letter-spacing: 0.5px;
+        }
+        .serv-desc {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+        .serv-price {
+            color: var(--rose-gold);
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-top: 15px;
+            display: block;
+        }
 
-        .sec { padding:90px 0; }
-        .sec-alt { padding:90px 0; background:rgba(244,63,94,0.025); }
-        .modal-content { background:#120008; border:1px solid rgba(244,63,94,0.25); border-radius:24px; }
-        .dark-input { background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.15); color:#fff; border-radius:12px; padding:13px 16px; width:100%; }
-        .dark-input:focus { outline:none; border-color:var(--rose); }
+        /* Team */
+        .prof-card {
+            text-align: center;
+        }
+        .prof-img {
+            width: 100%;
+            aspect-ratio: 1/1;
+            object-fit: cover;
+            margin-bottom: 25px;
+            border-radius: 50%;
+            border: 2px solid transparent;
+            filter: grayscale(20%) sepia(10%) brightness(0.9);
+            transition: 0.5s;
+        }
+        .prof-card:hover .prof-img {
+            filter: grayscale(0%) sepia(0%) brightness(1);
+            border-color: var(--rose-gold);
+            transform: scale(1.05);
+        }
+        .prof-name {
+            font-size: 1.4rem;
+            margin-bottom: 5px;
+            font-weight: 400;
+        }
+        .prof-role {
+            color: var(--rose-gold);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+        }
+        
+        .btn-outline-prof {
+            background: transparent;
+            border: 1px solid rgba(232,180,184,0.3);
+            color: var(--rose-gold);
+            padding: 8px 24px;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: 0.3s;
+            border-radius: 20px;
+        }
+        .btn-outline-prof:hover {
+            background: var(--rose-gold);
+            color: #000;
+        }
+
+        /* Testimonials */
+        .testi-card {
+            background: var(--bg-card);
+            padding: 40px;
+            text-align: center;
+            height: 100%;
+            position: relative;
+            border-radius: 24px;
+            border: 1px solid rgba(232,180,184,0.05);
+        }
+        .testi-card::before {
+            content: "“";
+            font-family: var(--primary-font);
+            font-size: 6rem;
+            color: rgba(232,180,184,0.05);
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            line-height: 1;
+        }
+        .stars { color: var(--gold); margin-bottom: 20px; position: relative; z-index: 2; }
+        .testi-text {
+            font-family: var(--primary-font);
+            font-size: 1.15rem;
+            font-style: italic;
+            color: #e0e0e0;
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 2;
+            line-height: 1.6;
+        }
+        .testi-author {
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            color: var(--rose-gold);
+        }
+
+        /* Scheduling Section */
+        .schedule-wrap {
+            background: var(--bg-card);
+            padding: 60px;
+            border-radius: 24px;
+            border: 1px solid rgba(232,180,184,0.1);
+        }
+        
+        /* Forms */
+        .dark-input {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(232,180,184,0.2);
+            color: #fff;
+            padding: 16px 20px;
+            width: 100%;
+            border-radius: 12px;
+            transition: 0.3s;
+            font-size: 0.95rem;
+        }
+        .dark-input:focus {
+            outline: none;
+            border-color: var(--rose-gold);
+            background: rgba(232,180,184,0.05);
+        }
+        .dark-input::placeholder { color: rgba(255,255,255,0.3); }
+        select.dark-input option {
+            background: var(--dark);
+            color: #fff;
+        }
+
+        /* Modal */
+        .modal-content {
+            background: var(--bg-card);
+            border: 1px solid var(--rose-gold);
+            border-radius: 24px;
+            padding: 20px;
+        }
+        .modal-header { border-bottom: 1px solid rgba(232,180,184,0.1); }
+        .modal-title { font-family: var(--primary-font); font-size: 1.8rem; color: var(--rose-gold); }
+        
+        /* Time Slots */
+        .time-slot {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(232,180,184,0.2);
+            padding: 15px 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: 0.3s;
+            color: #e0e0e0;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            border-radius: 12px;
+        }
+        .time-slot:hover {
+            background: var(--rose-gold);
+            border-color: var(--rose-gold);
+            color: #000;
+        }
+        
+        /* Footer */
+        .footer {
+            background: #080507;
+            padding: 80px 0 30px;
+            border-top: 1px solid rgba(232,180,184,0.05);
+        }
+        .footer-logo {
+            font-size: 2rem;
+            color: #fff;
+            text-decoration: none;
+            margin-bottom: 20px;
+            display: inline-block;
+        }
     </style>
 </head>
 <body class="demo-page">
 
     <div class="demo-bar">
         <a href="/nossos-servicos" class="demo-back-btn"><i data-lucide="arrow-left"></i> Voltar</a>
-        <div class="demo-bar-brand"><span class="demo-bar-badge">🔴 DEMO AO VIVO</span><span>Salão de Beleza — Serviços & Agendamento</span></div>
+        <div class="demo-bar-brand"><span class="demo-bar-badge">🔴 DEMO AO VIVO</span><span>Salão de Beleza Premium</span></div>
         <div class="demo-controls">
             <a href="https://wa.me/5521983225806?text=Quero+um+site+de+salao+de+beleza" target="_blank" class="demo-cta-btn">
                 <i data-lucide="message-circle"></i> Quero um Site Assim
@@ -57,103 +450,175 @@
         </div>
     </div>
 
-    <nav style="background:rgba(13,6,10,0.97);border-bottom:1px solid rgba(244,63,94,0.15);position:fixed;top:56px;width:100%;z-index:999;padding:14px 0;">
+    <nav class="lux-nav">
         <div class="container d-flex align-items-center justify-content-between">
-            <a href="#" style="font-family:'Outfit',sans-serif;font-weight:900;font-size:1.4rem;text-decoration:none">
-                💄 <span class="text-rose">BELLA</span><span class="text-white"> GLAMOUR</span>
+            <a href="#" class="brand-logo">
+                <i data-lucide="scissors" style="width:24px;height:24px"></i>
+                <div>
+                    Glamour
+                    <span class="brand-subtitle">Salon & Studio</span>
+                </div>
             </a>
-            <div class="d-flex gap-3 align-items-center">
-                <a href="#servicos" class="text-white text-decoration-none d-none d-md-inline" style="opacity:0.8">Serviços</a>
-                <a href="#profissionais" class="text-white text-decoration-none d-none d-md-inline" style="opacity:0.8">Equipe</a>
-                <button class="btn-rose btn border-0 btn-sm" data-bs-toggle="modal" data-bs-target="#agModal">💅 Agendar</button>
+            <div class="d-none d-lg-flex align-items-center">
+                <a href="#" class="nav-link">Home</a>
+                <a href="#servicos" class="nav-link">Serviços</a>
+                <a href="#equipe" class="nav-link">Equipe</a>
+                <a href="#depoimentos" class="nav-link">Depoimentos</a>
+            </div>
+            <div class="d-flex align-items-center gap-4">
+                <div class="d-none d-md-flex align-items-center gap-2" style="font-size:0.9rem;letter-spacing:1px;color:#fff;">
+                    <i data-lucide="phone" style="width:16px;height:16px;color:var(--rose-gold)"></i>
+                    (21) 98322-5806
+                </div>
+                <button class="btn-lux-outline d-none d-sm-block" data-bs-toggle="modal" data-bs-target="#agModal">Agendar Horário</button>
             </div>
         </div>
     </nav>
 
     <header class="hero">
         <div class="container">
-            <div class="col-lg-6">
-                <div class="d-flex flex-wrap gap-2 mb-4">
-                    <span class="stat-pill">💄 +8.500 clientes atendidas</span>
-                    <span class="stat-pill">⭐ 4.97 · Nota Google</span>
-                </div>
-                <h1 class="page-title text-white mb-4">
-                    BELEZA QUE <span class="text-rose">TRANSFORMA</span>,<br>ESTILO QUE <span class="text-rose">ENCANTA</span>
-                </h1>
-                <p class="text-white mb-5" style="font-size:1.1rem;opacity:0.88;max-width:500px;line-height:1.7">
-                    Do corte ao colorido, do alongamento ao penteado de festa — tudo agendado em segundos, com confirmação instantânea no WhatsApp.
+            <div class="col-lg-7">
+                <span class="hero-subtitle">Look Good, Feel Gorgeous</span>
+                <h1 class="hero-title">Revele sua<br>Beleza Natural</h1>
+                <p class="hero-desc">
+                    Serviços profissionais de beleza e cabelo que realçam o que há de melhor em você. Um espaço projetado para o seu conforto e bem-estar.
                 </p>
-                <div class="d-flex flex-wrap gap-3">
-                    <button class="btn-rose btn border-0 btn-lg" data-bs-toggle="modal" data-bs-target="#agModal">💅 Agendar Agora</button>
-                    <a href="#servicos" class="btn-outline-rose btn btn-lg">Ver Serviços</a>
+                <div class="d-flex flex-wrap gap-3 mt-4">
+                    <button class="btn-solid-lux" data-bs-toggle="modal" data-bs-target="#agModal">Agendar Horário</button>
+                    <a href="#servicos" class="btn-play"><i data-lucide="play-circle"></i> Ver Serviços</a>
                 </div>
             </div>
         </div>
     </header>
 
+    <!-- Features -->
+    <section class="features-strip">
+        <div class="container">
+            <div class="row g-0">
+                <div class="col-6 col-lg-3 feature-item">
+                    <i data-lucide="sparkles" class="feature-icon" style="width:32px;height:32px"></i>
+                    <h4 class="feature-title">Estilistas Experts</h4>
+                    <p class="feature-desc">Profissionais de beleza experientes e certificados</p>
+                </div>
+                <div class="col-6 col-lg-3 feature-item">
+                    <i data-lucide="droplet" class="feature-icon" style="width:32px;height:32px"></i>
+                    <h4 class="feature-title">Produtos Premium</h4>
+                    <p class="feature-desc">Alta qualidade para cuidar da sua pele e cabelo</p>
+                </div>
+                <div class="col-6 col-lg-3 feature-item">
+                    <i data-lucide="coffee" class="feature-icon" style="width:32px;height:32px"></i>
+                    <h4 class="feature-title">Ambiente Relaxante</h4>
+                    <p class="feature-desc">Espaço luxuoso, higiênico e super confortável</p>
+                </div>
+                <div class="col-6 col-lg-3 feature-item">
+                    <i data-lucide="calendar-check" class="feature-icon" style="width:32px;height:32px"></i>
+                    <h4 class="feature-title">Agendamento Fácil</h4>
+                    <p class="feature-desc">Sistema de reservas online rápido e prático</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Serviços -->
     <section class="sec" id="servicos">
         <div class="container">
-            <h2 class="text-white text-center mb-2" style="font-size:2.2rem">Nossos <span class="text-rose">Serviços</span></h2>
-            <p class="text-center mb-5" style="opacity:0.7">Clique no serviço para agendar instantaneamente.</p>
-            <div class="row g-4">
-                <div class="col-md-6 col-lg-4">
-                    <div class="serv-card" onclick="selectService('Corte Feminino', 80)">
-                        <div class="serv-img" style="background-image:url('https://images.unsplash.com/photo-1562322140-8baeececf3df?w=500&q=80&auto=format&fit=crop')"></div>
+            <h6 class="sec-subtitle">Nossos Serviços</h6>
+            <h2 class="sec-title">Serviços de Beleza & Cuidados</h2>
+            
+            <div class="row g-4 mt-5">
+                <div class="col-md-6 col-lg-3">
+                    <div class="serv-card" onclick="selectService('Corte & Escova', 120)">
+                        <div class="serv-img-wrap">
+                            <div class="serv-img" style="background-image:url('https://images.unsplash.com/photo-1562322140-8baeececf3df?w=500&q=80&auto=format&fit=crop')"></div>
+                        </div>
                         <div class="serv-body">
-                            <h5 class="text-white fw-700 mb-1">Corte Feminino</h5>
-                            <p style="font-size:0.85rem;opacity:0.75;margin-bottom:12px">Corte personalizado com lavagem e escovação incluída</p>
-                            <div class="d-flex justify-content-between"><span class="text-rose fw-900">R$ 80</span><span style="color:#00ff88;font-size:0.8rem;font-weight:700">+ Agendar</span></div>
+                            <h4 class="serv-title">Corte & Escova</h4>
+                            <p class="serv-desc">Corte personalizado, lavagem especial e modelagem</p>
+                            <span class="serv-price">R$ 120</span>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6 col-lg-4">
-                    <div class="serv-card" onclick="selectService('Coloração Completa', 200)">
-                        <div class="serv-img" style="background-image:url('https://images.unsplash.com/photo-1522337660859-02fbefca4702?w=500&q=80&auto=format&fit=crop')"></div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="serv-card" onclick="selectService('Maquiagem Profissional', 250)">
+                        <div class="serv-img-wrap">
+                            <div class="serv-img" style="background-image:url('https://images.unsplash.com/photo-1596704017254-9b121068fb31?w=500&q=80&auto=format&fit=crop')"></div>
+                        </div>
                         <div class="serv-body">
-                            <h5 class="text-white fw-700 mb-1">Coloração Completa</h5>
-                            <p style="font-size:0.85rem;opacity:0.75;margin-bottom:12px">Coloração profissional L'Oréal com máscara hidratante</p>
-                            <div class="d-flex justify-content-between"><span class="text-rose fw-900">R$ 200+</span><span style="color:#00ff88;font-size:0.8rem;font-weight:700">+ Agendar</span></div>
+                            <h4 class="serv-title">Maquiagem Profissional</h4>
+                            <p class="serv-desc">Produção impecável para noivas, formaturas e festas</p>
+                            <span class="serv-price">R$ 250</span>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6 col-lg-4">
-                    <div class="serv-card" onclick="selectService('Progressiva Premium', 350)">
-                        <div class="serv-img" style="background-image:url('https://images.unsplash.com/photo-1519699047748-de8e457a634e?w=500&q=80&auto=format&fit=crop')"></div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="serv-card" onclick="selectService('Limpeza de Pele', 180)">
+                        <div class="serv-img-wrap">
+                            <div class="serv-img" style="background-image:url('https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=500&q=80&auto=format&fit=crop')"></div>
+                        </div>
                         <div class="serv-body">
-                            <h5 class="text-white fw-700 mb-1">Progressiva Premium</h5>
-                            <p style="font-size:0.85rem;opacity:0.75;margin-bottom:12px">Alisamento com queratina de alta fixação e brilho intenso</p>
-                            <div class="d-flex justify-content-between"><span class="text-rose fw-900">R$ 350+</span><span style="color:#00ff88;font-size:0.8rem;font-weight:700">+ Agendar</span></div>
+                            <h4 class="serv-title">Limpeza de Pele</h4>
+                            <p class="serv-desc">Detox facial profundo com hidratação premium</p>
+                            <span class="serv-price">R$ 180</span>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6 col-lg-4">
-                    <div class="serv-card" onclick="selectService('Manicure + Pedicure', 75)">
-                        <div class="serv-img" style="background-image:url('https://images.unsplash.com/photo-1522771739223-2592b2d07525?w=500&q=80&auto=format&fit=crop')"></div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="serv-card" onclick="selectService('Nail Art & Alongamento', 150)">
+                        <div class="serv-img-wrap">
+                            <div class="serv-img" style="background-image:url('https://images.unsplash.com/photo-1604654894610-df63bc536371?w=500&q=80&auto=format&fit=crop')"></div>
+                        </div>
                         <div class="serv-body">
-                            <h5 class="text-white fw-700 mb-1">Manicure + Pedicure</h5>
-                            <p style="font-size:0.85rem;opacity:0.75;margin-bottom:12px">Combo completo com esmaltação em gel e hidratação</p>
-                            <div class="d-flex justify-content-between"><span class="text-rose fw-900">R$ 75</span><span style="color:#00ff88;font-size:0.8rem;font-weight:700">+ Agendar</span></div>
+                            <h4 class="serv-title">Nail Art & Alongamento</h4>
+                            <p class="serv-desc">Unhas em gel, fibra de vidro e esmaltação artística</p>
+                            <span class="serv-price">R$ 150</span>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6 col-lg-4">
-                    <div class="serv-card" onclick="selectService('Maquiagem de Festa', 280)">
-                        <div class="serv-img" style="background-image:url('https://images.unsplash.com/photo-1596704017254-9b121068fb31?w=500&q=80&auto=format&fit=crop')"></div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="serv-card" onclick="selectService('Mechas & Coloração', 350)">
+                        <div class="serv-img-wrap">
+                            <div class="serv-img" style="background-image:url('https://images.unsplash.com/photo-1522337660859-02fbefca4702?w=500&q=80&auto=format&fit=crop')"></div>
+                        </div>
                         <div class="serv-body">
-                            <h5 class="text-white fw-700 mb-1">Maquiagem de Festa</h5>
-                            <p style="font-size:0.85rem;opacity:0.75;margin-bottom:12px">Make artística com produtos MAC e NYX profissional</p>
-                            <div class="d-flex justify-content-between"><span class="text-rose fw-900">R$ 280</span><span style="color:#00ff88;font-size:0.8rem;font-weight:700">+ Agendar</span></div>
+                            <h4 class="serv-title">Mechas & Coloração</h4>
+                            <p class="serv-desc">Técnicas modernas de iluminação e cor sem danos</p>
+                            <span class="serv-price">R$ 350</span>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6 col-lg-4">
-                    <div class="serv-card" onclick="selectService('Pacote Noiva', 800)">
-                        <div class="serv-img" style="background-image:url('https://images.unsplash.com/photo-1519741497674-611481863552?w=500&q=80&auto=format&fit=crop')"></div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="serv-card" onclick="selectService('Spa dos Pés e Mãos', 90)">
+                        <div class="serv-img-wrap">
+                            <div class="serv-img" style="background-image:url('https://images.unsplash.com/photo-1519415510236-718bdfcd89c8?w=500&q=80&auto=format&fit=crop')"></div>
+                        </div>
                         <div class="serv-body">
-                            <h5 class="text-white fw-700 mb-1">Pacote Noiva</h5>
-                            <p style="font-size:0.85rem;opacity:0.75;margin-bottom:12px">Penteado + maquiagem + manicure + teste incluso</p>
-                            <div class="d-flex justify-content-between"><span class="text-rose fw-900">R$ 800+</span><span style="color:#00ff88;font-size:0.8rem;font-weight:700">+ Agendar</span></div>
+                            <h4 class="serv-title">Spa Pés & Mãos</h4>
+                            <p class="serv-desc">Esfoliação, hidratação profunda e relaxamento total</p>
+                            <span class="serv-price">R$ 90</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="serv-card" onclick="selectService('Progressiva Premium', 400)">
+                        <div class="serv-img-wrap">
+                            <div class="serv-img" style="background-image:url('https://images.unsplash.com/photo-1519699047748-de8e457a634e?w=500&q=80&auto=format&fit=crop')"></div>
+                        </div>
+                        <div class="serv-body">
+                            <h4 class="serv-title">Progressiva Premium</h4>
+                            <p class="serv-desc">Alisamento perfeito com queratina e brilho intenso</p>
+                            <span class="serv-price">R$ 400</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="serv-card" onclick="selectService('Penteado de Festa', 200)">
+                        <div class="serv-img-wrap">
+                            <div class="serv-img" style="background-image:url('https://images.unsplash.com/photo-1519741497674-611481863552?w=500&q=80&auto=format&fit=crop')"></div>
+                        </div>
+                        <div class="serv-body">
+                            <h4 class="serv-title">Penteado de Festa</h4>
+                            <p class="serv-desc">Coques, tranças elaboradas e finalização perfeita</p>
+                            <span class="serv-price">R$ 200</span>
                         </div>
                     </div>
                 </div>
@@ -162,85 +627,172 @@
     </section>
 
     <!-- Equipe -->
-    <section class="sec-alt" id="profissionais">
+    <section class="sec-alt" id="equipe">
         <div class="container">
-            <h2 class="text-white text-center mb-5" style="font-size:2.2rem">Nossa <span class="text-rose">Equipe</span></h2>
-            <div class="row g-4 justify-content-center">
+            <h6 class="sec-subtitle">Especialistas</h6>
+            <h2 class="sec-title">Nossa Equipe</h2>
+            
+            <div class="row g-5 mt-4 justify-content-center">
                 <div class="col-md-4 col-lg-3">
                     <div class="prof-card">
-                        <div class="prof-avatar" style="background-image:url('https://images.unsplash.com/photo-1595959183082-7b570b7e08e2?w=200&q=80&auto=format&fit=crop')"></div>
-                        <h5 class="text-white fw-800 mb-1">Fernanda Lima</h5>
-                        <div class="text-rose fw-700 mb-2" style="font-size:0.85rem">⭐ 4.99 · Coloração & Corte</div>
-                        <p style="font-size:0.85rem;opacity:0.75;margin-bottom:16px">12 anos. Especialista em técnicas de coloração e babylights.</p>
-                        <button class="btn-rose btn border-0 w-100 btn-sm" onclick="selectProf('Fernanda')">Agendar com Fernanda</button>
+                        <img src="https://images.unsplash.com/photo-1595959183082-7b570b7e08e2?w=400&q=80&auto=format&fit=crop" alt="Fernanda Lima" class="prof-img">
+                        <h4 class="prof-name">Fernanda Lima</h4>
+                        <p class="prof-role">Senior Hair Stylist</p>
+                        <button class="btn-outline-prof" onclick="selectProf('Fernanda Lima')">Agendar</button>
                     </div>
                 </div>
                 <div class="col-md-4 col-lg-3">
                     <div class="prof-card">
-                        <div class="prof-avatar" style="background-image:url('https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&q=80&auto=format&fit=crop')"></div>
-                        <h5 class="text-white fw-800 mb-1">Juliana Rocha</h5>
-                        <div class="text-rose fw-700 mb-2" style="font-size:0.85rem">⭐ 4.98 · Make & Penteados</div>
-                        <p style="font-size:0.85rem;opacity:0.75;margin-bottom:16px">Artista de maquiagem referência em noivas e debutantes.</p>
-                        <button class="btn-rose btn border-0 w-100 btn-sm" onclick="selectProf('Juliana')">Agendar com Juliana</button>
+                        <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&q=80&auto=format&fit=crop" alt="Juliana Rocha" class="prof-img">
+                        <h4 class="prof-name">Juliana Rocha</h4>
+                        <p class="prof-role">Makeup Artist</p>
+                        <button class="btn-outline-prof" onclick="selectProf('Juliana Rocha')">Agendar</button>
                     </div>
                 </div>
                 <div class="col-md-4 col-lg-3">
                     <div class="prof-card">
-                        <div class="prof-avatar" style="background-image:url('https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=200&q=80&auto=format&fit=crop')"></div>
-                        <h5 class="text-white fw-800 mb-1">Patricia Souza</h5>
-                        <div class="text-rose fw-700 mb-2" style="font-size:0.85rem">⭐ 4.97 · Química & Tratamentos</div>
-                        <p style="font-size:0.85rem;opacity:0.75;margin-bottom:16px">Especialista em progressivas, relaxamentos e cronogramas.</p>
-                        <button class="btn-rose btn border-0 w-100 btn-sm" onclick="selectProf('Patricia')">Agendar com Patricia</button>
+                        <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=400&q=80&auto=format&fit=crop" alt="Patricia Souza" class="prof-img">
+                        <h4 class="prof-name">Patricia Souza</h4>
+                        <p class="prof-role">Especialista em Pele & Spa</p>
+                        <button class="btn-outline-prof" onclick="selectProf('Patricia Souza')">Agendar</button>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Horários -->
-    <section class="sec">
+    <!-- Depoimentos -->
+    <section class="sec" id="depoimentos">
         <div class="container">
-            <div class="row g-5 align-items-center">
-                <div class="col-lg-5">
-                    <h2 class="text-white mb-3" style="font-size:2.2rem">Horários <span class="text-rose">disponíveis</span></h2>
-                    <p style="opacity:0.8">Selecione o melhor horário para você. Confirmação instantânea!</p>
+            <h6 class="sec-subtitle">O que dizem</h6>
+            <h2 class="sec-title">Depoimentos</h2>
+            
+            <div class="row g-4 mt-4">
+                <div class="col-lg-4">
+                    <div class="testi-card">
+                        <div class="stars">
+                            <i data-lucide="star" fill="currentColor" style="width:18px"></i>
+                            <i data-lucide="star" fill="currentColor" style="width:18px"></i>
+                            <i data-lucide="star" fill="currentColor" style="width:18px"></i>
+                            <i data-lucide="star" fill="currentColor" style="width:18px"></i>
+                            <i data-lucide="star" fill="currentColor" style="width:18px"></i>
+                        </div>
+                        <p class="testi-text">"O melhor salão que já frequentei. O atendimento é super delicado, os produtos são maravilhosos e o resultado superou todas as expectativas."</p>
+                        <h6 class="testi-author">— Camila Santos</h6>
+                    </div>
                 </div>
-                <div class="col-lg-7">
-                    <div class="row g-3">
-                        <div class="col-4"><div class="time-slot" onclick="bookSlot('09:00')">09:00</div></div>
-                        <div class="col-4"><div class="time-slot" onclick="bookSlot('10:00')">10:00</div></div>
-                        <div class="col-4"><div class="time-slot" onclick="bookSlot('11:00')">11:00</div></div>
-                        <div class="col-4"><div class="time-slot" onclick="bookSlot('13:30')">13:30</div></div>
-                        <div class="col-4"><div class="time-slot" onclick="bookSlot('14:30')">14:30</div></div>
-                        <div class="col-4"><div class="time-slot" onclick="bookSlot('15:30')">15:30</div></div>
-                        <div class="col-4"><div class="time-slot" onclick="bookSlot('16:30')">16:30</div></div>
-                        <div class="col-4"><div class="time-slot" onclick="bookSlot('17:30')">17:30</div></div>
-                        <div class="col-4"><div class="time-slot" onclick="bookSlot('18:30')">18:30</div></div>
+                <div class="col-lg-4">
+                    <div class="testi-card">
+                        <div class="stars">
+                            <i data-lucide="star" fill="currentColor" style="width:18px"></i>
+                            <i data-lucide="star" fill="currentColor" style="width:18px"></i>
+                            <i data-lucide="star" fill="currentColor" style="width:18px"></i>
+                            <i data-lucide="star" fill="currentColor" style="width:18px"></i>
+                            <i data-lucide="star" fill="currentColor" style="width:18px"></i>
+                        </div>
+                        <p class="testi-text">"Fiz minha maquiagem e cabelo para o meu casamento e foi perfeito! A equipe me passou muita paz e me senti uma verdadeira princesa."</p>
+                        <h6 class="testi-author">— Mariana Costa</h6>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="testi-card">
+                        <div class="stars">
+                            <i data-lucide="star" fill="currentColor" style="width:18px"></i>
+                            <i data-lucide="star" fill="currentColor" style="width:18px"></i>
+                            <i data-lucide="star" fill="currentColor" style="width:18px"></i>
+                            <i data-lucide="star" fill="currentColor" style="width:18px"></i>
+                            <i data-lucide="star" fill="currentColor" style="width:18px"></i>
+                        </div>
+                        <p class="testi-text">"Espaço extremamente relaxante. O tratamento de pele foi revigorante. Recomendo de olhos fechados para quem busca carinho e sofisticação."</p>
+                        <h6 class="testi-author">— Beatriz Almeida</h6>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <footer class="demo-footer">
+    <!-- Horários / Agendamento -->
+    <section class="sec-alt">
+        <div class="container">
+            <div class="schedule-wrap">
+                <div class="row g-5 align-items-center">
+                    <div class="col-lg-5">
+                        <h6 class="sec-subtitle" style="text-align:left; margin-bottom:20px;">Sua Reserva</h6>
+                        <h2 class="sec-title" style="text-align:left;">Agende seu<br>Momento</h2>
+                        <p style="color:var(--text-muted); line-height:1.7; margin-top:20px; font-size:1rem;">
+                            Selecione o melhor horário para o seu atendimento. Nossa equipe confirmará instantaneamente via WhatsApp para garantir que tudo seja perfeito.
+                        </p>
+                    </div>
+                    <div class="col-lg-7">
+                        <h5 class="mb-4" style="font-family:var(--secondary-font); font-weight:500; text-transform:uppercase; letter-spacing:1px; font-size:0.9rem; color:var(--rose-gold);">Próximos Horários Disponíveis Hoje</h5>
+                        <div class="row g-3">
+                            <div class="col-4 col-md-3"><div class="time-slot" onclick="bookSlot('09:00')">09:00</div></div>
+                            <div class="col-4 col-md-3"><div class="time-slot" onclick="bookSlot('10:00')">10:00</div></div>
+                            <div class="col-4 col-md-3"><div class="time-slot" onclick="bookSlot('11:00')">11:00</div></div>
+                            <div class="col-4 col-md-3"><div class="time-slot" onclick="bookSlot('13:30')">13:30</div></div>
+                            <div class="col-4 col-md-3"><div class="time-slot" onclick="bookSlot('14:30')">14:30</div></div>
+                            <div class="col-4 col-md-3"><div class="time-slot" onclick="bookSlot('15:30')">15:30</div></div>
+                            <div class="col-4 col-md-3"><div class="time-slot" onclick="bookSlot('16:30')">16:30</div></div>
+                            <div class="col-4 col-md-3"><div class="time-slot" onclick="bookSlot('17:30')">17:30</div></div>
+                        </div>
+                        <div class="mt-4 pt-3 border-top border-secondary border-opacity-25">
+                            <button class="btn-solid-lux w-100" data-bs-toggle="modal" data-bs-target="#agModal">Agendar para Outra Data</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
         <div class="container text-center">
-            <div class="text-rose fw-900 mb-2" style="font-size:1.5rem;font-family:'Outfit',sans-serif">💄 BELLA GLAMOUR</div>
-            <p style="opacity:0.5;font-size:0.85rem">© 2026 · Demo por Inovador Tech · <a href="https://wa.me/5521983225806" class="text-rose text-decoration-none">Solicitar este site</a></p>
+            <a href="#" class="footer-logo">
+                <i data-lucide="scissors" style="width:28px;height:28px;color:var(--rose-gold)"></i> Glamour
+            </a>
+            <p style="color:var(--text-muted); font-size:0.85rem; margin-top:10px;">
+                © 2026 Glamour Salon & Studio. Todos os direitos reservados.
+            </p>
+            <p style="color:rgba(255,255,255,0.2); font-size:0.75rem; margin-top:20px;">
+                Demo por Inovador Tech · <a href="https://wa.me/5521983225806" style="color:var(--rose-gold);text-decoration:none">Solicitar este site</a>
+            </p>
         </div>
     </footer>
 
+    <!-- Modal de Agendamento -->
     <div class="modal fade" id="agModal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content p-4">
-                <div class="modal-header border-0 pb-0"><h5 class="modal-title text-white fw-800">💅 Agendar Serviço</h5><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div>
-                <div class="modal-body">
+                <div class="modal-header border-0 pb-0">
+                    <h5 class="modal-title">Sua Reserva</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body mt-3">
                     <form onsubmit="confirmAg(event)">
-                        <div class="mb-3"><input id="agNome" type="text" class="dark-input" placeholder="Nome" required></div>
-                        <div class="mb-3"><input type="tel" class="dark-input" placeholder="WhatsApp" required></div>
-                        <div class="mb-3"><select id="agServ" class="dark-input"><option>Corte Feminino – R$80</option><option>Coloração Completa – R$200+</option><option>Progressiva Premium – R$350+</option><option>Manicure + Pedicure – R$75</option><option>Maquiagem de Festa – R$280</option><option>Pacote Noiva – R$800+</option></select></div>
-                        <div class="mb-3"><select id="agProf" class="dark-input"><option>Fernanda Lima</option><option>Juliana Rocha</option><option>Patricia Souza</option></select></div>
-                        <div class="mb-4"><input type="date" class="dark-input" required></div>
-                        <button type="submit" class="btn-rose btn border-0 w-100 py-3 fw-900">CONFIRMAR AGENDAMENTO</button>
+                        <div class="mb-4"><input id="agNome" type="text" class="dark-input" placeholder="Seu Nome Completo" required></div>
+                        <div class="mb-4"><input type="tel" class="dark-input" placeholder="Seu WhatsApp" required></div>
+                        <div class="mb-4">
+                            <select id="agServ" class="dark-input">
+                                <option>Corte & Escova – R$120</option>
+                                <option>Maquiagem Profissional – R$250</option>
+                                <option>Limpeza de Pele – R$180</option>
+                                <option>Nail Art & Alongamento – R$150</option>
+                                <option>Mechas & Coloração – R$350</option>
+                                <option>Spa dos Pés e Mãos – R$90</option>
+                                <option>Progressiva Premium – R$400</option>
+                                <option>Penteado de Festa – R$200</option>
+                            </select>
+                        </div>
+                        <div class="mb-4">
+                            <select id="agProf" class="dark-input">
+                                <option value="">Escolha um Profissional (Opcional)</option>
+                                <option>Fernanda Lima (Cabelo)</option>
+                                <option>Juliana Rocha (Maquiagem)</option>
+                                <option>Patricia Souza (Pele & Unhas)</option>
+                            </select>
+                        </div>
+                        <div class="mb-5"><input type="date" class="dark-input" required></div>
+                        <button type="submit" class="btn-solid-lux w-100 py-3">CONFIRMAR RESERVA</button>
                     </form>
                 </div>
             </div>
@@ -251,10 +803,18 @@
     <script>
         lucide.createIcons();
         function selectService(nome, preco) { document.getElementById('agServ').value = `${nome} – R$${preco}`; new bootstrap.Modal(document.getElementById('agModal')).show(); }
-        function selectProf(nome) { document.getElementById('agProf').value = nome === 'Fernanda' ? 'Fernanda Lima' : nome === 'Juliana' ? 'Juliana Rocha' : 'Patricia Souza'; new bootstrap.Modal(document.getElementById('agModal')).show(); }
-        function bookSlot(h) { showToast(`✅ Horário ${h} reservado! Complete o agendamento e receba confirmação no WhatsApp.`); }
-        function confirmAg(e) { e.preventDefault(); const n = document.getElementById('agNome').value; bootstrap.Modal.getInstance(document.getElementById('agModal')).hide(); showToast(`💄 Agendamento confirmado para ${n}! Até logo!`); }
-        function showToast(msg) { const t = document.createElement('div'); t.className = 'demo-toast'; t.innerHTML = `<div class="demo-toast-icon">💄</div><div><strong class="text-white">Bella Glamour</strong><p class="mb-0 small text-white mt-1">${msg}</p></div>`; document.body.appendChild(t); setTimeout(() => t.remove(), 6000); }
+        function selectProf(nome) { document.getElementById('agProf').value = nome; new bootstrap.Modal(document.getElementById('agModal')).show(); }
+        function bookSlot(h) { showToast(`Horário das ${h} selecionado. Preencha seus dados para confirmar.`); new bootstrap.Modal(document.getElementById('agModal')).show(); }
+        function confirmAg(e) { e.preventDefault(); const n = document.getElementById('agNome').value; bootstrap.Modal.getInstance(document.getElementById('agModal')).hide(); showToast(`Reserva confirmada, ${n}! Te enviamos uma mensagem no WhatsApp.`); }
+        function showToast(msg) { 
+            const t = document.createElement('div'); 
+            t.className = 'demo-toast'; 
+            t.style.cssText = 'position:fixed;bottom:20px;right:20px;background:#171014;border:1px solid var(--rose-gold);padding:20px;z-index:9999;display:flex;align-items:center;gap:15px;box-shadow:0 10px 30px rgba(0,0,0,0.5);border-radius:12px;';
+            t.innerHTML = `<i data-lucide="heart" style="color:var(--rose-gold)"></i><div><strong style="font-family:var(--primary-font);font-size:1.1rem;color:#fff">Glamour Salon</strong><p class="mb-0 small text-white mt-1" style="color:var(--text-muted)!important">${msg}</p></div>`; 
+            document.body.appendChild(t); 
+            lucide.createIcons();
+            setTimeout(() => { t.style.opacity = '0'; t.style.transition = '0.5s'; setTimeout(() => t.remove(), 500); }, 5000); 
+        }
     </script>
 </body>
 </html>
