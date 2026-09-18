@@ -59,20 +59,31 @@ class GlobalOraculoPopupContractTests(unittest.TestCase):
                     self.assertEqual(body.count('id="oraculo-free-popup"'), 1)
                     self.assertIn('href="https://oraculo-crm.sitesinovador.com.br/"', body)
 
-    def test_popup_behavior_keeps_frequency_and_accessibility_guards(self):
+    def test_popup_behavior_reopens_per_page_after_ten_seconds(self):
         css = POPUP_CSS.read_text(encoding="utf-8")
         js = POPUP_JS.read_text(encoding="utf-8")
         js_tokens = (
-            "sessionStorage", "localStorage", "event.key === 'Escape'",
+            "const displayDelayMs = 10 * 1000;",
+            "popupHasOpened",
+            "window.setTimeout(openPopup, displayDelayMs)",
+            "event.key === 'Escape'",
             "firstFocusable", "lastFocusable", "closeButtons.forEach",
             "if (cta)", "cta.addEventListener",
-        )
-        css_tokens = (
-            "prefers-reduced-motion", "max-height: calc(100dvh - 24px)",
+            "window.matchMedia('(hover: hover) and (pointer: fine)')",
         )
         for token in js_tokens:
             with self.subTest(token=token):
                 self.assertIn(token, js)
+
+        for storage_api in ("sessionStorage", "localStorage"):
+            with self.subTest(storage_api=storage_api):
+                self.assertNotIn(storage_api, js)
+
+        self.assertNotIn("}, { once: true });", js)
+
+        css_tokens = (
+            "prefers-reduced-motion", "max-height: calc(100dvh - 24px)",
+        )
         for token in css_tokens:
             with self.subTest(token=token):
                 self.assertIn(token, css)
