@@ -45,6 +45,7 @@
         .modal-content { background:#070f1a; border:1px solid rgba(0,243,255,0.25); border-radius:24px; }
         .dark-input { background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.15); color:#fff; border-radius:12px; padding:13px 16px; width:100%; }
     </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/oraculo-popup.css') }}">
 </head>
 <body class="demo-page">
 
@@ -179,6 +180,8 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ url_for('static', filename='js/oraculo-popup.js') }}"></script>
+    {% include '_oraculo_popup.html' %}
     <script>
         lucide.createIcons();
         let cart = [];

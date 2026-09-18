@@ -34,6 +34,7 @@
         .dark-input { background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.15); color:#fff; border-radius:12px; padding:13px 16px; width:100%; }
         .dark-input:focus { outline:none; border-color:var(--indigo); }
     </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/oraculo-popup.css') }}">
 </head>
 <body class="demo-page">
     <div class="demo-bar">
@@ -76,6 +77,8 @@
     <footer class="demo-footer"><div class="container text-center"><div class="text-indigo fw-900 mb-2" style="font-size:1.5rem;font-family:'Outfit',sans-serif">📚 EDUCLASS</div><p style="opacity:0.5;font-size:0.85rem">© 2026 · Demo por Inovador Tech · <a href="https://wa.me/5521983225806" class="text-indigo text-decoration-none">Solicitar este site</a></p></div></footer>
     <div class="modal fade" id="inscModal" tabindex="-1"><div class="modal-dialog modal-dialog-centered"><div class="modal-content p-4"><div class="modal-header border-0 pb-0"><h5 class="modal-title text-white fw-800">📝 Inscrição no Curso</h5><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div><div class="modal-body"><form onsubmit="confirmInsc(event)"><div class="mb-3"><input id="inscNome" type="text" class="dark-input" placeholder="Nome completo" required></div><div class="mb-3"><input type="email" class="dark-input" placeholder="E-mail" required></div><div class="mb-3"><input type="tel" class="dark-input" placeholder="WhatsApp" required></div><div class="mb-4"><select id="inscCurso" class="dark-input"><option>Marketing Digital – R$197</option><option>Programação Web – R$297</option><option>Design & UX/UI – R$247</option></select></div><button type="submit" class="btn-indigo btn border-0 w-100 py-3 fw-900">GARANTIR MINHA VAGA</button></form></div></div></div></div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ url_for('static', filename='js/oraculo-popup.js') }}"></script>
+    {% include '_oraculo_popup.html' %}
     <script>
         lucide.createIcons();
         function inscreverse(curso) { document.getElementById('inscCurso').value = curso === 'Marketing Digital' ? 'Marketing Digital – R$197' : curso === 'Programação Web' ? 'Programação Web – R$297' : 'Design & UX/UI – R$247'; new bootstrap.Modal(document.getElementById('inscModal')).show(); }

@@ -610,6 +610,7 @@
       }
     }
   </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/oraculo-popup.css') }}">
 </head>
 <body>
   <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
@@ -815,6 +816,8 @@
     </div>
   </footer>
 
+  <script src="{{ url_for('static', filename='js/oraculo-popup.js') }}"></script>
+  {% include '_oraculo_popup.html' %}
   <script>
     document.documentElement.classList.add('js');
     document.addEventListener('DOMContentLoaded', () => {
@@ -829,6 +832,7 @@
         }
       }, { threshold: 0.18 });
       cards.forEach(card => observer.observe(card));
+
     });
   </script>
 </body>

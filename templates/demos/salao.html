@@ -437,6 +437,7 @@
             display: inline-block;
         }
     </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/oraculo-popup.css') }}">
 </head>
 <body class="demo-page">
 
@@ -800,6 +801,8 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ url_for('static', filename='js/oraculo-popup.js') }}"></script>
+    {% include '_oraculo_popup.html' %}
     <script>
         lucide.createIcons();
         function selectService(nome, preco) { document.getElementById('agServ').value = `${nome} – R$${preco}`; new bootstrap.Modal(document.getElementById('agModal')).show(); }
