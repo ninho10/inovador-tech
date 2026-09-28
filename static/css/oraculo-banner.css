@@ -2,10 +2,10 @@
 
 .oraculo-banner {
   position: relative;
-  display: flex;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 360px);
   align-items: center;
-  justify-content: space-between;
-  gap: clamp(24px, 5vw, 64px);
+  gap: clamp(28px, 5vw, 72px);
   max-width: 1160px;
   margin: 0 auto;
   padding: clamp(28px, 4vw, 42px) clamp(24px, 5vw, 58px);
@@ -13,7 +13,7 @@
   border: 1px solid rgba(0, 255, 136, 0.36);
   border-radius: 24px;
   background:
-    radial-gradient(circle at 85% 20%, rgba(0, 243, 255, 0.16), transparent 28%),
+    radial-gradient(circle at 86% 18%, rgba(0, 243, 255, 0.16), transparent 28%),
     linear-gradient(120deg, rgba(9, 23, 42, 0.98), rgba(5, 12, 28, 0.96));
   box-shadow: 0 22px 60px rgba(0, 0, 0, 0.24), 0 0 34px rgba(0, 255, 136, 0.08);
   color: #fff;
@@ -31,10 +31,15 @@
   pointer-events: none;
 }
 
-.oraculo-banner__content {
+.oraculo-banner__content,
+.oraculo-banner__action {
   position: relative;
   z-index: 1;
-  max-width: 690px;
+}
+
+.oraculo-banner__content {
+  min-width: 0;
+  max-width: 680px;
 }
 
 .oraculo-banner__eyebrow {
@@ -47,6 +52,7 @@
 }
 
 .oraculo-banner h2 {
+  max-width: 18ch;
   margin: 0;
   color: #fff;
   font-family: 'Outfit', sans-serif;
@@ -58,9 +64,29 @@
 
 .oraculo-banner__description {
   max-width: 58ch;
-  margin: 12px 0 0;
+  margin: 14px 0 0;
   color: rgba(255, 255, 255, 0.76);
   line-height: 1.6;
+}
+
+.oraculo-banner__action {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
+  gap: 12px;
+  min-width: 0;
+  padding-left: clamp(24px, 4vw, 48px);
+  border-left: 1px solid rgba(0, 255, 136, 0.22);
+}
+
+.oraculo-banner__action-label {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.58);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 .oraculo-banner__cta {
@@ -69,9 +95,9 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  flex: 0 0 auto;
   gap: 10px;
-  min-height: 52px;
+  width: 100%;
+  min-height: 54px;
   padding: 13px 20px;
   border: 1px solid #00ff88;
   border-radius: 12px;
@@ -92,16 +118,31 @@
   outline-offset: 2px;
 }
 
+@media (max-width: 900px) {
+  .oraculo-banner {
+    grid-template-columns: minmax(0, 1fr) minmax(240px, 300px);
+    gap: 28px;
+  }
+
+  .oraculo-banner__action {
+    padding-left: 28px;
+  }
+}
+
 @media (max-width: 768px) {
   .oraculo-banner {
+    grid-template-columns: 1fr;
     align-items: flex-start;
-    flex-direction: column;
     gap: 22px;
     border-radius: 20px;
   }
 
-  .oraculo-banner__cta {
+  .oraculo-banner__action {
     width: 100%;
+    padding-top: 20px;
+    padding-left: 0;
+    border-top: 1px solid rgba(0, 255, 136, 0.22);
+    border-left: 0;
   }
 }
 

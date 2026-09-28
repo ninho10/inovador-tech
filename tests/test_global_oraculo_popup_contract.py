@@ -70,6 +70,17 @@ class GlobalOraculoPopupContractTests(unittest.TestCase):
                     else:
                         self.assertNotIn('id="oraculo-free-banner"', body)
 
+    def test_banner_has_a_desktop_action_column_and_mobile_stack_contract(self):
+        banner = (TEMPLATES / "_oraculo_banner.html").read_text(encoding="utf-8")
+        stylesheet = (ROOT / "static/css/oraculo-banner.css").read_text(encoding="utf-8")
+
+        self.assertIn("oraculo-banner__action", banner)
+        self.assertIn("oraculo-banner__action-label", banner)
+        self.assertIn("grid-template-columns", stylesheet)
+        self.assertIn("oraculo-banner__action", stylesheet)
+        self.assertIn("flex-direction: column", stylesheet)
+        self.assertIn("width: 100%", stylesheet)
+
 
 if __name__ == "__main__":
     unittest.main()
