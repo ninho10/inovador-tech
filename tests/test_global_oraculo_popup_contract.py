@@ -8,46 +8,52 @@ sys.path.insert(0, str(ROOT))
 from app import app
 
 TEMPLATES = ROOT / "templates"
-PARTIAL = TEMPLATES / "_oraculo_popup.html"
-POPUP_CSS = ROOT / "static" / "css" / "oraculo-popup.css"
-POPUP_JS = ROOT / "static" / "js" / "oraculo-popup.js"
 PAGE_TEMPLATES = sorted(
-    path for path in TEMPLATES.rglob("*.html") if path.name != "_oraculo_popup.html"
+    path for path in TEMPLATES.rglob("*.html")
+    if path.name not in {"_oraculo_popup.html", "_oraculo_banner.html"}
 )
 DEMO_SLUGS = (
     "academia", "barbearia", "clinica", "consultorio", "escola", "hotel",
     "imobiliaria", "loja", "oficina", "planilha", "restaurante", "salao",
 )
+POPUP_TOKENS = (
+    "oraculo-popup.css",
+    "oraculo-popup.js",
+    "_oraculo_popup.html",
+    "oraculo-free-popup",
+)
 
 
 class GlobalOraculoPopupContractTests(unittest.TestCase):
-    def test_all_page_templates_include_shared_assets_and_partial_once(self):
+    def test_popup_is_not_referenced_by_any_page_template(self):
         self.assertEqual(len(PAGE_TEMPLATES), 18)
         for template in PAGE_TEMPLATES:
             source = template.read_text(encoding="utf-8")
             with self.subTest(template=template.relative_to(TEMPLATES)):
-                self.assertEqual(source.count("oraculo-popup.css"), 1)
-                self.assertEqual(source.count("oraculo-popup.js"), 1)
-                self.assertEqual(source.count("{% include '_oraculo_popup.html' %}"), 1)
-                self.assertEqual(source.count('id="oraculo-free-popup"'), 0)
+                for token in POPUP_TOKENS:
+                    self.assertNotIn(token, source)
 
-    def test_shared_partial_has_cta_and_non_javascript_fallback(self):
-        source = PARTIAL.read_text(encoding="utf-8")
-        required = (
-            'id="oraculo-free-popup"',
-            'role="dialog"',
-            'aria-modal="true"',
-            'data-popup-cta="oraculo-free"',
-            'https://oraculo-crm.sitesinovador.com.br/',
-            'id="oraculo-free-popup-dismiss"',
-            '<noscript>',
-            'aria-label="Benefícios do Oráculo CRM"',
-        )
-        for token in required:
-            with self.subTest(token=token):
-                self.assertIn(token, source)
+        popup_partial = (TEMPLATES / "_oraculo_popup.html").read_text(encoding="utf-8")
+        self.assertNotIn('id="oraculo-free-popup"', popup_partial)
 
-    def test_rendered_routes_contain_the_popup_once(self):
+    def test_home_has_the_crm_banner_and_other_pages_do_not(self):
+        home = (TEMPLATES / "index.html").read_text(encoding="utf-8")
+        self.assertIn("oraculo-banner.css", home)
+        self.assertIn("_oraculo_banner.html", home)
+        banner = (TEMPLATES / "_oraculo_banner.html").read_text(encoding="utf-8")
+        self.assertIn('id="oraculo-free-banner"', banner)
+        self.assertIn('href="https://oraculo-crm.sitesinovador.com.br/"', banner)
+        self.assertIn("Testar o Oráculo CRM grátis", banner)
+
+        for template in PAGE_TEMPLATES:
+            if template.name == "index.html":
+                continue
+            source = template.read_text(encoding="utf-8")
+            with self.subTest(template=template.relative_to(TEMPLATES)):
+                self.assertNotIn("oraculo-banner.css", source)
+                self.assertNotIn("_oraculo_banner.html", source)
+
+    def test_rendered_routes_do_not_contain_popup_and_only_home_has_banner(self):
         routes = ["/", "/oraculo", "/sistema-sob-medida", "/planilhas", "/sites", "/nossos-servicos"]
         routes.extend(f"/demo/{slug}" for slug in DEMO_SLUGS)
         with app.test_client() as client:
@@ -56,37 +62,13 @@ class GlobalOraculoPopupContractTests(unittest.TestCase):
                 with self.subTest(route=route):
                     self.assertEqual(response.status_code, 200)
                     body = response.get_data(as_text=True)
-                    self.assertEqual(body.count('id="oraculo-free-popup"'), 1)
-                    self.assertIn('href="https://oraculo-crm.sitesinovador.com.br/"', body)
-
-    def test_popup_behavior_reopens_per_page_after_ten_seconds(self):
-        css = POPUP_CSS.read_text(encoding="utf-8")
-        js = POPUP_JS.read_text(encoding="utf-8")
-        js_tokens = (
-            "const displayDelayMs = 10 * 1000;",
-            "popupHasOpened",
-            "window.setTimeout(openPopup, displayDelayMs)",
-            "event.key === 'Escape'",
-            "firstFocusable", "lastFocusable", "closeButtons.forEach",
-            "if (cta)", "cta.addEventListener",
-            "window.matchMedia('(hover: hover) and (pointer: fine)')",
-        )
-        for token in js_tokens:
-            with self.subTest(token=token):
-                self.assertIn(token, js)
-
-        for storage_api in ("sessionStorage", "localStorage"):
-            with self.subTest(storage_api=storage_api):
-                self.assertNotIn(storage_api, js)
-
-        self.assertNotIn("}, { once: true });", js)
-
-        css_tokens = (
-            "prefers-reduced-motion", "max-height: calc(100dvh - 24px)",
-        )
-        for token in css_tokens:
-            with self.subTest(token=token):
-                self.assertIn(token, css)
+                    for token in POPUP_TOKENS:
+                        self.assertNotIn(token, body)
+                    if route == "/":
+                        self.assertIn('id="oraculo-free-banner"', body)
+                        self.assertIn('href="https://oraculo-crm.sitesinovador.com.br/"', body)
+                    else:
+                        self.assertNotIn('id="oraculo-free-banner"', body)
 
 
 if __name__ == "__main__":

@@ -33,22 +33,22 @@ class RuntimePopupBrowserContractTests(unittest.TestCase):
         connection.close()
         return response.status, headers, body
 
-    def test_home_serves_rendered_popup_assets(self):
+    def test_home_serves_banner_without_popup_assets(self):
         status, _, body = self.get('/')
         self.assertEqual(status, 200)
-        self.assertIn('id="oraculo-free-popup"', body)
-        self.assertNotIn("{% include '_oraculo_popup.html' %}", body)
+        self.assertIn('id="oraculo-free-banner"', body)
+        self.assertIn('href="https://oraculo-crm.sitesinovador.com.br/"', body)
+        self.assertIn('Testar o Oráculo CRM grátis', body)
+        self.assertNotIn('oraculo-free-popup', body)
+        self.assertNotIn('oraculo-popup.css', body)
+        self.assertNotIn('oraculo-popup.js', body)
 
-        css_status, css_headers, css = self.get('/static/css/oraculo-popup.css')
-        js_status, js_headers, js = self.get('/static/js/oraculo-popup.js')
+        css_status, css_headers, css = self.get('/static/css/oraculo-banner.css')
         self.assertEqual(css_status, 200)
-        self.assertEqual(js_status, 200)
         self.assertIn('text/css', css_headers.get('Content-Type', ''))
-        self.assertIn('javascript', js_headers.get('Content-Type', ''))
-        self.assertIn('oraculo-popup-enter', css)
-        self.assertIn("event.key === 'Escape'", js)
+        self.assertIn('oraculo-banner', css)
 
-    def test_all_rendered_routes_have_one_popup(self):
+    def test_all_rendered_routes_have_no_global_popup(self):
         routes = ["/", "/oraculo", "/sistema-sob-medida", "/planilhas", "/sites", "/nossos-servicos"]
         routes.extend(f"/demo/{slug}" for slug in (
             "academia", "barbearia", "clinica", "consultorio", "escola", "hotel",
@@ -58,8 +58,9 @@ class RuntimePopupBrowserContractTests(unittest.TestCase):
             with self.subTest(route=route):
                 status, _, body = self.get(route)
                 self.assertEqual(status, 200)
-                self.assertEqual(body.count('id="oraculo-free-popup"'), 1)
-                self.assertIn('data-popup-cta="oraculo-free"', body)
+                self.assertNotIn('oraculo-free-popup', body)
+                self.assertNotIn('oraculo-popup.css', body)
+                self.assertNotIn('oraculo-popup.js', body)
 
 
 if __name__ == '__main__':

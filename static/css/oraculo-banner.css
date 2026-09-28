@@ -1,0 +1,112 @@
+/* Banner permanente do Oráculo CRM na home. */
+
+.oraculo-banner {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: clamp(24px, 5vw, 64px);
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: clamp(28px, 4vw, 42px) clamp(24px, 5vw, 58px);
+  overflow: hidden;
+  border: 1px solid rgba(0, 255, 136, 0.36);
+  border-radius: 24px;
+  background:
+    radial-gradient(circle at 85% 20%, rgba(0, 243, 255, 0.16), transparent 28%),
+    linear-gradient(120deg, rgba(9, 23, 42, 0.98), rgba(5, 12, 28, 0.96));
+  box-shadow: 0 22px 60px rgba(0, 0, 0, 0.24), 0 0 34px rgba(0, 255, 136, 0.08);
+  color: #fff;
+}
+
+.oraculo-banner__glow {
+  position: absolute;
+  top: -85px;
+  right: 16%;
+  width: 190px;
+  height: 190px;
+  border-radius: 50%;
+  background: rgba(0, 255, 136, 0.12);
+  filter: blur(30px);
+  pointer-events: none;
+}
+
+.oraculo-banner__content {
+  position: relative;
+  z-index: 1;
+  max-width: 690px;
+}
+
+.oraculo-banner__eyebrow {
+  margin: 0 0 10px;
+  color: #00ff88;
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.oraculo-banner h2 {
+  margin: 0;
+  color: #fff;
+  font-family: 'Outfit', sans-serif;
+  font-size: clamp(1.65rem, 3.2vw, 2.55rem);
+  font-weight: 700;
+  letter-spacing: -0.045em;
+  line-height: 1.05;
+}
+
+.oraculo-banner__description {
+  max-width: 58ch;
+  margin: 12px 0 0;
+  color: rgba(255, 255, 255, 0.76);
+  line-height: 1.6;
+}
+
+.oraculo-banner__cta {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  gap: 10px;
+  min-height: 52px;
+  padding: 13px 20px;
+  border: 1px solid #00ff88;
+  border-radius: 12px;
+  background: linear-gradient(45deg, #00f3ff, #00ff88);
+  color: #03120a;
+  font-weight: 800;
+  text-align: center;
+  text-decoration: none;
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+.oraculo-banner__cta:hover,
+.oraculo-banner__cta:focus-visible {
+  color: #03120a;
+  box-shadow: 0 12px 32px rgba(0, 255, 136, 0.28);
+  transform: translateY(-2px);
+  outline: 2px solid rgba(0, 255, 136, 0.45);
+  outline-offset: 2px;
+}
+
+@media (max-width: 768px) {
+  .oraculo-banner {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 22px;
+    border-radius: 20px;
+  }
+
+  .oraculo-banner__cta {
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .oraculo-banner__cta {
+    transition: none;
+  }
+}
